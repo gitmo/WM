@@ -1,5 +1,8 @@
 package dbs.project.entity;
 
+import javax.persistence.Entity;
+
+@Entity
 public class EventCard extends MatchEvent
 {
     private String color;

@@ -3,12 +3,29 @@ package dbs.project.entity;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+
+@Entity
 public class Team {
+	@Id
+	@GeneratedValue
+	Long id;
     String name;
-    List<Player> players;
+    @OneToMany
+	List<Player> players;
+    /*TODO embedded*/
+    @Transient
     Map<Integer, Player> trikotNumbers;
-    List<Advisor> advisors;
-    Country country;
+    @OneToMany
+	List<Advisor> advisors;
+    @ManyToOne
+	Country country;
 
     public Team() {}
     

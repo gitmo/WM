@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory name="HibernateUtil">
+        <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.password">postgres</property>
+        <property name="hibernate.connection.url">jdbc:postgresql:test</property>
+        <property name="hibernate.connection.username">postgres</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.show_sql">true</property>
+        
+        <mapping class="dbs.project.entity.Advisor" />
+        <mapping class="dbs.project.entity.Country" />
+        <mapping class="dbs.project.entity.EventCard" />
+        <mapping class="dbs.project.entity.EventGoal" />
+        <mapping class="dbs.project.entity.EventSubstitution" />
+        <mapping class="dbs.project.entity.Group" />
+        <mapping class="dbs.project.entity.GroupMatch" />
+        <mapping class="dbs.project.entity.KnockoutMatch" />
+        <mapping class="dbs.project.entity.Match" />
+        <mapping class="dbs.project.entity.MatchEvent" />
+        <mapping class="dbs.project.entity.Person" />
+        <mapping class="dbs.project.entity.Player" />
+        <mapping class="dbs.project.entity.Stadium" />
+        <mapping class="dbs.project.entity.Team" />
+        <mapping class="dbs.project.entity.Tournament" />
+    </session-factory>
+</hibernate-configuration>

@@ -1,10 +1,11 @@
 package dbs.project.entity;
 
 import java.util.Date;
+import javax.persistence.Entity;
 
+@Entity
 public class Advisor extends Person {
     private String task;
-
    
     public Advisor() {}
     

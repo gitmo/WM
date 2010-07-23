@@ -1,8 +1,13 @@
 package dbs.project.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+
+@Entity
 public class EventSubstitution extends MatchEvent
 {
-    private Player newPlayer;
+    @ManyToOne
+	private Player newPlayer;
     
     public EventSubstitution() {}
 

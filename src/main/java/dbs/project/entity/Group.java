@@ -1,11 +1,18 @@
 package dbs.project.entity;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
+@Entity
 public class Group
 {
+	@Id
     String name;
-    List<Team> teams;
-    List<GroupMatch> matches;
+	@OneToMany
+	List<Team> teams;
+	@OneToMany
+	List<GroupMatch> matches;
     
     public Group() {}
 

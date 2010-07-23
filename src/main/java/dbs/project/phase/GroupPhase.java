@@ -1,9 +1,11 @@
-package dbs.project.entity;
+package dbs.project.phase;
 import java.util.List;
+
+import dbs.project.entity.Group;
 
 public class GroupPhase
 {
-    private List<Group> groups;
+	private List<Group> groups;
 
     public GroupPhase() {}
 

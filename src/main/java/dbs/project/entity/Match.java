@@ -1,19 +1,29 @@
 package dbs.project.entity;
 import java.util.List;
 
-/**
- * Abstract class Match - write a description of the class here
- * 
- * @author (your name here)
- * @version (version number or date here)
- */
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+@Entity
 public abstract class Match
 {
+	@Id
+	@GeneratedValue
+	Long id;
+	@ManyToOne
     Team hostTeam;
+	@ManyToOne
     Team guestTeam;
+    @OneToMany
     List<Player> hostLineup;
+    @OneToMany
     List<Player> guestLineup;    
+	@ManyToOne
     Stadium stadium;
+    @OneToMany
     List<MatchEvent> events;
     
     public Match() {}

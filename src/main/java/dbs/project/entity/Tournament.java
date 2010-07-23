@@ -1,14 +1,28 @@
 package dbs.project.entity;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
+import dbs.project.phase.GroupPhase;
+import dbs.project.phase.KnockoutPhase;
+
+@Entity
 public class Tournament
 {
+	@Id
     private String name;
     private Integer year;
-    private List<Country> hostCountries;
-    private KnockoutPhase knockoutPhase;
-    private GroupPhase groupPhase;
-    private List<Stadium> stadiums;
+    @OneToMany
+	private List<Country> hostCountries;
+    @Transient
+	private KnockoutPhase knockoutPhase;
+    @Transient
+	private GroupPhase groupPhase;
+    @OneToMany
+	private List<Stadium> stadiums;
     
     public Tournament() {}
 

@@ -1,14 +1,20 @@
-package dbs.project.entity;
+package dbs.project.phase;
 import java.util.Collection;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import dbs.project.entity.KnockoutMatch;
+import dbs.project.entity.Match;
 
 public class KnockoutPhase
 {
-    private KnockoutMatch finalMatch;
+	private KnockoutMatch finalMatch;
     // TODO: Baum bau'n
     Collection<KnockoutMatch> matchTree;
-    Match nextMatch;
-    List<Match> previousMatches;
+	Match nextMatch;
+	List<Match> previousMatches;
 
     public KnockoutPhase() {}
 

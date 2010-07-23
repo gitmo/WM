@@ -2,7 +2,18 @@ package dbs.project.entity;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+
+@Entity
+@Inheritance(strategy=InheritanceType.JOINED)
 public abstract class Person {
+	@Id
+	@GeneratedValue
+	Long id;
     Integer height;
     Integer weight;
     String firstname;
