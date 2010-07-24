@@ -8,7 +8,7 @@ import javax.persistence.OneToMany;
 import dbs.project.entity.KnockoutMatch;
 import dbs.project.entity.Match;
 
-public class KnockoutPhase
+public class KnockoutStage
 {
 	private KnockoutMatch finalMatch;
     // TODO: Baum bau'n
@@ -16,7 +16,7 @@ public class KnockoutPhase
 	Match nextMatch;
 	List<Match> previousMatches;
 
-    public KnockoutPhase() {}
+    public KnockoutStage() {}
 
 	public KnockoutMatch getFinalMatch() {
 		return finalMatch;

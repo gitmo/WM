@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Group
+public class TournamentGroup
 {
 	@Id
     String name;
@@ -14,7 +14,7 @@ public class Group
 	@OneToMany
 	List<GroupMatch> matches;
     
-    public Group() {}
+    public TournamentGroup() {}
 
 	public String getName() {
 		return name;

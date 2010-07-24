@@ -6,8 +6,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
-import dbs.project.phase.GroupPhase;
-import dbs.project.phase.KnockoutPhase;
+import dbs.project.phase.GroupStage;
+import dbs.project.phase.KnockoutStage;
 
 @Entity
 public class Tournament
@@ -18,9 +18,9 @@ public class Tournament
     @OneToMany
 	private List<Country> hostCountries;
     @Transient
-	private KnockoutPhase knockoutPhase;
+	private KnockoutStage knockoutStage;
     @Transient
-	private GroupPhase groupPhase;
+	private GroupStage groupStage;
     @OneToMany
 	private List<Stadium> stadiums;
     
@@ -50,20 +50,20 @@ public class Tournament
 		this.hostCountries = hostCountries;
 	}
 
-	public KnockoutPhase getKnockoutPhase() {
-		return knockoutPhase;
+	public KnockoutStage getKnockoutPhase() {
+		return knockoutStage;
 	}
 
-	public void setKnockoutPhase(KnockoutPhase knockoutPhase) {
-		this.knockoutPhase = knockoutPhase;
+	public void setKnockoutPhase(KnockoutStage knockoutPhase) {
+		this.knockoutStage = knockoutPhase;
 	}
 
-	public GroupPhase getGroupPhase() {
-		return groupPhase;
+	public GroupStage getGroupPhase() {
+		return groupStage;
 	}
 
-	public void setGroupPhase(GroupPhase groupPhase) {
-		this.groupPhase = groupPhase;
+	public void setGroupPhase(GroupStage groupStage) {
+		this.groupStage= groupStage;
 	}
 
 	public List<Stadium> getStadiums() {
