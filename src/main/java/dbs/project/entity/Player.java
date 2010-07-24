@@ -1,5 +1,6 @@
 package dbs.project.entity;
 
+import java.text.DateFormat;
 import java.util.Date;
 import javax.persistence.Entity;
 
@@ -10,9 +11,9 @@ public class Player extends Person {
 
     public Player() {}
     
-    public Player(String first, String last, String nick, Date today,
-            String club, int height, int weight) {
-        super(first, last, today, height, weight);
+    public Player(String first, String last, String nick, Date birthday,
+            String club, Integer height, Integer weight) {
+        super(first, last, birthday, height, weight);
         this.nickname = nick;
         this.club = club;
     }
@@ -31,5 +32,16 @@ public class Player extends Person {
 
 	public void setClub(String club) {
 		this.club = club;
+	}
+	
+	public String toString() {
+		return String.format(
+				"%s %s geboren am %s (Groesse: %d, Gewicht: %d)",
+			 	this.firstname,
+			 	this.lastname,
+			 	this.birthday,
+			 	this.height,
+			 	this.weight
+		);
 	}
 }

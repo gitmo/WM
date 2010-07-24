@@ -9,16 +9,20 @@ public class TournamentDao extends DaoBase {
 	 * Creates or updates a tournament
 	 * @param tournament
 	 */
-	public void save(Tournament tournament) {
+	public static void save(Tournament tournament) {
+		session.beginTransaction();
 		session.save(tournament);
+		session.getTransaction().commit();
 	}
 	
 	/**
 	 * Deletes a tournament
 	 * @param tournament
 	 */
-	public void delete(Tournament tournament) {
+	public static void delete(Tournament tournament) {
+		session.beginTransaction();
 		session.delete(tournament);
+		session.getTransaction().commit();
 	}
 	
 	/**
@@ -26,7 +30,7 @@ public class TournamentDao extends DaoBase {
 	 * @param name
 	 * @return
 	 */
-	public Tournament find(String name) {
+	public static Tournament find(String name) {
 		return (Tournament) session.load(Tournament.class, name);
 	}
 	
@@ -35,7 +39,7 @@ public class TournamentDao extends DaoBase {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Tournament> fetchAll() {
+	public static List<Tournament> fetchAll() {
 		return (List<Tournament>) session.createQuery("From Tournament").list();
 	}
 	
