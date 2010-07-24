@@ -1,4 +1,4 @@
-package dbs.project.phase;
+package dbs.project.stage;
 import java.util.List;
 
 import dbs.project.entity.TournamentGroup;

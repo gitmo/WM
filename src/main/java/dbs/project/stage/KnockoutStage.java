@@ -1,4 +1,4 @@
-package dbs.project.phase;
+package dbs.project.stage;
 import java.util.Collection;
 import java.util.List;
 import javax.persistence.Entity;

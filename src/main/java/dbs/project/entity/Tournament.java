@@ -6,8 +6,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
-import dbs.project.phase.GroupStage;
-import dbs.project.phase.KnockoutStage;
+import dbs.project.stage.GroupStage;
+import dbs.project.stage.KnockoutStage;
 
 @Entity
 public class Tournament
