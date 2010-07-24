@@ -1,0 +1,11 @@
+#Eclipse project settings
+.settings
+.project
+.classpath
+
+#Ignore swap files
+*~
+*.swp
+
+#Ignore target files
+target/
