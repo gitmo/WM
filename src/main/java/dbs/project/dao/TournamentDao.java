@@ -3,7 +3,7 @@ package dbs.project.dao;
 import java.util.List;
 import dbs.project.entity.Tournament;
 
-public class TournamentDao extends AbstractDao {
+public class TournamentDao extends DaoBase {
 	
 	/**
 	 * Creates or updates a tournament
