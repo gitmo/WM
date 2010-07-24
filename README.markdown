@@ -15,13 +15,15 @@
         mvn install 
         mvn eclipse:eclipse
 
+## Configure Eclipse
 * Start Eclipse
         New -> Java Project
             [x] Create Project from existing Source
-
-## Configure hibernate
+            
 * Switch to the hibernate perspective
+
 * Click the hibernate config window
+
 * Right-click and click "Add Configuration"
         Main:
             Type: [x] Annotations
