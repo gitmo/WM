@@ -15,8 +15,6 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
-import antlr.collections.impl.Vector;
-
 @Entity
 public class Team {
 	@Id
