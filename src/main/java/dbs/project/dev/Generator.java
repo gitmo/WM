@@ -140,8 +140,11 @@ public class Generator {
 		hostCountries.add(teams.get(0).getCountry());
 		tournament.setHostCountries(hostCountries);
 		
-		tournament.setName("WM 2010");
-		tournament.setYear(2010);
+		Random random = new Random();
+		
+		int year = 1970 + random.nextInt(50);
+		tournament.setName("WM " + year);
+		tournament.setYear(year);
 		
 		GroupStage groupStage = GroupStageDao.getByTeams(teams);
 		tournament.setGroupPhase(groupStage);
