@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -14,10 +15,10 @@ public abstract class Person {
 	@Id
 	@GeneratedValue
 	Long id;
-    Integer height;
-    Integer weight;
-    String firstname;
-    String lastname;
+    Integer height = 0;
+    Integer weight = 0;
+    String firstname = "";
+    String lastname = "";
     Date birthday;
 
     public Person() {}

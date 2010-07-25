@@ -95,9 +95,13 @@ public class Generator {
 		Random random = new Random();
 		
 		for(Team team : teams) {
-			for(int i=0; i<11; i++) {
-				Integer index = random.nextInt(players.size());
-				team.addPlayer(players.get(index));
+			for(int i=0; i<23; i++) {
+				if(players.size() > 0) {
+					int tmpIndex = random.nextInt(players.size());
+					team.addPlayer(players.remove(tmpIndex));
+				} else {
+					System.out.println("Warning: no players left for team " + team.getName());
+				}
 			}
 		}
 		return teams;

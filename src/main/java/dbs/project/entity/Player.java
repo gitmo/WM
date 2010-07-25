@@ -1,19 +1,19 @@
 package dbs.project.entity;
 
-import java.text.DateFormat;
 import java.util.Date;
 import javax.persistence.Entity;
 
 @Entity
 public class Player extends Person {
-    String nickname;
-    String club;
+    String nickname = "";
+    String club = "";
 
     public Player() {}
     
     public Player(String first, String last, String nick, Date birthday,
             String club, Integer height, Integer weight) {
         super(first, last, birthday, height, weight);
+        
         this.nickname = nick;
         this.club = club;
     }

@@ -11,8 +11,10 @@ public class TeamDao extends DaoBase {
 	 * @param Team
 	 */
 	public static void save(Team team) {
-		session.save(team);
-		session.flush();
+		session.beginTransaction();
+		session.saveOrUpdate(team);
+//		session.flush();
+		session.getTransaction().commit();
 	}
 	
 	public static void saveAll(List<Team> teams) {
