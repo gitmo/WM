@@ -6,6 +6,7 @@ import java.util.*;
 
 import au.com.bytecode.opencsv.CSVReader;
 
+import dbs.project.dao.TeamDao;
 import dbs.project.entity.Advisor;
 import dbs.project.entity.Country;
 import dbs.project.entity.Player;
@@ -109,6 +110,12 @@ public class Generator {
 			}
 		}
 		return teams;
+	}
+	
+	public static void main(String[] args) {
+		
+		List<Team> teams = Generator.LoadAndPopulateTeams("dev/teams.csv", "dev/players.csv");
+		TeamDao.saveAll(teams);
 	}
 	
 }
