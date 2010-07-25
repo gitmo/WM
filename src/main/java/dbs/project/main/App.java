@@ -32,6 +32,14 @@ public class App {
 		for(Team team : TeamDao.fetchAll())
 			System.out.println(team);
 		
+//		List<Player> players = Generator.loadSamplePlayersFromCsvFile("dev/players.csv");
+//		PlayerDao.saveAll(players);
+//		
+//		Team ladida = new Team("Holland", null, null, null, null);
+//		for(Player player : players)
+//			ladida.addPlayer(player);
+//		
+//		TeamDao.save(ladida);
 	}
 
 }

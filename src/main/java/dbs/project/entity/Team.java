@@ -19,19 +19,24 @@ public class Team {
 	@Id
 	@GeneratedValue
 	Long id;
-    String name;
-    @OneToMany
-    @Cascade(CascadeType.ALL)
-	List<Player> players;
+    
+	String name;
+    
     /*TODO embedded*/
     @Transient
     Map<Integer, Player> trikotNumbers;
+    
     @OneToMany
     @Cascade(CascadeType.ALL)
 	List<Advisor> advisors;
+    
     @ManyToOne
     @Cascade(CascadeType.ALL)
 	Country country;
+
+    @OneToMany
+    @Cascade(CascadeType.ALL)
+	List<Player> players;
 
     public Team() {}
     
@@ -96,9 +101,9 @@ public class Team {
 	}
 
 	public void addPlayer(Player player) {
-//		if(this.players == null)
-//			this.players = new LinkedList<Player>();
-//		
-//		this.players.add(player);
+		if(this.players == null)
+			this.players = new LinkedList<Player>();
+		
+		this.players.add(player);
 	}
 }
