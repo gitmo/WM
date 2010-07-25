@@ -15,7 +15,7 @@ public class ExamplePlayerGenerator {
 	private static final String OUTPUT_FOLDER = "dev/";
 	private static final String FIRSTNAME_FILE = Generator.getAbsoluteFilePath(INPUT_FOLDER + "spielerVor");
 	private static final String LASTNAME_FILE = Generator.getAbsoluteFilePath(INPUT_FOLDER + "spielerNach");
-	private static final int AMOUNT_OF_PLAYERS = 24 * 32;
+	private static final int AMOUNT_OF_PLAYERS = 5000;
 	
 	private static final int MIN_HEIGHT = 155, MAX_HEIGHT = 205, MIN_WEIGHT = 55, MAX_WEIGHT = 95;
 	
