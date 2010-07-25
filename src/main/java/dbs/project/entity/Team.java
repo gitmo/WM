@@ -1,15 +1,18 @@
 package dbs.project.entity;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 public class Team {
@@ -18,13 +21,16 @@ public class Team {
 	Long id;
     String name;
     @OneToMany
+    @Cascade(CascadeType.ALL)
 	List<Player> players;
     /*TODO embedded*/
     @Transient
     Map<Integer, Player> trikotNumbers;
     @OneToMany
+    @Cascade(CascadeType.ALL)
 	List<Advisor> advisors;
     @ManyToOne
+    @Cascade(CascadeType.ALL)
 	Country country;
 
     public Team() {}
@@ -40,12 +46,13 @@ public class Team {
     }
 
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (Integer key : trikotNumbers.keySet()) {
-            Player pl = trikotNumbers.get(key);
-            sb.append(String.format("%s <%d>\n", pl, key));
-        }
-        return sb.toString();
+//        StringBuilder sb = new StringBuilder();
+//        for (Integer key : trikotNumbers.keySet()) {
+//            Player pl = trikotNumbers.get(key);
+//            sb.append(String.format("%s <%d>\n", pl, key));
+//        }
+//        return sb.toString();
+    	return String.format("%s", this.name);
     }
 
 	public String getName() {
@@ -86,5 +93,12 @@ public class Team {
 
 	public void setCountry(Country country) {
 		this.country = country;
+	}
+
+	public void addPlayer(Player player) {
+//		if(this.players == null)
+//			this.players = new LinkedList<Player>();
+//		
+//		this.players.add(player);
 	}
 }

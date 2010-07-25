@@ -6,6 +6,8 @@ import java.util.*;
 
 import au.com.bytecode.opencsv.CSVReader;
 
+import dbs.project.entity.Advisor;
+import dbs.project.entity.Country;
 import dbs.project.entity.Player;
 import dbs.project.entity.Team;
 import dbs.project.main.App;
@@ -67,11 +69,38 @@ public class Generator {
 		return csvList;
 	}
 	
-//	public static List<Team> loadSampleTeamsFromCsv(String fileName) {
-//		List<Team> teams = new ArrayList<Team>();
-//		List<String[]> csvList = getCsvList(fileName);
-//		
-//		return teams;
-//	}
+	public static List<Team> loadSampleTeamsFromCsv(String fileName) {
+		List<Team> teams = new ArrayList<Team>();
+		List<String[]> csvList = getCsvList(fileName);
+		
+		for(String[] line : csvList) {
+			Country country = new Country(line[0]);
+			List<Advisor> advisors = new ArrayList<Advisor>();
+			
+			advisors.add(new Advisor(line[1], line[2], null, 0, 0));
+			advisors.add(new Advisor(line[3], line[4], null, 0, 0));
+			advisors.add(new Advisor(line[5], line[6], null, 0, 0));
+			
+			Team team = new Team(line[0], null, null, advisors, country);
+			teams.add(team);
+		}
+		
+		return teams;
+	}
+	
+	public static List<Team> LoadAndPopulateTeams(String teamFile, String playerFile) {
+		List<Team> teams = loadSampleTeamsFromCsv(teamFile);
+		List<Player> players = loadSamplePlayersFromCsvFile(playerFile);
+		
+		Random random = new Random();
+		
+		for(Team team : teams) {
+			for(int i=0; i<11; i++) {
+				Integer index = random.nextInt(players.size());
+				team.addPlayer(players.get(index));
+			}
+		}
+		return teams;
+	}
 	
 }
