@@ -54,6 +54,7 @@ public class Generator {
 			);
 			
 			players.add(player);
+			System.out.println("Generated Player:" + player);
 		}
 		
 		return players;
@@ -98,6 +99,7 @@ public class Generator {
 			
 			Team team = new Team(line[0], null, null, advisors, country);
 			teams.add(team);
+			System.out.println("Generated Team:" + team);
 		}
 		
 		return teams;
@@ -118,6 +120,7 @@ public class Generator {
 					System.out.println("Warning: no players left for team " + team.getName());
 				}
 			}
+			System.out.println("Populated Team:" + team);
 		}
 		return teams;
 	}

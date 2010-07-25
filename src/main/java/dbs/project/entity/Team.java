@@ -1,5 +1,6 @@
 package dbs.project.entity;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -14,13 +15,15 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import antlr.collections.impl.Vector;
+
 @Entity
 public class Team {
 	@Id
 	@GeneratedValue
 	Long id;
     
-	String name;
+	String name = "";
     
     /*TODO embedded*/
     @Transient
@@ -38,15 +41,18 @@ public class Team {
     @Cascade(CascadeType.ALL)
 	List<Player> players;
 
-    public Team() {}
+    public Team() {
+    	this.advisors = new ArrayList<Advisor>();
+    	this.players = new ArrayList<Player>();
+    }
     
     public Team(String name, List<Player> players,
             Map<Integer, Player> trikotNumbers, List<Advisor> advisors,
             Country country) {
-        this.advisors = advisors;
+        this.advisors = (advisors == null) ? new ArrayList<Advisor>() : advisors;
         this.country = country;
         this.name = name;
-        this.players = players;
+        this.players = (players == null) ? new ArrayList<Player>() : players;
         this.trikotNumbers = trikotNumbers;
     }
 
