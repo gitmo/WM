@@ -13,13 +13,13 @@ public class ExamplePlayerGenerator {
 
 	private static final String INPUT_FOLDER = "dev/generator/";
 	private static final String OUTPUT_FOLDER = "dev/";
-	private static final String FIRSTNAME_FILE = Generator.getFilePath(INPUT_FOLDER + "spielerVor");
-	private static final String LASTNAME_FILE = Generator.getFilePath(INPUT_FOLDER + "spielerNach");
+	private static final String FIRSTNAME_FILE = Generator.getAbsoluteFilePath(INPUT_FOLDER + "spielerVor");
+	private static final String LASTNAME_FILE = Generator.getAbsoluteFilePath(INPUT_FOLDER + "spielerNach");
 	private static final int AMOUNT_OF_PLAYERS = 24 * 32;
 	
 	private static final int MIN_HEIGHT = 155, MAX_HEIGHT = 205, MIN_WEIGHT = 55, MAX_WEIGHT = 95;
 	
-	private static final String CSV_OUTPUT_FILE = Generator.getFilePath(OUTPUT_FOLDER + "players.csv");
+	private static final String CSV_OUTPUT_FILE = Generator.getAbsoluteFilePath(OUTPUT_FOLDER + "players.csv");
 	
 	
 	/*

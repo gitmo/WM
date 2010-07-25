@@ -26,6 +26,12 @@ public class Generator {
 		List<String[]> csvList = getCsvList(fileName);
 		
 		for(String[] line : csvList) {
+			
+			if(line.length < 5) {
+				System.out.println("Warning: not enough line informations");
+				continue;
+			}
+			
 			Date birthday = null;
 			Integer height = 0, weight = 0;
 			
@@ -53,12 +59,16 @@ public class Generator {
 		return players;
 	}
 	
-	public static String getFilePath(String fileName) {
-		return App.class.getClassLoader().getResource(fileName).getPath().replaceAll("%20", " ");
+	public static String getRootpath() {
+		return System.getProperty("user.dir");
+	}
+	
+	public static String getAbsoluteFilePath(String fileName) {
+		return getRootpath().concat("/target/classes/" + fileName);
 	}
 	
 	private static List<String[]> getCsvList(String fileName) {
-		String filePath = getFilePath(fileName);
+		String filePath = getAbsoluteFilePath(fileName);
 		CSVReader reader;
 		List<String[]> csvList = null;
 		try {
@@ -66,7 +76,7 @@ public class Generator {
 			csvList = reader.readAll();
 			reader.close();
 		} catch (FileNotFoundException e) {
-			System.err.println("file not found");
+			System.err.println("file " + filePath + "not found");
 		} catch (IOException e) {
 			System.err.println("could not read file");
 		}

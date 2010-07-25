@@ -13,12 +13,12 @@ public class ExampleTeamGenerator {
 
 	private static final String INPUT_FOLDER = "dev/generator/";
 	private static final String OUTPUT_FOLDER = "dev/";
-	private static final String FIRSTNAME_FILE = Generator.getFilePath(INPUT_FOLDER + "staffVor");
-	private static final String LASTNAME_FILE = Generator.getFilePath(INPUT_FOLDER + "staffNach");
-	private static final String TEAM_FILE = Generator.getFilePath(INPUT_FOLDER + "teams");
+	private static final String FIRSTNAME_FILE = Generator.getAbsoluteFilePath(INPUT_FOLDER + "staffVor");
+	private static final String LASTNAME_FILE = Generator.getAbsoluteFilePath(INPUT_FOLDER + "staffNach");
+	private static final String TEAM_FILE = Generator.getAbsoluteFilePath(INPUT_FOLDER + "teams");
 	private static final int AMOUNT_OF_TEAMS = 32;
 	
-	private static final String CSV_OUTPUT_FILE = Generator.getFilePath(OUTPUT_FOLDER + "teams.csv");
+	private static final String CSV_OUTPUT_FILE = Generator.getAbsoluteFilePath(OUTPUT_FOLDER + "teams.csv");
 	
 	
 	/*
