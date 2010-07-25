@@ -11,7 +11,6 @@ import dbs.project.entity.Advisor;
 import dbs.project.entity.Country;
 import dbs.project.entity.Player;
 import dbs.project.entity.Team;
-import dbs.project.main.App;
 
 public class Generator {
 

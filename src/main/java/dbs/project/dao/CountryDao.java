@@ -3,7 +3,6 @@ package dbs.project.dao;
 import java.util.List;
 
 import dbs.project.entity.Country;
-import dbs.project.entity.Player;
 
 public class CountryDao extends DaoBase {
 	
@@ -12,8 +11,9 @@ public class CountryDao extends DaoBase {
 	 * @param country
 	 */
 	public static void save(Country country) {
+		session.beginTransaction();
 		session.saveOrUpdate(country);
-		session.flush();
+		session.getTransaction().commit();
 	}
 	
 	public static void saveAll(List<Country> countries) {

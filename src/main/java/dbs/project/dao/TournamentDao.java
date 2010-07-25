@@ -11,7 +11,7 @@ public class TournamentDao extends DaoBase {
 	 */
 	public static void save(Tournament tournament) {
 		session.beginTransaction();
-		session.save(tournament);
+		session.saveOrUpdate(tournament);
 		session.getTransaction().commit();
 	}
 	

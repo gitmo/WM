@@ -12,7 +12,7 @@ public class PlayerDao extends DaoBase {
 	 */
 	public static void save(Player player) {
 		session.beginTransaction();
-		session.save(player);
+		session.saveOrUpdate(player);
 		session.getTransaction().commit();
 	}
 	
