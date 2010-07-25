@@ -52,8 +52,12 @@ public class Generator {
 		return players;
 	}
 	
+	public static String getFilePath(String fileName) {
+		return App.class.getClassLoader().getResource(fileName).getPath().replaceAll("%20", " ");
+	}
+	
 	private static List<String[]> getCsvList(String fileName) {
-		String filePath = App.class.getClassLoader().getResource(fileName).getPath().replaceAll("%20", " ");
+		String filePath = getFilePath(fileName);
 		CSVReader reader;
 		List<String[]> csvList = null;
 		try {
