@@ -1,4 +1,5 @@
 package dbs.project.entity;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -7,26 +8,48 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 @Entity
 public abstract class Match
 {
 	@Id
 	@GeneratedValue
 	Long id;
+	
 	@ManyToOne
+	@Cascade(CascadeType.ALL)
     Team hostTeam;
+	
 	@ManyToOne
+	@Cascade(CascadeType.ALL)
     Team guestTeam;
+	
     @OneToMany
+	@Cascade(CascadeType.ALL)
     List<Player> hostLineup;
+    
     @OneToMany
-    List<Player> guestLineup;    
+	@Cascade(CascadeType.ALL)
+    List<Player> guestLineup; 
+    
 	@ManyToOne
+	@Cascade(CascadeType.ALL)
     Stadium stadium;
+	
     @OneToMany
+	@Cascade(CascadeType.ALL)
     List<MatchEvent> events;
     
-    public Match() {}
+    public Match() {
+    	hostTeam = new Team();
+    	guestTeam = new Team();
+    	List<Player> hostLineup = new LinkedList<Player>();
+    	List<Player> guestLineup = new LinkedList<Player>();
+    	stadium = new Stadium();
+    	events = new LinkedList<MatchEvent>();
+    }
 
 	public Team getHostTeam() {
 		return hostTeam;
@@ -74,5 +97,13 @@ public abstract class Match
 
 	public void setEvents(List<MatchEvent> events) {
 		this.events = events;
+	}
+	
+	public String toString() {
+    	StringBuilder sb = new StringBuilder();
+    	
+    	sb.append(getHostTeam() + " vs " + getGuestTeam());
+    	
+    	return sb.toString();
 	}
 }

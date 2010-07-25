@@ -1,6 +1,7 @@
 package dbs.project.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -8,7 +9,11 @@ import javax.persistence.ManyToOne;
 public class Stadium
 {
 	@Id
+	@GeneratedValue
+	long stadiumId;
+	
     private String city;
+	
     @ManyToOne
 	private Country country;
     private Integer capacity;

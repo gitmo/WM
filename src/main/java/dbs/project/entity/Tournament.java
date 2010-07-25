@@ -1,12 +1,17 @@
 package dbs.project.entity;
 
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
-import dbs.project.stage.GroupStage;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.property.Getter;
+
 import dbs.project.stage.KnockoutStage;
 
 @Entity
@@ -15,16 +20,28 @@ public class Tournament
 	@Id
     private String name;
     private Integer year;
+    
     @OneToMany
+	@Cascade(CascadeType.ALL)
 	private List<Country> hostCountries;
+    
     @Transient
 	private KnockoutStage knockoutStage;
-    @Transient
+    
+    @ManyToOne
+	@Cascade(CascadeType.ALL)
 	private GroupStage groupStage;
+    
     @OneToMany
+	@Cascade(CascadeType.ALL)
 	private List<Stadium> stadiums;
     
-    public Tournament() {}
+    public Tournament() {
+    	hostCountries = new LinkedList<Country>();
+    	knockoutStage = new KnockoutStage();
+    	groupStage = new GroupStage();
+    	stadiums = new LinkedList<Stadium>();
+    }
 
 	public String getName() {
 		return name;
@@ -72,5 +89,22 @@ public class Tournament
 
 	public void setStadiums(List<Stadium> stadiums) {
 		this.stadiums = stadiums;
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("Name:\t" + getName() + "\n\n");
+		
+		sb.append("Host:\t");
+		for(Country country : getHostCountries())
+			sb.append(country.getName());
+		sb.append("\n\n");
+		
+		sb.append("GroupStage: ");
+		sb.append("\n\n");
+		sb.append(getGroupPhase());
+		
+		return sb.toString();
 	}
 }

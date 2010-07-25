@@ -1,16 +1,16 @@
 package dbs.project.main;
 
-import dbs.project.dao.TeamDao;
-import dbs.project.entity.Team;
+import dbs.project.dao.TournamentDao;
+import dbs.project.entity.Tournament;
 
 
 public class App {
 
 	public static void main(String[] args) {
-		System.out.println("App");
+		System.out.println("WM");
 		
-		for(Team team : TeamDao.fetchAll())
-			System.out.println(team);
+		for(Tournament tournament : TournamentDao.fetchAll())
+			System.out.println(tournament);
 		
 	}
 

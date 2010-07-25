@@ -19,6 +19,7 @@
         <mapping class="dbs.project.entity.EventGoal" />
         <mapping class="dbs.project.entity.EventSubstitution" />
         <mapping class="dbs.project.entity.TournamentGroup" />
+        <mapping class="dbs.project.entity.GroupStage" />
         <mapping class="dbs.project.entity.GroupMatch" />
         <mapping class="dbs.project.entity.KnockoutMatch" />
         <mapping class="dbs.project.entity.Match" />

@@ -6,11 +6,16 @@ import java.util.*;
 
 import au.com.bytecode.opencsv.CSVReader;
 
+import dbs.project.dao.GroupStageDao;
 import dbs.project.dao.TeamDao;
+import dbs.project.dao.TournamentDao;
 import dbs.project.entity.Advisor;
 import dbs.project.entity.Country;
+import dbs.project.entity.GroupStage;
 import dbs.project.entity.Player;
 import dbs.project.entity.Team;
+import dbs.project.entity.Tournament;
+import dbs.project.stage.KnockoutStage;
 
 public class Generator {
 
@@ -124,10 +129,32 @@ public class Generator {
 		return teams;
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		
 		List<Team> teams = Generator.LoadAndPopulateTeams("dev/teams.csv", "dev/players.csv");
 		TeamDao.saveAll(teams);
+		
+		Tournament tournament = new Tournament();
+		
+		List<Country> hostCountries = new ArrayList<Country>();
+		hostCountries.add(teams.get(0).getCountry());
+		tournament.setHostCountries(hostCountries);
+		
+		tournament.setName("WM 2010");
+		tournament.setYear(2010);
+		
+		GroupStage groupStage = GroupStageDao.getByTeams(teams);
+		tournament.setGroupPhase(groupStage);
+		
+//		KnockoutStage knockoutStage = new KnockoutStage();
+//		knockoutStage.init(groupStage);
+//		tournament.setKnockoutPhase(knockoutPhase);
+		
+		tournament.setStadiums(null);
+		
+		TournamentDao.save(tournament);
+		
+		System.out.println(tournament);
 	}
 	
 }

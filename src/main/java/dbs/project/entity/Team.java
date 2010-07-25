@@ -61,7 +61,7 @@ public class Team {
 //            sb.append(String.format("%s <%d>\n", pl, key));
 //        }
 //        return sb.toString();
-    	return String.format("Team: %s (%d Player, %d Advisor)", this.name, this.players.size(), this.advisors.size());
+    	return this.getName();
     }
 
 	public String getName() {
