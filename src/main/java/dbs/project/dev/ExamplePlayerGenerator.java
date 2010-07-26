@@ -2,6 +2,7 @@ package dbs.project.dev;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.Calendar;
@@ -21,15 +22,13 @@ public class ExamplePlayerGenerator {
 	
 	private static final String CSV_OUTPUT_FILE = Generator.getAbsoluteFilePath(OUTPUT_FOLDER + "players.csv");
 	
-	
 	/*
 	 * 
 	 * Erzeugt die Datei player_dev.csv
 	 * Vorname, Nachname, Geburtszeitpunkt, Groesse, Gewicht
 	 * 
 	 */
-	public static void main(String[] args) throws Exception{
-		
+	public static void generatePlayers() throws Exception {
 		Vector<String> firstnames = new Vector<String>();
 		Vector<String> lastnames = new Vector<String>();
 		
@@ -91,6 +90,11 @@ public class ExamplePlayerGenerator {
 		}
 		
 		bw.close();
+	}
+	
+	
+	public static void main(String[] args) throws Exception{
+		generatePlayers();
 	}
 
 }

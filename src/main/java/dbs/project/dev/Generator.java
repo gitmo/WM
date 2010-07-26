@@ -131,6 +131,9 @@ public class Generator {
 	
 	public static void main(String[] args) throws Exception {
 		
+		ExamplePlayerGenerator.generatePlayers();
+		ExampleTeamGenerator.generateTeams();
+		
 		List<Team> teams = Generator.LoadAndPopulateTeams("dev/teams.csv", "dev/players.csv");
 		TeamDao.saveAll(teams);
 		

@@ -110,4 +110,8 @@ public class Team {
 		
 		this.players.add(player);
 	}
+	
+	public boolean equals(Team obj) {
+		return (this.getName() == obj.getName()) ? true : false;
+	}
 }

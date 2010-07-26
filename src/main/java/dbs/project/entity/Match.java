@@ -42,6 +42,8 @@ public abstract class Match
 	@Cascade(CascadeType.ALL)
     List<MatchEvent> events;
     
+    boolean played  = false;
+    
     public Match() {
     	hostTeam = new Team();
     	guestTeam = new Team();
@@ -99,6 +101,21 @@ public abstract class Match
 		this.events = events;
 	}
 	
+	public void addEvent(MatchEvent event) {
+		if(this.events == null)
+			this.events = new LinkedList<MatchEvent>();
+		
+		this.events.add(event);
+	}
+	
+	public boolean isPlayed() {
+		return played;
+	}
+
+	public void setPlayed(boolean played) {
+		this.played = played;
+	}
+	
 	public String toString() {
     	StringBuilder sb = new StringBuilder();
     	
@@ -106,4 +123,5 @@ public abstract class Match
     	
     	return sb.toString();
 	}
+
 }

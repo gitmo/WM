@@ -27,8 +27,7 @@ public class ExampleTeamGenerator {
 	 * 
 	 */
 	
-	public static void main(String[] args) throws Exception{
-		
+	public static void generateTeams() throws Exception {
 		Vector<String> firstnames = new Vector<String>();
 		Vector<String> lastnames = new Vector<String>();
 		Vector<String> teams = new Vector<String>();
@@ -91,6 +90,10 @@ public class ExampleTeamGenerator {
 
 		
 		bw.close();
+	}
+	
+	public static void main(String[] args) throws Exception {
+		generateTeams();
 	}
 
 }
