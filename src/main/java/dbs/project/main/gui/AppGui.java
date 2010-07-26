@@ -1,21 +1,31 @@
 package dbs.project.main.gui;
 
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.CellRendererPane;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTree;
+import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.tree.TreeModel;
 
+import dbs.project.dev.Generator;
 import dbs.project.entity.Tournament;
 import dbs.project.entity.TournamentGroup;
 import dbs.project.service.KnockoutStageService;
@@ -51,7 +61,8 @@ public class AppGui extends JFrame {
     	mainPanel = new javax.swing.JPanel();
         mainPanel.setName("mainPanel");
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
-        
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		
         initLeftComponents();
         initTab();
         
@@ -96,33 +107,53 @@ public class AppGui extends JFrame {
 
 	private void initLeftComponents() {
 		JPanel components = new JPanel();
-		components.setLayout(new BoxLayout(components, BoxLayout.Y_AXIS));
+		BoxLayout bl = new BoxLayout(components, BoxLayout.Y_AXIS);
+		components.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		components.setLayout(bl);
+		components.setMaximumSize(new Dimension(15, Short.MAX_VALUE));
+		
+		JLabel label = new JLabel("Verfügbare Turniere:");
+		label.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+		components.add(label);
 		
 		JScrollPane tournamentsScrollPane = new JScrollPane();
         tournamentsList = new JList();
         tournamentsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tournamentsList.setModel(TournamentService.getListModel());
         tournamentsScrollPane.setViewportView(tournamentsList);
+        refreshList();
         
         ListSelectionListener listListener = new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				int i = e.getLastIndex();
-				System.out.println(i);
 				Tournament selectedTournament = (Tournament) tournamentsList.getModel().getElementAt(i);
 				refreshTabs(selectedTournament);
 			}
 		};
 		tournamentsList.addListSelectionListener(listListener);
 
-        JButton createTournament = new JButton();
-        createTournament.setText("Turnier erstellen"); // NOI18N
-        createTournament.setName("tournamentCreateButton"); // NOI18N
+        JButton refreshTournament = new JButton();
+        refreshTournament.setText("Turnier generieren"); // NOI18N
+        refreshTournament.setName("tournamentCreateButton"); // NOI18N
+        ActionListener buttonPressed = new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				try {
+					Generator.generateTournament();
+				} catch(Exception e) {}
+				
+				refreshList();
+			}
+		};
+		refreshTournament.addActionListener(buttonPressed);
         
         //Liste hinzufügen
         components.add(tournamentsScrollPane);
         //Button hinzufügen
-        components.add(createTournament);
+        components.add(refreshTournament);
 
         mainPanel.add(components);
 	}
+	
+	private void refreshList() {
+		tournamentsList.setModel(TournamentService.getListModel());
+    }
 }

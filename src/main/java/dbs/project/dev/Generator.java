@@ -135,7 +135,7 @@ public class Generator {
 		return teams;
 	}
 	
-	public static void main(String[] args) throws Exception {
+	public static void generateTournament() throws Exception {
 		
 		ExamplePlayerGenerator.generatePlayers();
 		ExampleTeamGenerator.generateTeams();
@@ -166,6 +166,10 @@ public class Generator {
 		TournamentDao.save(tournament);
 		
 		System.out.println(tournament);
+	}
+	
+	public static void main(String[] args) throws Exception {
+		generateTournament();
 	}
 	
 }
