@@ -92,19 +92,20 @@ public class Tournament
 	}
 
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		
-		sb.append("Name:\t" + getName() + "\n\n");
-		
-		sb.append("Host:\t");
-		for(Country country : getHostCountries())
-			sb.append(country.getName());
-		sb.append("\n\n");
-		
-		sb.append("GroupStage: ");
-		sb.append("\n\n");
-		sb.append(getGroupPhase());
-		
-		return sb.toString();
+//		StringBuilder sb = new StringBuilder();
+//		
+//		sb.append("Name:\t" + getName() + "\n\n");
+//		
+//		sb.append("Host:\t");
+//		for(Country country : getHostCountries())
+//			sb.append(country.getName());
+//		sb.append("\n\n");
+//		
+//		sb.append("GroupStage: ");
+//		sb.append("\n\n");
+//		sb.append(getGroupPhase());
+//		
+//		return sb.toString();
+		return getName();
 	}
 }

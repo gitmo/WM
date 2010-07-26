@@ -3,9 +3,14 @@ package dbs.project.service.group;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Vector;
+
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import dbs.project.entity.GroupMatch;
 import dbs.project.entity.Team;
+import dbs.project.entity.TournamentGroup;
 import dbs.project.service.MatchService;
 import dbs.project.util.Tuple;
 
@@ -17,7 +22,7 @@ public class StandingRow implements Comparable<StandingRow> {
 		this.teamName = name;
 	}
 
-	public int getPoints() {
+	public Integer getPoints() {
 		return this.points;
 	}
 	
@@ -25,11 +30,11 @@ public class StandingRow implements Comparable<StandingRow> {
 		this.points += points;
 	}
 	
-	public int getGoalsScored() {
+	public Integer getGoalsScored() {
 		return this.goalsScored;
 	}
 	
-	public int getGoalDifference() {
+	public Integer getGoalDifference() {
 		return Math.abs(this.getGoalsScored() - this.getGoalsAgainst());
 	}
 	
@@ -53,7 +58,7 @@ public class StandingRow implements Comparable<StandingRow> {
 		this.teamName = teamName;
 	}
 	
-	public int getPlayedGames() {
+	public Integer getPlayedGames() {
 		return playedGames;
 	}
 
@@ -120,6 +125,26 @@ public class StandingRow implements Comparable<StandingRow> {
 		//Collections.sort(standings);
 		
 		return standings;
+	}
+
+	public static TableModel getModel(TournamentGroup group) {
+		Vector<String> columnNames = new Vector<String>();
+		columnNames.add("Team");
+		columnNames.add("Spiele");
+		columnNames.add("Punkte");
+		columnNames.add("Torverhältniss");
+		
+		Vector<Vector<String>> columnData = new Vector<Vector<String>>();
+		for(StandingRow sr : StandingRow.getRows(group.getTeams(), group.getMatches())) {
+			Vector<String> row = new Vector<String>();
+			row.add(sr.getTeamName());
+			row.add(sr.getPlayedGames().toString());
+			row.add(sr.getPoints().toString());
+			row.add(sr.getGoalDifference().toString());
+			columnData.add(row);
+		}
+		
+		return new DefaultTableModel(columnData, columnNames);
 	}
 	
 }
