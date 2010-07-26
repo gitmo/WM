@@ -4,7 +4,7 @@ Gruppe A
 16/06 20:30	Tshwane/Pretoria	Südafrika	Südafrika	--:--	Uruguay
 17/06 20:30	Polokwane	Frankreich	--:--	Mexiko
 22/06 16:00	Rustenburg	Mexiko	--:--	Uruguay
-22/06 16:00	Mangaung / Bloemfontein	Frankreich	--:--	Südafrika
+22/06 16:00	Mangaung / Bloemfontein	Fran§kreich	--:--	Südafrika
 
 Gruppe B
 12/06 16:00	Johannesburg - JEP	Argentinien	--:--	Nigeria
@@ -31,11 +31,11 @@ Gruppe D
 23/06 20:30	Nelspruit	Australien	--:--	Serbien
 
 Gruppe E
-14/06 13:30	Johannesburg - JSC	Niederlande	--:--	D�nemark
+14/06 13:30	Johannesburg - JSC	Niederlande	--:--	Dänemark
 14/06 16:00	Mangaung / Bloemfontein	Japan	--:--	Kamerun
 19/06 13:30	Durban	Niederlande	--:--	Japan
-19/06 20:30	Tshwane/Pretoria	Kamerun	--:--	D�nemark
-24/06 20:30	Rustenburg	D�nemark	--:--	Japan
+19/06 20:30	Tshwane/Pretoria	Kamerun	--:--	Dänemark
+24/06 20:30	Rustenburg	Dänemark	--:--	Japan
 24/06 20:30	Kapstadt	Kamerun	--:--	Niederlande
 
 Gruppe F
