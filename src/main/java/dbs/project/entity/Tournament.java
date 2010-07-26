@@ -2,6 +2,7 @@ package dbs.project.entity;
 
 import java.util.LinkedList;
 import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;

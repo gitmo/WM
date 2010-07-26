@@ -1,10 +1,6 @@
 package dbs.project.main;
 
-import java.util.List;
-
-import dbs.project.dao.TournamentDao;
 import dbs.project.dao.TournamentGroupDao;
-import dbs.project.entity.Tournament;
 import dbs.project.entity.TournamentGroup;
 import dbs.project.service.GroupService;
 

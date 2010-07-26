@@ -2,7 +2,6 @@ package dbs.project.main.gui;
 
 import java.util.List;
 
-import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,16 +14,13 @@ import javax.swing.JTree;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeModel;
 
-import dbs.project.entity.KnockoutMatch;
 import dbs.project.entity.Tournament;
 import dbs.project.entity.TournamentGroup;
 import dbs.project.service.KnockoutStageService;
 import dbs.project.service.TournamentService;
 import dbs.project.service.group.StandingRow;
-import dbs.project.stage.KnockoutStage;
 
 public class AppGui extends JFrame {
 	private static final long serialVersionUID = 1L;

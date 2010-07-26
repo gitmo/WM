@@ -2,9 +2,6 @@ package dbs.project.service;
 
 import java.util.List;
 
-import org.hibernate.cfg.NotYetImplementedException;
-
-import dbs.project.entity.GroupMatch;
 import dbs.project.entity.TournamentGroup;
 import dbs.project.service.group.StandingRow;
 

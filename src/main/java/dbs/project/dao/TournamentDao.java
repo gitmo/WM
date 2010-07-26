@@ -1,6 +1,7 @@
 package dbs.project.dao;
 
 import java.util.List;
+
 import dbs.project.entity.Tournament;
 
 public class TournamentDao extends DaoBase {

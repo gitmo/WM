@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 
-import javax.swing.GroupLayout.Group;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 

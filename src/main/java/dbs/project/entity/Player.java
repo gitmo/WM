@@ -1,6 +1,7 @@
 package dbs.project.entity;
 
 import java.util.Date;
+
 import javax.persistence.Entity;
 
 @Entity
