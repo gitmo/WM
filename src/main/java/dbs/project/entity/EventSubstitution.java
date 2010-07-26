@@ -11,6 +11,11 @@ public class EventSubstitution extends MatchEvent
     
     public EventSubstitution() {}
 
+	public EventSubstitution(Player p1, Player p2, int i) {
+		super(p1,i);
+		this.newPlayer = p2;
+		}
+
 	public Player getNewPlayer() {
 		return newPlayer;
 	}

@@ -26,6 +26,11 @@ public abstract class MatchEvent
     
     public MatchEvent() {}
 
+	public MatchEvent(Player p1, int i) {
+		this.minute = i;
+		this.involvedPlayer = p1;
+	}
+
 	public Integer getMinute() {
 		return minute;
 	}

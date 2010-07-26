@@ -15,7 +15,10 @@ public class PlayerDao extends DaoBase {
 		session.saveOrUpdate(player);
 		session.getTransaction().commit();
 	}
-	
+	/**
+	 * Creates or updates a list of players
+	 * @param players
+	 */
 	public static void saveAll(List<Player> players) {
 		for(Player player : players)
 			save(player);
