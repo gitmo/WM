@@ -124,7 +124,7 @@ public class AppGui extends JFrame {
         
         ListSelectionListener listListener = new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				int i = e.getLastIndex();
+				int i = ((JList) e.getSource()).getSelectedIndex();
 				Tournament selectedTournament = (Tournament) tournamentsList.getModel().getElementAt(i);
 				refreshTabs(selectedTournament);
 			}
