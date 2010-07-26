@@ -1,11 +1,5 @@
 package dbs.project.main.gui;
 
-/*
- * DesktopApplication1View.java
- */
-
-
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -20,7 +14,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import dbs.project.dao.TournamentDao;
 import dbs.project.entity.Tournament;
 import dbs.project.entity.TournamentGroup;
 import dbs.project.service.GroupStageService;
@@ -31,6 +24,8 @@ import dbs.project.service.group.StandingRow;
  * The application's main frame.
  */
 public class AppGui extends JFrame {
+	private static final long serialVersionUID = 1L;
+
 	private final String APP_NAME = "Weltmeisterschaft DB";
 	
     private JPanel mainPanel;
@@ -128,7 +123,4 @@ public class AppGui extends JFrame {
 
         mainPanel.add(components);
 	}
-
-	// Variables declaration - do not modify
-    // End of variables declaration
 }
