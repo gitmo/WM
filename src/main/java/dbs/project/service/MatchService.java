@@ -1,5 +1,7 @@
 package dbs.project.service;
 
+import java.util.List;
+
 import org.hibernate.cfg.NotYetImplementedException;
 
 import dbs.project.dao.MatchDao;
@@ -10,6 +12,8 @@ import dbs.project.entity.Player;
 import dbs.project.entity.Team;
 import dbs.project.exception.PlayerDoesNotPlay;
 import dbs.project.service.event.FilterGoals;
+import dbs.project.service.event.FilterOwnGoals;
+import dbs.project.util.Collections;
 import dbs.project.util.Tuple;
 
 
@@ -48,13 +52,17 @@ public class MatchService {
 	public static Tuple<Integer> getGoalsByTeam(Team team, Match match) {
 		Tuple<Integer> goals = new Tuple<Integer>();
 		int goalsScored, goalsAgainst;
+		List<MatchEvent> goalEvents = Collections.filter(match.getEvents(), new FilterGoals());
 		if(match.getHostTeam() == team) {
-			goalsScored = MatchEvent.filter(match.getEvents(), new FilterGoals()).size();
-			goalsAgainst = MatchEvent.filter(match.getEvents(), new FilterGoals()).size();
+			List<MatchEvent> realGoals = Collections.filter(goalEvents, new FilterOwnGoals());
+			goalsScored = realGoals.size();
+			goalsAgainst = goalEvents.size();
 		} else {
-			goalsScored = MatchEvent.filter(match.getEvents(), new FilterGoals()).size();
-			goalsAgainst = MatchEvent.filter(match.getEvents(), new FilterGoals()).size();
+			goalsScored = goalEvents.size();
+			goalsAgainst = goalEvents.size();
 		}
+		
+		
 		
 		goals.setFirst(goalsScored);
 		goals.setSecond(goalsAgainst);

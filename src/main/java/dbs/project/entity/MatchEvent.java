@@ -41,19 +41,4 @@ public abstract class MatchEvent
 	public void setInvolvedPlayer(Player involvedPlayer) {
 		this.involvedPlayer = involvedPlayer;
 	}
-
-	/**
-	 * filters a MatchEvent ĺist by a given filter implementation
-	 * @param events
-	 * @param filter
-	 * @return filtered list
-	 */
-	public static List<MatchEvent> filter(List<MatchEvent> events, Filter<MatchEvent> filter) {
-		List<MatchEvent> filteredEvents = new LinkedList<MatchEvent>();
-		for(MatchEvent event : events)
-			if(filter.apply(event))
-				filteredEvents.add(event);
-		
-		return filteredEvents;
-	}
 }

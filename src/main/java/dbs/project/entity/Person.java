@@ -1,12 +1,14 @@
 package dbs.project.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
@@ -19,6 +21,8 @@ public abstract class Person {
     String firstname = "";
     String lastname = "";
     Date birthday;
+    @OneToMany
+    List<Team> teams;
 
     public Person() {}
     
@@ -72,5 +76,13 @@ public abstract class Person {
 
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
+	}
+
+	public List<Team> getTeams() {
+		return teams;
+	}
+
+	public void setTeams(List<Team> teams) {
+		this.teams = teams;
 	}
 }
