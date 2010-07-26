@@ -1,19 +1,17 @@
 package dbs.project.stage;
-import java.util.Collection;
 import java.util.List;
 
 import dbs.project.entity.KnockoutMatch;
-import dbs.project.entity.Match;
 
 public class KnockoutStage
 {
 	private KnockoutMatch finalMatch;
-    // TODO: Baum bau'n
-    Collection<KnockoutMatch> matchTree;
-	Match nextMatch;
-	List<Match> previousMatches;
 
     public KnockoutStage() {}
+
+	public KnockoutStage(KnockoutMatch finalMatch) {
+		this.finalMatch = finalMatch;
+	}
 
 	public KnockoutMatch getFinalMatch() {
 		return finalMatch;
@@ -23,27 +21,18 @@ public class KnockoutStage
 		this.finalMatch = finalMatch;
 	}
 
-	public Collection<KnockoutMatch> getMatchTree() {
-		return matchTree;
+	public List<KnockoutMatch> getSemiFinals() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	public void setMatchTree(Collection<KnockoutMatch> matchTree) {
-		this.matchTree = matchTree;
+	public List<KnockoutMatch> getQuarterFinals() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	public Match getNextMatch() {
-		return nextMatch;
-	}
-
-	public void setNextMatch(Match nextMatch) {
-		this.nextMatch = nextMatch;
-	}
-
-	public List<Match> getPreviousMatches() {
-		return previousMatches;
-	}
-
-	public void setPreviousMatches(List<Match> previousMatches) {
-		this.previousMatches = previousMatches;
+	public List<KnockoutMatch> getRoundOfSixteen() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

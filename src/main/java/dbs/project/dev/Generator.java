@@ -7,6 +7,7 @@ import java.util.*;
 import au.com.bytecode.opencsv.CSVReader;
 
 import dbs.project.service.GroupStageService;
+import dbs.project.service.KnockoutStageService;
 import dbs.project.dao.TeamDao;
 import dbs.project.dao.TournamentDao;
 import dbs.project.entity.Advisor;
@@ -15,7 +16,7 @@ import dbs.project.entity.GroupStage;
 import dbs.project.entity.Player;
 import dbs.project.entity.Team;
 import dbs.project.entity.Tournament;
-//import dbs.project.stage.KnockoutStage;
+import dbs.project.stage.KnockoutStage;
 
 public class Generator {
 
@@ -152,9 +153,8 @@ public class Generator {
 		GroupStage groupStage = GroupStageService.getByTeams(teams);
 		tournament.setGroupPhase(groupStage);
 		
-//		KnockoutStage knockoutStage = new KnockoutStage();
-//		knockoutStage.init(groupStage);
-//		tournament.setKnockoutPhase(knockoutPhase);
+		KnockoutStage knockoutStage = KnockoutStageService.getDefault();
+		tournament.setKnockoutStage(knockoutStage);
 		
 		tournament.setStadiums(null);
 		

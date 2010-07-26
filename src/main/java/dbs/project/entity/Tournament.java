@@ -10,7 +10,6 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
-import org.hibernate.property.Getter;
 
 import dbs.project.stage.KnockoutStage;
 
@@ -25,8 +24,12 @@ public class Tournament
 	@Cascade(CascadeType.ALL)
 	private List<Country> hostCountries;
     
+    @ManyToOne
+    @Cascade(CascadeType.ALL)
+	private KnockoutMatch finalMatch;
+    
     @Transient
-	private KnockoutStage knockoutStage;
+    private KnockoutStage knockoutStage;
     
     @ManyToOne
 	@Cascade(CascadeType.ALL)
@@ -38,7 +41,6 @@ public class Tournament
     
     public Tournament() {
     	hostCountries = new LinkedList<Country>();
-    	knockoutStage = new KnockoutStage();
     	groupStage = new GroupStage();
     	stadiums = new LinkedList<Stadium>();
     }
@@ -68,11 +70,14 @@ public class Tournament
 	}
 
 	public KnockoutStage getKnockoutPhase() {
+		if(knockoutStage == null)
+			knockoutStage = new KnockoutStage(finalMatch);
 		return knockoutStage;
 	}
 
-	public void setKnockoutPhase(KnockoutStage knockoutPhase) {
+	public void setKnockoutStage(KnockoutStage knockoutPhase) {
 		this.knockoutStage = knockoutPhase;
+		this.finalMatch = knockoutPhase.getFinalMatch();
 	}
 
 	public GroupStage getGroupPhase() {

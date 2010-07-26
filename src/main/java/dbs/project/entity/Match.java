@@ -18,6 +18,8 @@ public abstract class Match
 	@GeneratedValue
 	Long id;
 	
+	String name;
+	
 	@ManyToOne
 	@Cascade(CascadeType.ALL)
     Team hostTeam;
@@ -47,8 +49,8 @@ public abstract class Match
     public Match() {
     	hostTeam = new Team();
     	guestTeam = new Team();
-    	List<Player> hostLineup = new LinkedList<Player>();
-    	List<Player> guestLineup = new LinkedList<Player>();
+    	hostLineup = new LinkedList<Player>();
+    	guestLineup = new LinkedList<Player>();
     	stadium = new Stadium();
     	events = new LinkedList<MatchEvent>();
     }
@@ -122,6 +124,14 @@ public abstract class Match
     	sb.append(getHostTeam() + " vs " + getGuestTeam());
     	
     	return sb.toString();
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

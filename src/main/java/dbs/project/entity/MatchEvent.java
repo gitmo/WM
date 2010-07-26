@@ -1,7 +1,5 @@
 package dbs.project.entity;
 
-import java.util.LinkedList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,9 +7,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
-
-import dbs.project.service.event.Filter;
-import dbs.project.service.event.FilterGoals;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
