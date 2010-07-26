@@ -1,13 +1,12 @@
-package dbs.project.dao;
+package dbs.project.service;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 import dbs.project.entity.GroupMatch;
 import dbs.project.entity.Team;
 
-public class MatchesDao {
+public class MatchService {
 
 	/**
 	 * Rekursive Generation der Matches

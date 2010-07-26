@@ -1,4 +1,4 @@
-package dbs.project.dao;
+package dbs.project.service;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -8,7 +8,7 @@ import dbs.project.entity.GroupStage;
 import dbs.project.entity.Team;
 import dbs.project.entity.TournamentGroup;
 
-public class GroupStageDao {
+public class GroupStageService {
 	private static final int MAX_TEAMS_PER_GROUP = 4;
 
 	public static GroupStage getByTeams(List<Team> teams) throws Exception {
@@ -27,7 +27,7 @@ public class GroupStageDao {
 				groupTeams.add(teams.remove(random.nextInt(teams.size())));
 			
 			currentGroup.setTeams(groupTeams);
-			currentGroup.setMatches(MatchesDao.generateMatches(groupTeams));
+			currentGroup.setMatches(MatchService.generateMatches(groupTeams));
 
 			allGroups.add(currentGroup);
 		}
