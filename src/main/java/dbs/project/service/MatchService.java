@@ -8,6 +8,7 @@ import dbs.project.entity.Match;
 import dbs.project.entity.MatchEvent;
 import dbs.project.entity.Player;
 import dbs.project.entity.Team;
+import dbs.project.exception.PlayerDoesNotPlay;
 import dbs.project.service.event.FilterGoals;
 import dbs.project.util.Tuple;
 
@@ -22,7 +23,10 @@ public class MatchService {
 		throw new NotYetImplementedException("getResult()");
 	}
 	
-	public static void insertGoal(EventGoal goal, Player player, Match match) {
+	public static void insertGoal(EventGoal goal, Player player, Match match) throws PlayerDoesNotPlay {
+		if(!PlayerService.playerHasPlayed(player, match))
+			throw new PlayerDoesNotPlay();
+		
 		goal.setInvolvedPlayer(player);
 		match.addEvent(goal);
 		MatchDao.save(match);
