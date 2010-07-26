@@ -75,8 +75,10 @@ public class AppGui extends JFrame {
         knockoutTree = new JTree();
         tabbComponents.add("Finalrunde", knockoutTree);
         
-    	Tournament firstTournament = (Tournament) tournamentsList.getModel().getElementAt(0);
-        refreshTabs(firstTournament);
+        if(tournamentsList.getModel().getSize() > 0) {
+        	Tournament firstTournament = (Tournament) tournamentsList.getModel().getElementAt(0);
+        	refreshTabs(firstTournament);
+        }
         
         mainPanel.add(tabbComponents);
 	}
@@ -128,8 +130,8 @@ public class AppGui extends JFrame {
 		tournamentsList.addListSelectionListener(listListener);
 
         JButton refreshTournament = new JButton();
-        refreshTournament.setText("Turnier generieren"); // NOI18N
-        refreshTournament.setName("tournamentCreateButton"); // NOI18N
+        refreshTournament.setText("Turnier generieren");
+        refreshTournament.setName("tournamentCreateButton");
         ActionListener buttonPressed = new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				try {

@@ -2,6 +2,7 @@ package dbs.project.entity;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -18,22 +19,24 @@ public abstract class Match
 	@GeneratedValue
 	Long id;
 	
-	String name;
+	String name = "";
 	
-	@ManyToOne
+	@ManyToOne(optional=true)
 	@Cascade(CascadeType.ALL)
     Team hostTeam;
 	
-	@ManyToOne
+	@ManyToOne(optional=true)
 	@Cascade(CascadeType.ALL)
     Team guestTeam;
 	
     @OneToMany
 	@Cascade(CascadeType.ALL)
+	@Column(nullable=true)
     List<Player> hostLineup;
     
     @OneToMany
 	@Cascade(CascadeType.ALL)
+	@Column(nullable=true)
     List<Player> guestLineup; 
     
 	@ManyToOne
@@ -47,11 +50,15 @@ public abstract class Match
     boolean played  = false;
     
     public Match() {
-    	hostTeam = new Team();
-    	guestTeam = new Team();
     	hostLineup = new LinkedList<Player>();
     	guestLineup = new LinkedList<Player>();
-    	stadium = new Stadium();
+    	events = new LinkedList<MatchEvent>();
+    }
+    
+    public Match(String name) {
+    	this.name = name;
+    	hostLineup = new LinkedList<Player>();
+    	guestLineup = new LinkedList<Player>();
     	events = new LinkedList<MatchEvent>();
     }
 

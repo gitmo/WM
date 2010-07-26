@@ -1,7 +1,9 @@
 package dbs.project.entity;
 
+import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -16,12 +18,15 @@ public class KnockoutMatch extends Match
 {
 	@OneToMany
 	@Cascade(CascadeType.ALL)
-	List<KnockoutMatch> childs;
+	@Column(nullable=true)
+	List<KnockoutMatch> childs = new LinkedList<KnockoutMatch>();
 	
-    public KnockoutMatch() {}
+    public KnockoutMatch() {
+    	super();
+    }
 
 	public KnockoutMatch(String name) {
-		this.setName(name);
+    	super(name);
 	}
 
 	public List<KnockoutMatch> getChilds() {
@@ -34,6 +39,9 @@ public class KnockoutMatch extends Match
 	
 	@Override
 	public String toString() {
-		return this.getName();
+		if(this.getGuestTeam() == null || this.getHostTeam() == null)
+			return this.getName();
+		else
+			return this.getHostTeam().getName() + " vs " + this.getGuestTeam().getName();
 	}
 }
