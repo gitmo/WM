@@ -1,4 +1,5 @@
 package dbs.project.entity;
+
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -10,34 +11,43 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 @Entity
-public class GroupStage
-{
-	@Id
-	@GeneratedValue
-	private long id;
-	
-	@OneToMany
-	@Cascade(CascadeType.ALL)
-	private List<TournamentGroup> groups;
+public class GroupStage {
+    @Id
+    @GeneratedValue
+    private long id;
 
-	public GroupStage() {}
+    @OneToMany
+    @Cascade(CascadeType.ALL)
+    private List<TournamentGroup> groups;
 
-	public List<TournamentGroup> getGroups() {
-		return groups;
-	}
+    public GroupStage() {
+    }
 
-	public void setGroups(List<TournamentGroup> groups) {
-		this.groups = groups;
-	}
-	
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		
-		sb.append("Groups:\n");
-		
-		for(TournamentGroup group : getGroups())
-			sb.append(group + "\n");
-		
-		return sb.toString();
-	}
+    public long getId() {
+        return this.id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public List<TournamentGroup> getGroups() {
+        return this.groups;
+    }
+
+    public void setGroups(List<TournamentGroup> groups) {
+        this.groups = groups;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Groups:\n");
+
+        for (TournamentGroup group : getGroups())
+            sb.append(group + "\n");
+
+        return sb.toString();
+    }
 }
