@@ -11,6 +11,9 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
 public abstract class Person {
@@ -23,6 +26,7 @@ public abstract class Person {
     String lastname = "";
     Date birthday;
     @OneToMany
+    @Cascade(CascadeType.ALL)
     Map<Tournament,Team> teams;
 
     public Person() {}

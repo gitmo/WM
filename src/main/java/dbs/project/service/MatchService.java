@@ -12,6 +12,7 @@ import dbs.project.entity.MatchEvent;
 import dbs.project.entity.Player;
 import dbs.project.entity.Team;
 import dbs.project.exception.NewPlayerHasPlayedBefore;
+import dbs.project.exception.NotInSameTeam;
 import dbs.project.exception.PlayerDoesNotPlay;
 import dbs.project.exception.PlayersTeamNotInMatch;
 import dbs.project.exception.TeamLineUpComplete;
@@ -29,8 +30,9 @@ public class MatchService {
 	 * @param minute
 	 * @throws NewPlayerHasPlayedBefore 
 	 * @throws PlayerDoesNotPlay 
+	 * @throws NotInSameTeam 
 	 */
-	public static void substitutePlayers(Player out, Player in, Integer minute, Match match) throws NewPlayerHasPlayedBefore, PlayerDoesNotPlay{
+	public static void substitutePlayers(Player out, Player in, Integer minute, Match match) throws NewPlayerHasPlayedBefore, PlayerDoesNotPlay, NotInSameTeam{
 		
 		if(PlayerService.playerHasPlayed(in, match))
 			throw new NewPlayerHasPlayedBefore();
@@ -38,7 +40,8 @@ public class MatchService {
 		if(!PlayerService.playerHasPlayed(out, match))
 			throw new PlayerDoesNotPlay();
 		
-		/*TODO same team?*/
+		if(out.getTeams().get(match.getTournament()) != in.getTeams().get(match.getTournament()))
+			throw new NotInSameTeam();
 		
 		EventSubstitution substitution = new EventSubstitution(out, in, minute);
 		match.addEvent(substitution);
@@ -48,24 +51,21 @@ public class MatchService {
 	
 	
 	public static void insertPlayerToMatch(Player player, Match match) throws PlayersTeamNotInMatch, TeamLineUpComplete {
-		List<Team> playerTeams = (List<Team>) player.getTeams().values();
-		if(playerTeams.size() == 1){
-			if(match.getGuestTeam() == playerTeams.get(0)){
-				if(match.getGuestLineup().size() < 11)
-					match.getGuestLineup().add(player);
-				else throw new TeamLineUpComplete();
-			}
-			else if (match.getHostTeam() == playerTeams.get(0)){
-				if(match.getHostLineup().size() < 11)
-					match.getHostLineup().add(player);
-				else throw new TeamLineUpComplete();
-			}
-			else
-				throw new PlayersTeamNotInMatch();
-					
-		}		
-		/*TODO more teams*/
-		throw new NotYetImplementedException("insertGoal()");
+		Team team = player.getTeams().get(match.getTournament());
+		
+		if(match.getGuestTeam() == team){
+			if(match.getGuestLineup().size() < 11)
+				match.getGuestLineup().add(player);
+			else throw new TeamLineUpComplete();
+		}
+		else if (match.getHostTeam() == team){
+			if(match.getHostLineup().size() < 11)
+				match.getHostLineup().add(player);
+			else throw new TeamLineUpComplete();
+		}
+		else
+			throw new PlayersTeamNotInMatch();
+				
 	}
 	
 	public static String getResult(Match match) {
