@@ -1,5 +1,7 @@
 package dbs.project.main.gui;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.ListSelectionModel;
@@ -27,6 +30,7 @@ import dbs.project.dev.Generator;
 import dbs.project.entity.Stadium;
 import dbs.project.entity.Tournament;
 import dbs.project.entity.TournamentGroup;
+import dbs.project.service.GroupService;
 import dbs.project.service.KnockoutStageService;
 import dbs.project.service.TournamentService;
 import dbs.project.service.group.StandingRow;
@@ -170,15 +174,33 @@ public class AppGui extends JFrame {
 		groupStageComponents.removeAll();
         for(TournamentGroup group : groups) {
         	JLabel groupLabel = new JLabel(group.getName());
-        	JTable tmpJTable = new JTable();
-            
-        	tmpJTable.setModel(StandingRow.getModel(group));
-        	JScrollPane tmpScrollPane = new JScrollPane(tmpJTable);
-        	tmpScrollPane.setMaximumSize(new Dimension(900, 100));
-        	tmpScrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         	
-            groupStageComponents.add(groupLabel);
-            groupStageComponents.add(tmpScrollPane);
+        	JPanel tablePanel = new JPanel();
+        	JTable tmpJTable = new JTable();
+            tmpJTable.setModel(StandingRow.getModel(group));
+            tablePanel.setLayout(new BorderLayout());
+            tablePanel.add(tmpJTable.getTableHeader(), BorderLayout.PAGE_START);
+            tablePanel.add(tmpJTable, BorderLayout.CENTER);
+            
+            JPanel schedulePanel = new JPanel();
+        	JLabel scheduleLabel = new JLabel("Spielplan");
+        	JTextArea tmpSchedule = new JTextArea();
+        	tmpSchedule.setText(GroupService.getSchedule(group));
+        	tmpSchedule.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        	tmpSchedule.setEditable(false);
+        	tmpSchedule.setOpaque(false);
+        	schedulePanel.setLayout(new BoxLayout(schedulePanel, BoxLayout.X_AXIS));
+        	schedulePanel.add(scheduleLabel);
+        	schedulePanel.add(tmpSchedule);
+        	
+        	JPanel tmpPanel = new JPanel();
+        	tmpPanel.setLayout(new BoxLayout(tmpPanel, BoxLayout.Y_AXIS));
+        	tmpPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        	tmpPanel.add(groupLabel);
+        	tmpPanel.add(tablePanel);
+        	tmpPanel.add(schedulePanel);
+        	
+        	groupStageComponents.add(tmpPanel);
         }
 	}
 
