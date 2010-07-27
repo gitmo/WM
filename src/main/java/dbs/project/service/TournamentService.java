@@ -142,14 +142,4 @@ public class TournamentService {
 		return topscorerTree.first().player.toString();
 	}
 
-	public static List<Integer> getAllyears() {
-		List<Integer> years = new ArrayList<Integer>();
-		List<Tournament> tournaments = TournamentDao.fetchAll();
-		for (Tournament t : tournaments) {
-			years.add(t.getYear());
-		}
-		return years;
-
-	}
-
 }

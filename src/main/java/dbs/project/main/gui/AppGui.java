@@ -25,7 +25,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.DimensionUIResource;
 import javax.swing.tree.TreeModel;
 
-import dbs.project.dev.Generator;
+import dbs.project.dev.TournamentGenerator;
 import dbs.project.entity.Stadium;
 import dbs.project.entity.Tournament;
 import dbs.project.entity.TournamentGroup;
@@ -248,7 +248,7 @@ public class AppGui extends JFrame {
 		ActionListener buttonPressed = new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				try {
-					Generator.generateTournament();
+					TournamentGenerator.generateTournament();
 				} catch (Exception e) {
 				}
 
