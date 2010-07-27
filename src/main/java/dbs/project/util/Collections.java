@@ -20,11 +20,9 @@ public class Collections {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static <T,E> List<E> filterAndChangeType(List<T> events, Filter<T> filter, List<E> newEvents) {
+	public static <T,E> void filterAndChangeType(List<T> events, Filter<T> filter, List<E> newEvents) {
 		for(T event : events)
 			if(filter.apply(event))
 				newEvents.add((E)event);
-		
-		return newEvents;
 	}
 }

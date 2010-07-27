@@ -6,7 +6,7 @@ import dbs.project.util.Filter;
 
 public class FilterSubstitutions implements Filter<MatchEvent>{
 
-	public boolean apply(MatchEvent type) {
-		return (type.getClass() == EventSubstitution.class) ? true : false;
+	public boolean apply(MatchEvent event) {
+		return (event instanceof EventSubstitution) ? true : false;
 	}
 }

@@ -14,6 +14,7 @@ import dbs.project.stage.KnockoutStage;
 public class KnockoutStageService {
 
 	private static final String[] matchLevel = { "Finale", "Halbfinale", "Viertelfinal", "Achtelfinale"};
+	private static final int[] matchLevelCount = {1,1,1,1};
 	
 	public static TreeModel getAsTreeModel(KnockoutStage knockoutStage) {
 		class KnockoutTree implements TreeModel {
@@ -64,9 +65,11 @@ public class KnockoutStageService {
 		if(height > 3)
 			return;
 		
-		String matchName = matchLevel[height];
-		KnockoutMatch match1 = new KnockoutMatch(matchName);
-		KnockoutMatch match2 = new KnockoutMatch(matchName);
+		String matchName1 = matchLevel[height] + " " + (matchLevelCount[height]++);
+		String matchName2 = matchLevel[height] + " " + (matchLevelCount[height]++);
+		
+		KnockoutMatch match1 = new KnockoutMatch(matchName1);
+		KnockoutMatch match2 = new KnockoutMatch(matchName2);
 		
 		List<KnockoutMatch> childs = new LinkedList<KnockoutMatch>();
 		childs.add(match1);
