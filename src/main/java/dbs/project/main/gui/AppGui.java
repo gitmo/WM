@@ -121,7 +121,7 @@ public class AppGui extends JFrame {
 		
 		addLine(statistic, "Spieler mit den meisten Karten", TournamentService.getPlayerWithMostCards(tournament));
 
-		JLabel stadiumLabel = new JLabel("Stadione");
+		JLabel stadiumLabel = new JLabel("Stadien");
 		stadiumLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
 		stadiumLabel.setAlignmentY(0F);
 		
