@@ -1,19 +1,21 @@
 package dbs.project.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeSet;
 
 import javax.swing.ListModel;
 
 import org.hibernate.cfg.NotYetImplementedException;
 
 import dbs.project.dao.TournamentDao;
+import dbs.project.entity.EventCard;
 import dbs.project.entity.EventGoal;
 import dbs.project.entity.Match;
 import dbs.project.entity.Player;
 import dbs.project.entity.Tournament;
+import dbs.project.service.event.filter.FilterCards;
 import dbs.project.service.event.filter.FilterGoals;
 
 public class TournamentService {
@@ -40,21 +42,39 @@ public class TournamentService {
 	}
 
 	public static String getTopscorers(Tournament tournament) {
-		List<Match> allMatches = TournamentService.getAllMatches(tournament);
-		HashMap<Player, Integer> hashMap = new HashMap<Player, Integer>();
+		class Topscorer implements Comparable<Topscorer> {
+			Player player;
+			int goals = 0;
+			
+			public int compareTo(Topscorer o) {
+				if(this.goals > o.goals)
+					return -1;
+				else if(this.goals < o.goals)
+					return 1;
+				else
+					return 0;
+			}
+		}
 		
+		List<Match> allMatches = TournamentService.getAllMatches(tournament);
+		if(allMatches.size() == 0)
+			return "Es wurden noch keine Spiele gespielt";
+		
+		ArrayList<Topscorer> topscorer = new ArrayList<Topscorer>();
 		for(Match match : allMatches) {
 			List<EventGoal> allGoals = new LinkedList<EventGoal>();
 			dbs.project.util.Collections.filterAndChangeType(match.getEvents(), new FilterGoals(), allGoals);
 			for(EventGoal eventGoal : allGoals) {
-				int i = 0;
-				try {
-					i = hashMap.get(eventGoal.getInvolvedPlayer());
-				} catch (Exception e) {}
-				hashMap.put(eventGoal.getInvolvedPlayer(), ++i);
+				int i = topscorer.indexOf(eventGoal.getInvolvedPlayer());
+				topscorer.get(i).goals++;
 			}
 		}
-		return "Nutze anderen Datentyp als Map";
+		
+		TreeSet<Topscorer> topscorerTree = new TreeSet<Topscorer>(topscorer);
+		if(topscorerTree.size() == 0)
+			return "Es wurden keine Tore geschoßen";
+		
+		return topscorerTree.first().player.toString();
 	}
 	
 	
@@ -67,7 +87,39 @@ public class TournamentService {
 	}
 
 	public static String getPlayerWithMostCards(Tournament tournament) {
-		return "Nutze anderen Datentyp als Map";
+		class PlayerWithCards implements Comparable<PlayerWithCards> {
+			Player player;
+			int cards = 0;
+			
+			public int compareTo(PlayerWithCards o) {
+				if(this.cards > o.cards)
+					return -1;
+				else if(this.cards < o.cards)
+					return 1;
+				else
+					return 0;
+			}
+		}
+		
+		List<Match> allMatches = TournamentService.getAllMatches(tournament);
+		if(allMatches.size() == 0)
+			return "Es wurden noch keine Spiele gespielt";
+		
+		ArrayList<PlayerWithCards> playersWithCards = new ArrayList<PlayerWithCards>();
+		for(Match match : allMatches) {
+			List<EventCard> allCards = new LinkedList<EventCard>();
+			dbs.project.util.Collections.filterAndChangeType(match.getEvents(), new FilterCards(), allCards);
+			for(EventCard eventCard : allCards) {
+				int i = playersWithCards.indexOf(eventCard.getInvolvedPlayer());
+				playersWithCards.get(i).cards++;
+			}
+		}
+		
+		TreeSet<PlayerWithCards> topscorerTree = new TreeSet<PlayerWithCards>(playersWithCards);
+		if(topscorerTree.size() == 0)
+			return "Es wurden keine Karten vergeben";
+		
+		return topscorerTree.first().player.toString();
 	}
 	
 	public static List<Integer> getAllyears(){

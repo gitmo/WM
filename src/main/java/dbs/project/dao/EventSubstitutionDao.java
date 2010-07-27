@@ -50,7 +50,7 @@ public class EventSubstitutionDao extends DaoBase{
 	
 	public static List<EventSubstitution> findByMatch(Match match){
 		List<EventSubstitution> res = new ArrayList<EventSubstitution>();
-		res = Collections.filterAndChangeType(match.getEvents(), new FilterSubstitutions(),res);
+		Collections.filterAndChangeType(match.getEvents(), new FilterSubstitutions(),res);
 		return res;
 	}
 	
