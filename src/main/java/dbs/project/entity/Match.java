@@ -47,12 +47,19 @@ public abstract class Match
 	@Cascade(CascadeType.ALL)
     List<MatchEvent> events;
     
-    boolean played  = false;
+    @ManyToOne
+    @Cascade(CascadeType.ALL)
+    Tournament tournament;
+    
+   
+
+	boolean played  = false;
     
     public Match() {
     	hostLineup = new LinkedList<Player>();
     	guestLineup = new LinkedList<Player>();
     	events = new LinkedList<MatchEvent>();
+    	tournament = new Tournament();
     }
     
     public Match(String name) {
@@ -141,4 +148,11 @@ public abstract class Match
 		this.name = name;
 	}
 
+	 public Tournament getTournament() {
+		return tournament;
+	}
+
+	public void setTournament(Tournament tournament) {
+		this.tournament = tournament;
+	}
 }

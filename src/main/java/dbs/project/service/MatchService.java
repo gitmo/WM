@@ -6,10 +6,12 @@ import org.hibernate.cfg.NotYetImplementedException;
 
 import dbs.project.dao.MatchDao;
 import dbs.project.entity.EventGoal;
+import dbs.project.entity.EventSubstitution;
 import dbs.project.entity.Match;
 import dbs.project.entity.MatchEvent;
 import dbs.project.entity.Player;
 import dbs.project.entity.Team;
+import dbs.project.exception.NewPlayerHasPlayedBefore;
 import dbs.project.exception.PlayerDoesNotPlay;
 import dbs.project.exception.PlayersTeamNotInMatch;
 import dbs.project.exception.TeamLineUpComplete;
@@ -20,8 +22,33 @@ import dbs.project.util.Tuple;
 
 public class MatchService {
 	
+	/**
+	 * Substitutes player1 with player2
+	 * @param out 
+	 * @param in 
+	 * @param minute
+	 * @throws NewPlayerHasPlayedBefore 
+	 * @throws PlayerDoesNotPlay 
+	 */
+	public static void substitutePlayers(Player out, Player in, Integer minute, Match match) throws NewPlayerHasPlayedBefore, PlayerDoesNotPlay{
+		
+		if(PlayerService.playerHasPlayed(in, match))
+			throw new NewPlayerHasPlayedBefore();
+		
+		if(!PlayerService.playerHasPlayed(out, match))
+			throw new PlayerDoesNotPlay();
+		
+		/*TODO same team?*/
+		
+		EventSubstitution substitution = new EventSubstitution(out, in, minute);
+		match.addEvent(substitution);
+		
+		MatchDao.save(match);
+	}
+	
+	
 	public static void insertPlayerToMatch(Player player, Match match) throws PlayersTeamNotInMatch, TeamLineUpComplete {
-		List<Team> playerTeams = player.getTeams();
+		List<Team> playerTeams = (List<Team>) player.getTeams().values();
 		if(playerTeams.size() == 1){
 			if(match.getGuestTeam() == playerTeams.get(0)){
 				if(match.getGuestLineup().size() < 11)
