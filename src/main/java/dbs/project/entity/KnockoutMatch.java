@@ -21,6 +21,11 @@ public class KnockoutMatch extends Match
 	@Column(nullable=true)
 	List<KnockoutMatch> childs = new LinkedList<KnockoutMatch>();
 	
+	boolean extraTime = false;
+	int addTimeThird = 0;
+	int addTimeForth = 0;
+	
+	
     public KnockoutMatch() {
     	super();
     }
@@ -43,5 +48,29 @@ public class KnockoutMatch extends Match
 			return this.getName();
 		else
 			return this.getHostTeam().getName() + " vs " + this.getGuestTeam().getName();
+	}
+
+	public boolean getExtraTime() {
+		return extraTime;
+	}
+
+	public void setExtraTime(boolean extraTime) {
+		this.extraTime = extraTime;
+	}
+
+	public int getAddTimeThird() {
+		return addTimeThird;
+	}
+
+	public void setAddTimeThird(int addTimeThird) {
+		this.addTimeThird = addTimeThird;
+	}
+
+	public int getAddTimeForth() {
+		return addTimeForth;
+	}
+
+	public void setAddTimeForth(int addTimeForth) {
+		this.addTimeForth = addTimeForth;
 	}
 }

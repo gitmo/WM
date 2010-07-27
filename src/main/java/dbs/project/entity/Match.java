@@ -20,6 +20,8 @@ public abstract class Match
 	Long id;
 	
 	String name = "";
+	int addTimeFirst = 0;
+	int addTimeSecond = 0;
 	
 	@ManyToOne(optional=true)
 	@Cascade(CascadeType.ALL)
@@ -155,5 +157,22 @@ public abstract class Match
 	public void setTournament(Tournament tournament) {
 		this.tournament = tournament;
 	}
+
+	public int getAddTimeFirst() {
+		return addTimeFirst;
+	}
+
+	public void setAddTimeFirst(int addTimeFirst) {
+		this.addTimeFirst = addTimeFirst;
+	}
+
+	public int getAddTimeSecond() {
+		return addTimeSecond;
+	}
+
+	public void setAddTimeSecond(int addTimeSecond) {
+		this.addTimeSecond = addTimeSecond;
+	}
+
 
 }

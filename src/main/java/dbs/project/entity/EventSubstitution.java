@@ -14,8 +14,13 @@ public class EventSubstitution extends MatchEvent
 	public EventSubstitution(Player out, Player in, int minute) {
 		super(out,minute);
 		this.newPlayer = in;
-		}
+	}
 
+	public EventSubstitution(Player out, Player in, int minute, int addTime) {
+		super(out,minute,addTime);
+		this.newPlayer = in;
+	}
+	
 	public Player getNewPlayer() {
 		return newPlayer;
 	}

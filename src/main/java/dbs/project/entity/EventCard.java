@@ -9,11 +9,16 @@ public class EventCard extends MatchEvent
     
     public EventCard() {}
 
-	public EventCard(Player p1, int i, String color) {
-		super(p1,i);
+	public EventCard(Player involevedPlayer, int minute, String color) {
+		super(involevedPlayer,minute);
 		this.color = color;
 	}
 
+	public EventCard(Player involevedPlayer, int minute, int addTime, String color) {
+		super(involevedPlayer,minute, addTime);
+		this.color = color;
+	}
+	
 	public String getColor() {
 		return color;
 	}

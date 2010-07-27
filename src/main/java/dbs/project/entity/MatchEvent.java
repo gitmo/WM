@@ -15,15 +15,22 @@ public abstract class MatchEvent
 	@Id
 	@GeneratedValue
 	Long id;
-    private Integer minute;
+    private Integer minute = 0;
+    private Integer addTime = 0;
 	@ManyToOne
     private Player involvedPlayer;
     
     public MatchEvent() {}
 
-	public MatchEvent(Player p1, int i) {
-		this.minute = i;
-		this.involvedPlayer = p1;
+    public MatchEvent(Player involvedPlayer, int minute) {
+		this.minute = minute;
+		this.involvedPlayer = involvedPlayer;
+	}
+    
+	public MatchEvent(Player involvedPlayer, int minute, int addTime) {
+		this.minute = minute;
+		this.involvedPlayer = involvedPlayer;
+		this.addTime = addTime;
 	}
 
 	public Integer getMinute() {
@@ -40,5 +47,13 @@ public abstract class MatchEvent
 
 	public void setInvolvedPlayer(Player involvedPlayer) {
 		this.involvedPlayer = involvedPlayer;
+	}
+
+	public void setAddTime(Integer addTime) {
+		this.addTime = addTime;
+	}
+
+	public Integer getAddTime() {
+		return addTime;
 	}
 }
