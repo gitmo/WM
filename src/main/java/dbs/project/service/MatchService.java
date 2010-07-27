@@ -84,13 +84,13 @@ public class MatchService {
 	
 	/**
 	 * returns a String with the names of the Teams and the result
-	 * style: Host 0 : 0 Guest
+	 * style: Host - Guest 0 : 0
 	 * @param match
 	 * @return
 	 */
 	public static String getResult(Match match) {
 		Tuple<Integer> goals = getGoalsByTeam(match.getHostTeam(), match);
-		return match.getHostTeam().getName() + " " + goals.getFirst() + " : " + goals.getSecond() + " " + match.getGuestTeam().getName();
+		return match.getHostTeam().getName() + " - "+ match.getGuestTeam().getName() + " " + goals.getFirst() + " : " + goals.getSecond() + " " ;
 	}
 	
 	/**
