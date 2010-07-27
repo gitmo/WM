@@ -87,6 +87,7 @@ public class KnockoutStageService {
 		
 		KnockoutStage knockoutStage = new KnockoutStage();
 		knockoutStage.setFinalMatch(root);
+		knockoutStage.setMatchForThirdPlace(new KnockoutMatch("Spiel um Platz 3"));
 		return knockoutStage;
 	}
 	

@@ -14,6 +14,7 @@ import dbs.project.exception.NotInSameTeam;
 import dbs.project.exception.PlayerDoesNotPlay;
 import dbs.project.exception.PlayersTeamNotInMatch;
 import dbs.project.exception.TeamLineUpComplete;
+import dbs.project.exception.TiedMatch;
 import dbs.project.service.event.filter.FilterGoals;
 import dbs.project.service.event.filter.FilterOwnGoals;
 import dbs.project.util.Collections;
@@ -47,6 +48,8 @@ public class MatchService {
 		
 		MatchDao.save(match);
 	}
+	
+	
 	
 	
 	/**
@@ -145,5 +148,31 @@ public class MatchService {
 		goals.setSecond(goalsAgainst);
 		
 		return goals;
+	}
+
+
+	public static Team getWinner(Match match) throws TiedMatch {
+		if(MatchService.isTied(match))
+			throw new TiedMatch();
+		
+		if(getPointsByTeam(match.getHostTeam(), match) == 3)
+			return match.getHostTeam();
+		
+		return match.getGuestTeam();
+	}
+	
+	public static Team getLooser(Match match) throws TiedMatch {
+		if(MatchService.isTied(match))
+			throw new TiedMatch();
+		
+		if(getPointsByTeam(match.getHostTeam(), match) == 3)
+			return match.getGuestTeam();
+		
+		return match.getHostTeam();
+	}
+
+
+	private static boolean isTied(Match match) {
+		return getPointsByTeam(match.getHostTeam(), match) == 0 ? true : false;
 	}
 }
