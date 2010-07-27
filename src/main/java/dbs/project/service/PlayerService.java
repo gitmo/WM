@@ -5,6 +5,13 @@ import dbs.project.entity.Match;
 import dbs.project.entity.Player;
 
 public class PlayerService {
+
+	/**
+	 * Has player played in match?
+	 * @param player
+	 * @param match
+	 * @return
+	 */
 	public static boolean playerHasPlayed(Player player, Match match) {
 		
 		if(EventSubstitutionDao.findByPlayerAndMatch(player, match).size()>0)
@@ -13,4 +20,7 @@ public class PlayerService {
 			return true;
 		return false;
 	}
+	
+	
+	
 }

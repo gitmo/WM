@@ -2,8 +2,6 @@ package dbs.project.service;
 
 import java.util.List;
 
-import org.hibernate.cfg.NotYetImplementedException;
-
 import dbs.project.dao.MatchDao;
 import dbs.project.entity.EventGoal;
 import dbs.project.entity.EventSubstitution;
@@ -51,6 +49,13 @@ public class MatchService {
 	}
 	
 	
+	/**
+	 * inserts Player to Match(the LineUp)
+	 * @param player
+	 * @param match
+	 * @throws PlayersTeamNotInMatch
+	 * @throws TeamLineUpComplete
+	 */
 	public static void insertPlayerToMatch(Player player, Match match) throws PlayersTeamNotInMatch, TeamLineUpComplete {
 		Team team = player.getTeams().get(match.getTournament());
 		
@@ -69,11 +74,24 @@ public class MatchService {
 				
 	}
 	
+	/**
+	 * returns a String with the names of the Teams and the result
+	 * style: Host 0 : 0 Guest
+	 * @param match
+	 * @return
+	 */
 	public static String getResult(Match match) {
 		Tuple<Integer> goals = getGoalsByTeam(match.getHostTeam(), match);
 		return match.getHostTeam().getName() + " " + goals.getFirst() + " : " + goals.getSecond() + " " + match.getGuestTeam().getName();
 	}
 	
+	/**
+	 * Insert Goal into match
+	 * @param goal
+	 * @param player
+	 * @param match
+	 * @throws PlayerDoesNotPlay
+	 */
 	public static void insertGoal(EventGoal goal, Player player, Match match) throws PlayerDoesNotPlay {
 		if(!PlayerService.playerHasPlayed(player, match))
 			throw new PlayerDoesNotPlay();
@@ -83,6 +101,12 @@ public class MatchService {
 		MatchDao.save(match);
 	}
 
+	/**
+	 * Get the points a team receives in a match
+	 * @param team
+	 * @param match
+	 * @return
+	 */
 	public static int getPointsByTeam(Team team, Match match) {
 		if(!match.isPlayed())
 			return 0;
@@ -96,6 +120,14 @@ public class MatchService {
 			return 0;
 	}
 
+	
+	/**
+	 * get the goals for a team in a tuple
+	 * (ownGoals,enemyGoals)
+	 * @param team
+	 * @param match
+	 * @return
+	 */
 	public static Tuple<Integer> getGoalsByTeam(Team team, Match match) {
 		Tuple<Integer> goals = new Tuple<Integer>();
 		int goalsScored, goalsAgainst;

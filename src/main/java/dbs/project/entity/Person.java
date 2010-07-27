@@ -27,7 +27,7 @@ public abstract class Person {
     Date birthday;
     @OneToMany
     @Cascade(CascadeType.ALL)
-    private Map<Tournament,Team> teams;
+    Map<Tournament,Team> teams;
 
     public Person() {}
     
