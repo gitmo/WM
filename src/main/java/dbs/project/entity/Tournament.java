@@ -29,6 +29,10 @@ public class Tournament
     @Cascade(CascadeType.ALL)
 	private KnockoutMatch finalMatch;
     
+    @ManyToOne
+    @Cascade(CascadeType.ALL)
+	private KnockoutMatch matchForThirdPlace;
+    
     @Transient
     private KnockoutStage knockoutStage;
     
@@ -72,7 +76,7 @@ public class Tournament
 
 	public KnockoutStage getKnockoutPhase() {
 		if(knockoutStage == null)
-			knockoutStage = new KnockoutStage(finalMatch);
+			knockoutStage = new KnockoutStage(finalMatch, matchForThirdPlace);
 		return knockoutStage;
 	}
 
@@ -98,6 +102,14 @@ public class Tournament
 
 	public void setStadiums(List<Stadium> stadiums) {
 		this.stadiums = stadiums;
+	}
+
+	public void setMatchForThirdPlace(KnockoutMatch matchForThirdPlace) {
+		this.matchForThirdPlace = matchForThirdPlace;
+	}
+
+	public KnockoutMatch getMatchForThirdPlace() {
+		return matchForThirdPlace;
 	}
 
 	public String toString() {

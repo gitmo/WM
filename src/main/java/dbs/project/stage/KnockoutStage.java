@@ -6,11 +6,13 @@ import dbs.project.entity.KnockoutMatch;
 public class KnockoutStage
 {
 	private KnockoutMatch finalMatch;
+	private KnockoutMatch matchForThirdPlace;
 
     public KnockoutStage() {}
 
-	public KnockoutStage(KnockoutMatch finalMatch) {
+	public KnockoutStage(KnockoutMatch finalMatch, KnockoutMatch matchForThirdPlace) {
 		this.finalMatch = finalMatch;
+		this.setMatchForThirdPlace(matchForThirdPlace);
 	}
 
 	public KnockoutMatch getFinalMatch() {
@@ -19,6 +21,14 @@ public class KnockoutStage
 
 	public void setFinalMatch(KnockoutMatch finalMatch) {
 		this.finalMatch = finalMatch;
+	}
+
+	public void setMatchForThirdPlace(KnockoutMatch matchForThirdPlace) {
+		this.matchForThirdPlace = matchForThirdPlace;
+	}
+
+	public KnockoutMatch getMatchForThirdPlace() {
+		return matchForThirdPlace;
 	}
 
 	public List<KnockoutMatch> getSemiFinals() {

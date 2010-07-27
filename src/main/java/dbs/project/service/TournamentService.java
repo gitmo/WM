@@ -12,20 +12,36 @@ import java.util.TreeSet;
 
 import javax.swing.ListModel;
 
-import org.hibernate.cfg.NotYetImplementedException;
-
 import dbs.project.dao.TournamentDao;
 import dbs.project.entity.EventCard;
 import dbs.project.entity.EventGoal;
 import dbs.project.entity.Match;
 import dbs.project.entity.Player;
+import dbs.project.entity.Team;
 import dbs.project.entity.Tournament;
+import dbs.project.exception.TiedMatch;
+import dbs.project.exception.TournamentNotOver;
 import dbs.project.service.event.filter.FilterCards;
 import dbs.project.service.event.filter.FilterGoals;
 
 public class TournamentService {
-	public static void weAreTheChampions(Tournament tournament) {
-		throw new NotYetImplementedException("weAreTheChampions()");
+	
+	public static List<Team> weAreTheChampions(Tournament tournament) throws TournamentNotOver {
+		Match finalMatch = tournament.getKnockoutPhase().getFinalMatch();
+		Match forThirdPlace = tournament.getKnockoutPhase().getMatchForThirdPlace();
+		if(!finalMatch.isPlayed() || !forThirdPlace.isPlayed())
+			throw new TournamentNotOver();
+		
+		List<Team> champions = new LinkedList<Team>();
+		try {
+			champions.add(MatchService.getWinner(finalMatch));
+			champions.add(MatchService.getLooser(finalMatch));
+			champions.add(MatchService.getWinner(forThirdPlace));
+		} catch (TiedMatch e) {
+			System.err.println("Uncompatible match type");
+		}
+		
+		return champions;
 	}
 
 	public static ListModel getListModel() {
