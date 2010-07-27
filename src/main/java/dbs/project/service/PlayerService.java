@@ -16,11 +16,6 @@ import dbs.project.util.Tuple;
 
 public class PlayerService {
 
-	public static Team getTeamOfPlayer(Player player, Match match){
-		return (Team) player.getTeams().get(match.getTournament());
-	}
-	
-	
 	/**
 	 * returns the entry and exitTime of the player
 	 * @param player
