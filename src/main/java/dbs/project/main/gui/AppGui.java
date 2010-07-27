@@ -205,7 +205,7 @@ public class AppGui extends JFrame {
 			tmpPanel.add(tablePanel);
 			tmpPanel.add(schedulePanel);
 
-			groupStageComponents.add(tmpPanel);
+			groupStageComponents.add(new JScrollPane(tmpPanel));
 		}
 	}
 
