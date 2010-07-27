@@ -32,3 +32,6 @@
     
         Options:
             Database dialect: PostgreSQL
+
+## Look at the Wiki
+[The Wiki](http://wiki.github.com/cholin/WM/) has some additional information.
