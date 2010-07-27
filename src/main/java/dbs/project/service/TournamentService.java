@@ -2,8 +2,10 @@ package dbs.project.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.ListModel;
 
@@ -54,7 +56,25 @@ public class TournamentService {
 				hashMap.put(eventGoal.getInvolvedPlayer(), ++i);
 			}
 		}
-		return "Nutze anderen Datentyp als Map";
+		
+		int max = 0;
+		for(Integer i : hashMap.values()){
+			if(i>max)
+				max = i;	
+		}
+		List<Player> scorer = new ArrayList<Player>();
+		
+		for(Player player : hashMap.keySet()){
+			if(hashMap.get(player)==max)
+				scorer.add(player);
+		}
+		
+		String res = new String();
+		
+		for(Player player : scorer)
+			res.concat(player.toString() + " ");
+		
+		return res;
 	}
 	
 	
