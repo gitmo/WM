@@ -2,38 +2,45 @@ package dbs.project.entity;
 
 import static org.junit.Assert.*;
 
+import java.util.Date;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class AdvisorTest {
 
+	Advisor advisor;
 	@Before
 	public void setUp() throws Exception {
+	advisor = new Advisor();
 	}
 
 	@After
 	public void tearDown() throws Exception {
+	advisor = null;
 	}
 
 	@Test
 	public void testAdvisor() {
-		fail("Not yet implemented");
+		assertNotNull(advisor);
 	}
 
 	@Test
 	public void testAdvisorStringStringDateIntInt() {
-		fail("Not yet implemented");
+		advisor = new Advisor("firstname", "lastname", new Date(100), 12, 23);
+		assertNotNull(advisor);
+		assertEquals("firstname",advisor.getFirstname());
+		assertEquals("lastname",advisor.getLastname());
+		assertEquals(new Date(100),advisor.getBirthday());
+		assertEquals((Integer) 12,advisor.getHeight());
+		assertEquals((Integer) 23, advisor.getWeight());
 	}
 
 	@Test
-	public void testGetTask() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetTask() {
-		fail("Not yet implemented");
+	public void testTask() {
+		advisor.setTask("task");
+		assertEquals("task", advisor.getTask());
 	}
 
 }

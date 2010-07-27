@@ -8,32 +8,32 @@ import org.junit.Test;
 
 public class CountryTest {
 	
-	Country c;
+	Country country;
 	@Before
 	public void setUp() throws Exception {
-		c = new Country();
+		country = new Country();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		c = null;
+		country = null;
 	}
 
 	@Test
 	public void testCountry() {
-		assertEquals(c.getClass(), Country.class);
+		assertNotNull(country);
 	}
 
 	@Test
 	public void testCountryString() {
-		c = new Country("Country");
-		assertEquals("Country", c.getName());
+		country = new Country("Country");
+		assertEquals("Country", country.getName());
 	}
 
 	@Test
 	public void testName() {
-		c.setName("Country");
-		assertEquals(c.getName(), "Country");
+		country.setName("Country");
+		assertEquals("Country", country.getName());
 	}
 
 }
