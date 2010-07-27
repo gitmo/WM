@@ -159,7 +159,7 @@ public class TournamentGenerator {
 		tournamentYear.set(Calendar.YEAR, 1970 + year);
 		SimpleDateFormat formatter =  new SimpleDateFormat("yyyy");
 
-		String yearString = formatter.format(tournamentYear);
+		String yearString = formatter.format(tournamentYear.getTime());
 		tournament.setName("WM " + yearString);
 		tournament.setYear(Integer.parseInt(yearString));
 

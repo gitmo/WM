@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Random;
 import java.util.Vector;
 
@@ -51,7 +52,7 @@ public class PlayerCsvFileGenerator {
 
 		String firstname, lastname;
 		int weight, height, alias;
-		Calendar birthday = Calendar.getInstance();
+		Calendar birthday = new GregorianCalendar();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
 		BufferedWriter bw = new BufferedWriter(new FileWriter(CSV_OUTPUT_FILE));
@@ -66,10 +67,10 @@ public class PlayerCsvFileGenerator {
 
 			System.out.println("Generated Player: " + lastname);
 			if (alias % 17 == 0) {
-				bw.write(", " + lastname + ", " + formatter.format(birthday) + ", " + height + ", "
+				bw.write(", " + lastname + ", " + formatter.format(birthday.getTime()) + ", " + height + ", "
 						+ weight + "\n");
 			} else {
-				bw.write(firstname + ", " + lastname + ", " + formatter.format(birthday) + ", "
+				bw.write(firstname + ", " + lastname + ", " + formatter.format(birthday.getTime()) + ", "
 						+ height + ", " + weight + "\n");
 			}
 		}
