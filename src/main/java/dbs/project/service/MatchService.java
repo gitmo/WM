@@ -11,6 +11,8 @@ import dbs.project.entity.MatchEvent;
 import dbs.project.entity.Player;
 import dbs.project.entity.Team;
 import dbs.project.exception.PlayerDoesNotPlay;
+import dbs.project.exception.PlayersTeamNotInMatch;
+import dbs.project.exception.TeamLineUpComplete;
 import dbs.project.service.event.filter.*;
 import dbs.project.util.Collections;
 import dbs.project.util.Tuple;
@@ -18,7 +20,24 @@ import dbs.project.util.Tuple;
 
 public class MatchService {
 	
-	public static void insertPlayerToMatch(Player player, Match match) {
+	public static void insertPlayerToMatch(Player player, Match match) throws PlayersTeamNotInMatch, TeamLineUpComplete {
+		List<Team> playerTeams = player.getTeams();
+		if(playerTeams.size() == 1){
+			if(match.getGuestTeam() == playerTeams.get(0)){
+				if(match.getGuestLineup().size() < 11)
+					match.getGuestLineup().add(player);
+				else throw new TeamLineUpComplete();
+			}
+			else if (match.getHostTeam() == playerTeams.get(0)){
+				if(match.getHostLineup().size() < 11)
+					match.getHostLineup().add(player);
+				else throw new TeamLineUpComplete();
+			}
+			else
+				throw new PlayersTeamNotInMatch();
+					
+		}		
+		/*TODO more teams*/
 		throw new NotYetImplementedException("insertGoal()");
 	}
 	
