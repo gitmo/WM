@@ -6,12 +6,11 @@ import javax.persistence.ManyToOne;
 import dbs.project.service.PlayerService;
 
 @Entity
-public class EventGoal extends MatchEvent
-{
+public class EventGoal extends MatchEvent {
 	@ManyToOne
 	Team scorringTeam;
-	
-    public Team getScorringTeam() {
+
+	public Team getScorringTeam() {
 		return scorringTeam;
 	}
 
@@ -19,10 +18,10 @@ public class EventGoal extends MatchEvent
 		this.scorringTeam = scorringTeam;
 	}
 
-	
-	public EventGoal() {}
+	public EventGoal() {
+	}
 
-	public EventGoal(Player player, Team team, int minute, int addTime){
+	public EventGoal(Player player, Team team, int minute, int addTime) {
 		super();
 		this.setScorringTeam(team);
 		this.setMinute(minute);

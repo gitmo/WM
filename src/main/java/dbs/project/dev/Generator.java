@@ -28,59 +28,55 @@ import dbs.project.service.TournamentService;
 import dbs.project.stage.KnockoutStage;
 
 public class Generator {
-	
+
 	/**
 	 * Example: loadPlayersFromCsvFile("dev/players.csv")
-	 * @param String csvFileName
+	 * 
+	 * @param String
+	 *            csvFileName
 	 * @return List<Player>
 	 */
 	public static List<Player> loadSamplePlayersFromCsvFile(String fileName) {
 		List<Player> players = new ArrayList<Player>();
 		List<String[]> csvList = getCsvList(fileName);
-		
-		for(String[] line : csvList) {
-			
-			if(line.length < 5) {
+
+		for (String[] line : csvList) {
+
+			if (line.length < 5) {
 				System.out.println("Warning: not enough line informations");
 				continue;
 			}
-			
+
 			Date birthday = null;
 			Integer height = 0, weight = 0;
-			
+
 			try {
 				height = Integer.parseInt(line[3].trim());
 				weight = Integer.parseInt(line[4].trim());
-				birthday = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy").parse(line[2].trim());
+				birthday = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy")
+						.parse(line[2].trim());
+			} catch (ParseException e) {
+			} catch (NumberFormatException e) {
 			}
-			catch(ParseException e) {}
-			catch(NumberFormatException e) {}
 
-			Player player = new Player(
-					line[0].trim(),
-					line[1].trim(),
-					"",
-					birthday,
-					"no club",
-					height,
-					weight
-			);
-			
+			Player player = new Player(line[0].trim(), line[1].trim(), "",
+					birthday, "no club", height, weight);
+
 			players.add(player);
 			System.out.println("Generated Player:" + player);
 		}
-		
+
 		return players;
 	}
-	
+
 	public static String getRootpath() {
 		return System.getProperty("user.dir");
 	}
-	
+
 	public static String getAbsoluteFilePath(String fileName) {
 		return getRootpath().concat("/target/classes/" + fileName);
 	}
-	
+
 	private static List<String[]> getCsvList(String fileName) {
 		String filePath = getAbsoluteFilePath(fileName);
 		CSVReader reader;
@@ -94,100 +90,106 @@ public class Generator {
 		} catch (IOException e) {
 			System.err.println("could not read file");
 		}
-		
+
 		return csvList;
 	}
-	
+
 	public static List<Team> loadSampleTeamsFromCsv(String fileName) {
 		List<Team> teams = new ArrayList<Team>();
 		List<String[]> csvList = getCsvList(fileName);
-		
-		for(String[] line : csvList) {
+
+		for (String[] line : csvList) {
 			Country country = new Country(line[0]);
 			List<Advisor> advisors = new ArrayList<Advisor>();
-			
+
 			advisors.add(new Advisor(line[1], line[2], null, 0, 0));
 			advisors.add(new Advisor(line[3], line[4], null, 0, 0));
 			advisors.add(new Advisor(line[5], line[6], null, 0, 0));
-			
+
 			Team team = new Team(line[0], null, null, advisors, country);
 			teams.add(team);
 			System.out.println("Generated Team:" + team);
 		}
-		
+
 		return teams;
 	}
-	
-	public static List<Team> LoadAndPopulateTeams(String teamFile, String playerFile) {
+
+	public static List<Team> LoadAndPopulateTeams(String teamFile,
+			String playerFile) {
 		List<Team> teams = loadSampleTeamsFromCsv(teamFile);
 		List<Player> players = loadSamplePlayersFromCsvFile(playerFile);
-		
+
 		Random random = new Random();
-		
-		for(Team team : teams) {
-			for(int i=0; i<23; i++) {
-				if(players.size() > 0) {
+
+		for (Team team : teams) {
+			for (int i = 0; i < 23; i++) {
+				if (players.size() > 0) {
 					int tmpIndex = random.nextInt(players.size());
 					team.addPlayer(players.remove(tmpIndex));
 				} else {
-					System.out.println("Warning: no players left for team " + team.getName());
+					System.out.println("Warning: no players left for team "
+							+ team.getName());
 				}
 			}
 			System.out.println("Populated Team:" + team);
 		}
 		return teams;
 	}
-	
+
 	public static void generateTournament() throws Exception {
-		
+
 		ExamplePlayerGenerator.generatePlayers();
 		ExampleTeamGenerator.generateTeams();
-		
-		List<Team> teams = Generator.LoadAndPopulateTeams("dev/teams.csv", "dev/players.csv");
+
+		List<Team> teams = Generator.LoadAndPopulateTeams("dev/teams.csv",
+				"dev/players.csv");
 		TeamDao.saveAll(teams);
-		
+
 		Tournament tournament = new Tournament();
-		
+
 		List<Country> hostCountries = new ArrayList<Country>();
 		hostCountries.add(teams.get(0).getCountry());
 		tournament.setHostCountries(hostCountries);
-		
+
 		Random random = new Random();
-		
+
 		int year = 1970 + random.nextInt(50);
-		while(TournamentService.getAllyears().contains(year)){
-			if(TournamentService.getAllyears().size()>50)
+		while (TournamentService.getAllyears().contains(year)) {
+			if (TournamentService.getAllyears().size() > 50)
 				throw new TooManyTournaments();
-			else year = 1970 + random.nextInt(50);
+			else
+				year = 1970 + random.nextInt(50);
 		}
-		
+
 		tournament.setName("WM " + year);
 		tournament.setYear(year);
-		
+
 		List<Stadium> stadiums = loadSampleStadiumsFromCsv("dev/stadiums.csv");
 		Collections.shuffle(stadiums);
 		tournament.setStadiums(stadiums.subList(0, 8));
-		
-		GroupStage groupStage = GroupStageService.getByTeams(teams, tournament.getStadiums());
+
+		GroupStage groupStage = GroupStageService.getByTeams(teams, tournament
+				.getStadiums());
 		tournament.setGroupPhase(groupStage);
-		
+
 		KnockoutStage knockoutStage = KnockoutStageService.getDefault();
 		tournament.setKnockoutStage(knockoutStage);
-		
+
 		TournamentDao.save(tournament);
-		
+
 		System.out.println(tournament);
 	}
-	
+
 	private static List<Stadium> loadSampleStadiumsFromCsv(String fileName) {
 		List<Stadium> stadiums = new ArrayList<Stadium>();
 		List<String[]> csvList = getCsvList(fileName);
-		for(String[] line : csvList) {
+		for (String[] line : csvList) {
 			int capacity = 0;
 			try {
 				capacity = Integer.parseInt(line[1].trim());
-			} catch (NumberFormatException e) {}
-			
+			} catch (NumberFormatException e) {
+			}
+
 			Stadium tmpStadium = new Stadium();
 			tmpStadium.setCity(line[0].trim());
 			tmpStadium.setCapacity(capacity);
@@ -199,5 +201,5 @@ public class Generator {
 	public static void main(String[] args) throws Exception {
 		generateTournament();
 	}
-	
+
 }

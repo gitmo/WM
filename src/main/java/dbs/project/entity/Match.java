@@ -1,4 +1,5 @@
 package dbs.project.entity;
+
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,63 +15,62 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 @Entity
-public abstract class Match
-{
+public abstract class Match {
 	@Id
 	@GeneratedValue
 	Long id;
-	
+
 	String name = "";
 	int addTimeFirst = 0;
 	int addTimeSecond = 0;
-	
-	@ManyToOne(optional=true)
+
+	@ManyToOne(optional = true)
 	@Cascade(CascadeType.ALL)
-    Team hostTeam;
-	
-	@ManyToOne(optional=true)
+	Team hostTeam;
+
+	@ManyToOne(optional = true)
 	@Cascade(CascadeType.ALL)
-    Team guestTeam;
-	
-    @OneToMany
+	Team guestTeam;
+
+	@OneToMany
 	@Cascade(CascadeType.ALL)
-	@Column(nullable=true)
-    List<Player> hostLineup;
-    
-    @OneToMany
+	@Column(nullable = true)
+	List<Player> hostLineup;
+
+	@OneToMany
 	@Cascade(CascadeType.ALL)
-	@Column(nullable=true)
-    List<Player> guestLineup; 
-    
+	@Column(nullable = true)
+	List<Player> guestLineup;
+
 	@ManyToOne
 	@Cascade(CascadeType.ALL)
-    Stadium stadium;
-	
-    @OneToMany
+	Stadium stadium;
+
+	@OneToMany
 	@Cascade(CascadeType.ALL)
-    List<MatchEvent> events;
-    
-    @ManyToOne
-    @Cascade(CascadeType.ALL)
-    Tournament tournament;
+	List<MatchEvent> events;
 
-    Date date;
+	@ManyToOne
+	@Cascade(CascadeType.ALL)
+	Tournament tournament;
 
-	boolean played  = false;
-    
-    public Match() {
-    	hostLineup = new LinkedList<Player>();
-    	guestLineup = new LinkedList<Player>();
-    	events = new LinkedList<MatchEvent>();
-//    	tournament = new Tournament();
-    }
-    
-    public Match(String name) {
-    	this.name = name;
-    	hostLineup = new LinkedList<Player>();
-    	guestLineup = new LinkedList<Player>();
-    	events = new LinkedList<MatchEvent>();
-    }
+	Date date;
+
+	boolean played = false;
+
+	public Match() {
+		hostLineup = new LinkedList<Player>();
+		guestLineup = new LinkedList<Player>();
+		events = new LinkedList<MatchEvent>();
+		// tournament = new Tournament();
+	}
+
+	public Match(String name) {
+		this.name = name;
+		hostLineup = new LinkedList<Player>();
+		guestLineup = new LinkedList<Player>();
+		events = new LinkedList<MatchEvent>();
+	}
 
 	public Team getHostTeam() {
 		return hostTeam;
@@ -119,14 +119,14 @@ public abstract class Match
 	public void setEvents(List<MatchEvent> events) {
 		this.events = events;
 	}
-	
+
 	public void addEvent(MatchEvent event) {
-		if(this.events == null)
+		if (this.events == null)
 			this.events = new LinkedList<MatchEvent>();
-		
+
 		this.events.add(event);
 	}
-	
+
 	public boolean isPlayed() {
 		return played;
 	}
@@ -134,17 +134,17 @@ public abstract class Match
 	public void setPlayed(boolean played) {
 		this.played = played;
 	}
-	
+
 	public String toString() {
-    	StringBuilder sb = new StringBuilder();
-    	
-    	sb.append(getHostTeam());
-    	sb.append(" vs ");
-    	sb.append(getGuestTeam());
-    	sb.append(" am "+getDate());
-    	sb.append(" in "+getStadium());
-    	
-    	return sb.toString();
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(getHostTeam());
+		sb.append(" vs ");
+		sb.append(getGuestTeam());
+		sb.append(" am " + getDate());
+		sb.append(" in " + getStadium());
+
+		return sb.toString();
 	}
 
 	public String getName() {
@@ -180,15 +180,14 @@ public abstract class Match
 	}
 
 	public Date getDate() {
-		if(date == null)
+		if (date == null)
 			return new Date();
-		
+
 		return date;
 	}
 
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
 
 }

@@ -5,18 +5,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Country
-{
+public class Country {
 	@Id
 	@GeneratedValue
 	long id;
-	
-    private String name;
 
-    public Country() {
-    	
-    }
-    
+	private String name;
+
+	public Country() {
+
+	}
+
 	public Country(String name) {
 		this.name = name;
 	}

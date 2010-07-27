@@ -6,19 +6,19 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Stadium
-{
+public class Stadium {
 	@Id
 	@GeneratedValue
 	long stadiumId;
-	
-    private String city;
-	
-    @ManyToOne
-	private Country country;
-    private Integer capacity;
 
-    public Stadium() {}
+	private String city;
+
+	@ManyToOne
+	private Country country;
+	private Integer capacity;
+
+	public Stadium() {
+	}
 
 	public String getCity() {
 		return city;
@@ -43,7 +43,7 @@ public class Stadium
 	public void setCapacity(Integer capacity) {
 		this.capacity = capacity;
 	}
-	
+
 	@Override
 	public String toString() {
 		return getCity();

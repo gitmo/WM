@@ -12,42 +12,42 @@ import org.hibernate.annotations.CascadeType;
 
 @Entity
 public class GroupStage {
-    @Id
-    @GeneratedValue
-    private long id;
+	@Id
+	@GeneratedValue
+	private long id;
 
-    @OneToMany
-    @Cascade(CascadeType.ALL)
-    private List<TournamentGroup> groups;
+	@OneToMany
+	@Cascade(CascadeType.ALL)
+	private List<TournamentGroup> groups;
 
-    public GroupStage() {
-    }
+	public GroupStage() {
+	}
 
-    public long getId() {
-        return this.id;
-    }
+	public long getId() {
+		return this.id;
+	}
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public List<TournamentGroup> getGroups() {
-        return this.groups;
-    }
+	public List<TournamentGroup> getGroups() {
+		return this.groups;
+	}
 
-    public void setGroups(List<TournamentGroup> groups) {
-        this.groups = groups;
-    }
+	public void setGroups(List<TournamentGroup> groups) {
+		this.groups = groups;
+	}
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
 
-        sb.append("Groups:\n");
+		sb.append("Groups:\n");
 
-        for (TournamentGroup group : getGroups())
-            sb.append(group + "\n");
+		for (TournamentGroup group : getGroups())
+			sb.append(group + "\n");
 
-        return sb.toString();
-    }
+		return sb.toString();
+	}
 }

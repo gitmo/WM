@@ -13,25 +13,23 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 @Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-public class KnockoutMatch extends Match
-{
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public class KnockoutMatch extends Match {
 	@OneToMany
 	@Cascade(CascadeType.ALL)
-	@Column(nullable=true)
+	@Column(nullable = true)
 	List<KnockoutMatch> childs = new LinkedList<KnockoutMatch>();
-	
+
 	boolean extraTime = false;
 	int addTimeThird = 0;
 	int addTimeForth = 0;
-	
-	
-    public KnockoutMatch() {
-    	super();
-    }
+
+	public KnockoutMatch() {
+		super();
+	}
 
 	public KnockoutMatch(String name) {
-    	super(name);
+		super(name);
 	}
 
 	public List<KnockoutMatch> getChilds() {
@@ -41,13 +39,14 @@ public class KnockoutMatch extends Match
 	public void setChilds(List<KnockoutMatch> childs) {
 		this.childs = childs;
 	}
-	
+
 	@Override
 	public String toString() {
-		if(this.getGuestTeam() == null || this.getHostTeam() == null)
+		if (this.getGuestTeam() == null || this.getHostTeam() == null)
 			return this.getName();
 		else
-			return this.getHostTeam().getName() + " vs " + this.getGuestTeam().getName();
+			return this.getHostTeam().getName() + " vs "
+					+ this.getGuestTeam().getName();
 	}
 
 	public boolean getExtraTime() {

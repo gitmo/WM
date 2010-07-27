@@ -1,4 +1,5 @@
 package dbs.project.entity;
+
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -10,23 +11,23 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 @Entity
-public class TournamentGroup
-{
+public class TournamentGroup {
 	@Id
 	@GeneratedValue
 	long groupId;
-	
-    String name;
-	
+
+	String name;
+
 	@OneToMany
 	@Cascade(CascadeType.ALL)
 	List<Team> teams;
-	
+
 	@OneToMany
 	@Cascade(CascadeType.ALL)
 	List<GroupMatch> matches;
-    
-    public TournamentGroup() {}
+
+	public TournamentGroup() {
+	}
 
 	public String getName() {
 		return name;
@@ -51,21 +52,21 @@ public class TournamentGroup
 	public void setMatches(List<GroupMatch> matches) {
 		this.matches = matches;
 	}
-	
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		
+
 		sb.append("Groupname: " + getName() + "\n");
-		
+
 		sb.append("Teams: ");
-		for(Team team : getTeams())
+		for (Team team : getTeams())
 			sb.append(" " + team);
 		sb.append("\n");
-		
+
 		sb.append("Matches:\n");
-		for(GroupMatch match : getMatches())
+		for (GroupMatch match : getMatches())
 			sb.append(match + "\n");
-		
+
 		return sb.toString();
 	}
 }

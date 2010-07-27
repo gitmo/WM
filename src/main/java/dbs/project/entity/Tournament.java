@@ -15,40 +15,39 @@ import org.hibernate.annotations.CascadeType;
 import dbs.project.stage.KnockoutStage;
 
 @Entity
-public class Tournament
-{
+public class Tournament {
 	@Id
-    private String name;
-    private Integer year;
-    
-    @OneToMany
+	private String name;
+	private Integer year;
+
+	@OneToMany
 	@Cascade(CascadeType.ALL)
 	private List<Country> hostCountries;
-    
-    @ManyToOne
-    @Cascade(CascadeType.ALL)
+
+	@ManyToOne
+	@Cascade(CascadeType.ALL)
 	private KnockoutMatch finalMatch;
-    
-    @ManyToOne
-    @Cascade(CascadeType.ALL)
+
+	@ManyToOne
+	@Cascade(CascadeType.ALL)
 	private KnockoutMatch matchForThirdPlace;
-    
-    @Transient
-    private KnockoutStage knockoutStage;
-    
-    @ManyToOne
+
+	@Transient
+	private KnockoutStage knockoutStage;
+
+	@ManyToOne
 	@Cascade(CascadeType.ALL)
 	private GroupStage groupStage;
-    
-    @OneToMany
+
+	@OneToMany
 	@Cascade(CascadeType.ALL)
 	private List<Stadium> stadiums;
-    
-    public Tournament() {
-    	hostCountries = new LinkedList<Country>();
-    	groupStage = new GroupStage();
-    	stadiums = new LinkedList<Stadium>();
-    }
+
+	public Tournament() {
+		hostCountries = new LinkedList<Country>();
+		groupStage = new GroupStage();
+		stadiums = new LinkedList<Stadium>();
+	}
 
 	public String getName() {
 		return name;
@@ -75,7 +74,7 @@ public class Tournament
 	}
 
 	public KnockoutStage getKnockoutPhase() {
-		if(knockoutStage == null)
+		if (knockoutStage == null)
 			knockoutStage = new KnockoutStage(finalMatch, matchForThirdPlace);
 		return knockoutStage;
 	}
@@ -90,13 +89,13 @@ public class Tournament
 	}
 
 	public void setGroupPhase(GroupStage groupStage) {
-		this.groupStage= groupStage;
+		this.groupStage = groupStage;
 	}
 
 	public List<Stadium> getStadiums() {
-		if(stadiums == null)
+		if (stadiums == null)
 			return new LinkedList<Stadium>();
-		
+
 		return stadiums;
 	}
 
@@ -113,20 +112,20 @@ public class Tournament
 	}
 
 	public String toString() {
-//		StringBuilder sb = new StringBuilder();
-//		
-//		sb.append("Name:\t" + getName() + "\n\n");
-//		
-//		sb.append("Host:\t");
-//		for(Country country : getHostCountries())
-//			sb.append(country.getName());
-//		sb.append("\n\n");
-//		
-//		sb.append("GroupStage: ");
-//		sb.append("\n\n");
-//		sb.append(getGroupPhase());
-//		
-//		return sb.toString();
+		// StringBuilder sb = new StringBuilder();
+		//		
+		// sb.append("Name:\t" + getName() + "\n\n");
+		//		
+		// sb.append("Host:\t");
+		// for(Country country : getHostCountries())
+		// sb.append(country.getName());
+		// sb.append("\n\n");
+		//		
+		// sb.append("GroupStage: ");
+		// sb.append("\n\n");
+		// sb.append(getGroupPhase());
+		//		
+		// return sb.toString();
 		return getName();
 	}
 }

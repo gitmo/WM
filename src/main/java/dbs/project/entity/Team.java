@@ -20,49 +20,50 @@ public class Team {
 	@Id
 	@GeneratedValue
 	Long id;
-    
+
 	String name = "";
-    
-    /*TODO embedded*/
-    @Transient
-    Map<Integer, Player> trikotNumbers;
-    
-    @OneToMany
-    @Cascade(CascadeType.ALL)
+
+	/* TODO embedded */
+	@Transient
+	Map<Integer, Player> trikotNumbers;
+
+	@OneToMany
+	@Cascade(CascadeType.ALL)
 	List<Advisor> advisors;
-    
-    @ManyToOne
-    @Cascade(CascadeType.ALL)
+
+	@ManyToOne
+	@Cascade(CascadeType.ALL)
 	Country country;
 
-    @OneToMany
-    @Cascade(CascadeType.ALL)
+	@OneToMany
+	@Cascade(CascadeType.ALL)
 	List<Player> players;
 
-    public Team() {
-    	this.advisors = new ArrayList<Advisor>();
-    	this.players = new ArrayList<Player>();
-    }
-    
-    public Team(String name, List<Player> players,
-            Map<Integer, Player> trikotNumbers, List<Advisor> advisors,
-            Country country) {
-        this.advisors = (advisors == null) ? new ArrayList<Advisor>() : advisors;
-        this.country = country;
-        this.name = name;
-        this.players = (players == null) ? new ArrayList<Player>() : players;
-        this.trikotNumbers = trikotNumbers;
-    }
+	public Team() {
+		this.advisors = new ArrayList<Advisor>();
+		this.players = new ArrayList<Player>();
+	}
 
-    public String toString() {
-//        StringBuilder sb = new StringBuilder();
-//        for (Integer key : trikotNumbers.keySet()) {
-//            Player pl = trikotNumbers.get(key);
-//            sb.append(String.format("%s <%d>\n", pl, key));
-//        }
-//        return sb.toString();
-    	return this.getName();
-    }
+	public Team(String name, List<Player> players,
+			Map<Integer, Player> trikotNumbers, List<Advisor> advisors,
+			Country country) {
+		this.advisors = (advisors == null) ? new ArrayList<Advisor>()
+				: advisors;
+		this.country = country;
+		this.name = name;
+		this.players = (players == null) ? new ArrayList<Player>() : players;
+		this.trikotNumbers = trikotNumbers;
+	}
+
+	public String toString() {
+		// StringBuilder sb = new StringBuilder();
+		// for (Integer key : trikotNumbers.keySet()) {
+		// Player pl = trikotNumbers.get(key);
+		// sb.append(String.format("%s <%d>\n", pl, key));
+		// }
+		// return sb.toString();
+		return this.getName();
+	}
 
 	public String getName() {
 		return name;
@@ -105,12 +106,12 @@ public class Team {
 	}
 
 	public void addPlayer(Player player) {
-		if(this.players == null)
+		if (this.players == null)
 			this.players = new LinkedList<Player>();
-		
+
 		this.players.add(player);
 	}
-	
+
 	public boolean equals(Team obj) {
 		return (this.getName() == obj.getName()) ? true : false;
 	}

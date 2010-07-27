@@ -1,6 +1,5 @@
 package dbs.project.entity;
 
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -9,24 +8,24 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
-public abstract class MatchEvent
-{
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class MatchEvent {
 	@Id
 	@GeneratedValue
 	Long id;
-    private Integer minute = 0;
-    private Integer addTime = 0;
+	private Integer minute = 0;
+	private Integer addTime = 0;
 	@ManyToOne
-    private Player involvedPlayer;
-    
-    public MatchEvent() {}
+	private Player involvedPlayer;
 
-    public MatchEvent(Player involvedPlayer, int minute) {
+	public MatchEvent() {
+	}
+
+	public MatchEvent(Player involvedPlayer, int minute) {
 		this.minute = minute;
 		this.involvedPlayer = involvedPlayer;
 	}
-    
+
 	public MatchEvent(Player involvedPlayer, int minute, int addTime) {
 		this.minute = minute;
 		this.involvedPlayer = involvedPlayer;

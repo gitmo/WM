@@ -10,12 +10,13 @@ import dbs.project.util.Filter;
 public class FilterOwnGoals implements Filter<MatchEvent> {
 
 	public boolean apply(MatchEvent goal) {
-		if(!new FilterGoals().apply(goal))
+		if (!new FilterGoals().apply(goal))
 			return false;
-		
+
 		List<Team> teams = (List<Team>) goal.getInvolvedPlayer().getTeams();
-		
-		return teams.contains(((EventGoal) goal).getScorringTeam()) ? true : false;
+
+		return teams.contains(((EventGoal) goal).getScorringTeam()) ? true
+				: false;
 	}
 
 }

@@ -1,16 +1,18 @@
 package dbs.project.stage;
+
 import java.util.List;
 
 import dbs.project.entity.KnockoutMatch;
 
-public class KnockoutStage
-{
+public class KnockoutStage {
 	private KnockoutMatch finalMatch;
 	private KnockoutMatch matchForThirdPlace;
 
-    public KnockoutStage() {}
+	public KnockoutStage() {
+	}
 
-	public KnockoutStage(KnockoutMatch finalMatch, KnockoutMatch matchForThirdPlace) {
+	public KnockoutStage(KnockoutMatch finalMatch,
+			KnockoutMatch matchForThirdPlace) {
 		this.finalMatch = finalMatch;
 		this.setMatchForThirdPlace(matchForThirdPlace);
 	}

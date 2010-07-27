@@ -14,33 +14,34 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Person {
 	@Id
 	@GeneratedValue
 	Long id;
-    Integer height = 0;
-    Integer weight = 0;
-    String firstname = "";
-    String lastname = "";
-    Date birthday;
-    @OneToMany
-    @Cascade(CascadeType.ALL)
-    List<Team> teams;
+	Integer height = 0;
+	Integer weight = 0;
+	String firstname = "";
+	String lastname = "";
+	Date birthday;
+	@OneToMany
+	@Cascade(CascadeType.ALL)
+	List<Team> teams;
 
-    public Person() {}
-    
-    public Person(String first, String last, Date birth, int height, int weight) {
-        this.height = height;
-        this.weight = weight;
-        firstname = first;
-        lastname = last;
-        this.birthday = birth;
-    }
-    
-    public String toString() {
-        return String.format("%s %s", firstname, lastname);
-    }
+	public Person() {
+	}
+
+	public Person(String first, String last, Date birth, int height, int weight) {
+		this.height = height;
+		this.weight = weight;
+		firstname = first;
+		lastname = last;
+		this.birthday = birth;
+	}
+
+	public String toString() {
+		return String.format("%s %s", firstname, lastname);
+	}
 
 	public Integer getHeight() {
 		return height;
