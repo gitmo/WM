@@ -148,11 +148,12 @@ public abstract class Match
 		this.name = name;
 	}
 
-//	 public Tournament getTournament() {
-//		return tournament;
-//	}
-//
-//	public void setTournament(Tournament tournament) {
-//		this.tournament = tournament;
-//	}
+	public Tournament getTournament() {
+		return tournament;
+	}
+
+	public void setTournament(Tournament tournament) {
+		this.tournament = tournament;
+	}
+
 }

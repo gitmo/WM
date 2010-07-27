@@ -41,7 +41,7 @@ public class MatchService {
 		if(!PlayerService.playerHasPlayed(out, match))
 			throw new PlayerDoesNotPlay();
 		
-		if(out.getTeams().get(0) != in.getTeams().get(0))
+		if(out.getTeams().get(match.getTournament())!= in.getTeams().get(match.getTournament()))
 			throw new NotInSameTeam();
 		
 		EventSubstitution substitution = new EventSubstitution(out, in, minute);
@@ -52,7 +52,7 @@ public class MatchService {
 	
 	
 	public static void insertPlayerToMatch(Player player, Match match) throws PlayersTeamNotInMatch, TeamLineUpComplete {
-		Team team = player.getTeams().get(0);
+		Team team = player.getTeams().get(match.getTournament());
 		
 		if(match.getGuestTeam() == team){
 			if(match.getGuestLineup().size() < 11)

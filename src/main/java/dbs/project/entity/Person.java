@@ -27,7 +27,7 @@ public abstract class Person {
     Date birthday;
     @OneToMany
     @Cascade(CascadeType.ALL)
-    List<Team> teams;
+    private Map<Tournament,Team> teams;
 
     public Person() {}
     
@@ -37,7 +37,7 @@ public abstract class Person {
         firstname = first;
         lastname = last;
         this.birthday = birth;
-    }	
+    }
     
     public String toString() {
         return String.format("%s %s", firstname, lastname);
@@ -83,11 +83,11 @@ public abstract class Person {
 		this.birthday = birthday;
 	}
 
-	public List<Team> getTeams() {
+	public Map<Tournament,Team> getTeams() {
 		return teams;
 	}
 
-	public void setTeams(List<Team> teams) {
+	public void setTeams(Map<Tournament,Team> teams) {
 		this.teams = teams;
 	}
 }
