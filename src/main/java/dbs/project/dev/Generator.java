@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -27,7 +28,6 @@ import dbs.project.service.TournamentService;
 import dbs.project.stage.KnockoutStage;
 
 public class Generator {
-
 	
 	/**
 	 * Example: loadPlayersFromCsvFile("dev/players.csv")
@@ -170,7 +170,9 @@ public class Generator {
 		KnockoutStage knockoutStage = KnockoutStageService.getDefault();
 		tournament.setKnockoutStage(knockoutStage);
 		
-		tournament.setStadiums(loadSampleStadiumsFromCsv("dev/stadiums.csv").subList(0, 8));
+		List<Stadium> stadiums = loadSampleStadiumsFromCsv("dev/stadiums.csv");
+		Collections.shuffle(stadiums);
+		tournament.setStadiums(stadiums.subList(0, 8));
 		
 		TournamentDao.save(tournament);
 		
