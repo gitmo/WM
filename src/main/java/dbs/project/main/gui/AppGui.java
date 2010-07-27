@@ -122,7 +122,7 @@ public class AppGui extends JFrame {
 		
 		JPanel stadiumList = new JPanel();
 		stadiumList.setLayout(new BoxLayout(stadiumList, BoxLayout.Y_AXIS));
-		for(Stadium stadium : TournamentService.getAllStadiums(tournament)) {
+		for(Stadium stadium : tournament.getStadiums()) {
 			JTextField tmpText = new JTextField(stadium.getCity());
 			tmpText.setMaximumSize(new DimensionUIResource(200, 20));
 			tmpText.setEditable(false);
