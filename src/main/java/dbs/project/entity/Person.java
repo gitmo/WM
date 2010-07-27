@@ -1,6 +1,7 @@
 package dbs.project.entity;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Entity;
@@ -26,7 +27,7 @@ public abstract class Person {
     Date birthday;
     @OneToMany
     @Cascade(CascadeType.ALL)
-    Map<Tournament,Team> teams;
+    List<Team> teams;
 
     public Person() {}
     
@@ -36,7 +37,7 @@ public abstract class Person {
         firstname = first;
         lastname = last;
         this.birthday = birth;
-    }
+    }	
     
     public String toString() {
         return String.format("%s %s", firstname, lastname);
@@ -82,11 +83,11 @@ public abstract class Person {
 		this.birthday = birthday;
 	}
 
-	public Map<Tournament,Team> getTeams() {
+	public List<Team> getTeams() {
 		return teams;
 	}
 
-	public void setTeams(Map<Tournament,Team> teams) {
+	public void setTeams(List<Team> teams) {
 		this.teams = teams;
 	}
 }
