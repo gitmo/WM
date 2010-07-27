@@ -139,7 +139,7 @@ public class StandingRow implements Comparable<StandingRow> {
 			row.add(sr.getTeamName());
 			row.add(sr.getPlayedGames().toString());
 			row.add(sr.getPoints().toString());
-			row.add(sr.getGoalDifference().toString());
+			row.add(sr.getGoalsScored() + ":" + sr.getGoalsAgainst());
 			columnData.add(row);
 		}
 		

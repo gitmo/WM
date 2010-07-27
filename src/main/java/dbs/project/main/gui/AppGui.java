@@ -70,13 +70,17 @@ public class AppGui extends JFrame {
     	groupStageComponents = new JPanel();
 		groupStageComponents.setLayout(new BoxLayout(groupStageComponents, BoxLayout.Y_AXIS));
         
-        tabbComponents.add("Vorrunde", groupStageComponents);
+        tabbComponents.add("Vorrunde", new JScrollPane(groupStageComponents));
 
         knockoutTree = new JTree();
         tabbComponents.add("Finalrunde", knockoutTree);
+        knockoutTree.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		
         
-    	Tournament firstTournament = (Tournament) tournamentsList.getModel().getElementAt(0);
-        refreshTabs(firstTournament);
+        if(tournamentsList.getModel().getSize() > 0) {
+        	Tournament firstTournament = (Tournament) tournamentsList.getModel().getElementAt(0);
+        	refreshTabs(firstTournament);
+        }
         
         mainPanel.add(tabbComponents);
 	}
@@ -86,13 +90,16 @@ public class AppGui extends JFrame {
 		groupStageComponents.removeAll();
 		
         for(TournamentGroup group : groups) {
+        	JLabel groupLabel = new JLabel(group.getName());
         	JTable tmpJTable = new JTable();
-        	JScrollPane tmpJScrollPane = new JScrollPane();
             
         	tmpJTable.setModel(StandingRow.getModel(group));
-        	tmpJScrollPane.setViewportView(tmpJTable);
+        	JScrollPane tmpScrollPane = new JScrollPane(tmpJTable);
+        	tmpScrollPane.setMaximumSize(new Dimension(900, 100));
+        	tmpScrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         	
-            groupStageComponents.add(tmpJScrollPane);
+            groupStageComponents.add(groupLabel);
+            groupStageComponents.add(tmpScrollPane);
         }
         
         TreeModel treeModel = KnockoutStageService.getAsTreeModel(tournament.getKnockoutPhase());
@@ -106,7 +113,7 @@ public class AppGui extends JFrame {
 		BoxLayout bl = new BoxLayout(components, BoxLayout.Y_AXIS);
 		components.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		components.setLayout(bl);
-		components.setMaximumSize(new Dimension(15, Short.MAX_VALUE));
+		components.setMaximumSize(new Dimension(200, 768));
 		
 		JLabel label = new JLabel("Verfügbare Turniere:");
 		label.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
@@ -128,8 +135,8 @@ public class AppGui extends JFrame {
 		tournamentsList.addListSelectionListener(listListener);
 
         JButton refreshTournament = new JButton();
-        refreshTournament.setText("Turnier generieren"); // NOI18N
-        refreshTournament.setName("tournamentCreateButton"); // NOI18N
+        refreshTournament.setText("Turnier generieren");
+        refreshTournament.setName("tournamentCreateButton");
         ActionListener buttonPressed = new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				try {
