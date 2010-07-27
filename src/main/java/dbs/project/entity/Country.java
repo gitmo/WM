@@ -12,9 +12,7 @@ public class Country {
 
 	private String name;
 
-	public Country() {
-
-	}
+	public Country() {}
 
 	public Country(String name) {
 		this.name = name;

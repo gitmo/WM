@@ -8,11 +8,11 @@ import javax.persistence.Entity;
 public class Advisor extends Person {
 	private String task;
 
-	public Advisor() {
-	}
+	public Advisor() {}
 
-	public Advisor(String first, String last, Date birth, int height, int weight) {
-		super(first, last, birth, height, weight);
+	public Advisor(String firstname, String lastname, Date birthday, int height, int weight, String task) {
+		super(firstname, lastname, birthday, height, weight);
+		setTask(task);
 	}
 
 	public String getTask() {
