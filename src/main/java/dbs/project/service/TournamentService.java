@@ -1,5 +1,6 @@
 package dbs.project.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -68,4 +69,15 @@ public class TournamentService {
 	public static String getPlayerWithMostCards(Tournament tournament) {
 		return "Nutze anderen Datentyp als Map";
 	}
+	
+	public static List<Integer> getAllyears(){
+		List<Integer> years = new ArrayList<Integer>();
+		List<Tournament> tournaments = TournamentDao.fetchAll();
+		for(Tournament t : tournaments){
+			years.add(t.getYear());
+		}
+		return years;
+		
+	}
+	
 }
