@@ -2,6 +2,7 @@ package dbs.project.entity;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +23,7 @@ public abstract class Person {
     String lastname = "";
     Date birthday;
     @OneToMany
-    List<Team> teams;
+    Map<Tournament,Team> teams;
 
     public Person() {}
     
@@ -78,11 +79,11 @@ public abstract class Person {
 		this.birthday = birthday;
 	}
 
-	public List<Team> getTeams() {
+	public Map<Tournament,Team> getTeams() {
 		return teams;
 	}
 
-	public void setTeams(List<Team> teams) {
+	public void setTeams(Map<Tournament,Team> teams) {
 		this.teams = teams;
 	}
 }

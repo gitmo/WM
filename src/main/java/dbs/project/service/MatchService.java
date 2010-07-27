@@ -6,11 +6,15 @@ import org.hibernate.cfg.NotYetImplementedException;
 
 import dbs.project.dao.MatchDao;
 import dbs.project.entity.EventGoal;
+import dbs.project.entity.EventSubstitution;
 import dbs.project.entity.Match;
 import dbs.project.entity.MatchEvent;
 import dbs.project.entity.Player;
 import dbs.project.entity.Team;
+import dbs.project.exception.NewPlayerHasPlayedBefore;
 import dbs.project.exception.PlayerDoesNotPlay;
+import dbs.project.exception.PlayersTeamNotInMatch;
+import dbs.project.exception.TeamLineUpComplete;
 import dbs.project.service.event.filter.*;
 import dbs.project.util.Collections;
 import dbs.project.util.Tuple;
@@ -18,7 +22,49 @@ import dbs.project.util.Tuple;
 
 public class MatchService {
 	
-	public static void insertPlayerToMatch(Player player, Match match) {
+	/**
+	 * Substitutes player1 with player2
+	 * @param out 
+	 * @param in 
+	 * @param minute
+	 * @throws NewPlayerHasPlayedBefore 
+	 * @throws PlayerDoesNotPlay 
+	 */
+	public static void substitutePlayers(Player out, Player in, Integer minute, Match match) throws NewPlayerHasPlayedBefore, PlayerDoesNotPlay{
+		
+		if(PlayerService.playerHasPlayed(in, match))
+			throw new NewPlayerHasPlayedBefore();
+		
+		if(!PlayerService.playerHasPlayed(out, match))
+			throw new PlayerDoesNotPlay();
+		
+		/*TODO same team?*/
+		
+		EventSubstitution substitution = new EventSubstitution(out, in, minute);
+		match.addEvent(substitution);
+		
+		MatchDao.save(match);
+	}
+	
+	
+	public static void insertPlayerToMatch(Player player, Match match) throws PlayersTeamNotInMatch, TeamLineUpComplete {
+		List<Team> playerTeams = (List<Team>) player.getTeams().values();
+		if(playerTeams.size() == 1){
+			if(match.getGuestTeam() == playerTeams.get(0)){
+				if(match.getGuestLineup().size() < 11)
+					match.getGuestLineup().add(player);
+				else throw new TeamLineUpComplete();
+			}
+			else if (match.getHostTeam() == playerTeams.get(0)){
+				if(match.getHostLineup().size() < 11)
+					match.getHostLineup().add(player);
+				else throw new TeamLineUpComplete();
+			}
+			else
+				throw new PlayersTeamNotInMatch();
+					
+		}		
+		/*TODO more teams*/
 		throw new NotYetImplementedException("insertGoal()");
 	}
 	
