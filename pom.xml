@@ -56,34 +56,20 @@
     </configuration>
    </plugin>
 
-   <plugin>
-    <groupId>org.codehaus.mojo</groupId>
-    <artifactId>exec-maven-plugin</artifactId>
-    <version>1.1.1</version>
-    <executions>
-     <execution>
-      <phase>test</phase>
-      <goals>
-       <goal>java</goal>
-      </goals>
-      <configuration>
-       <mainClass>dbs.project.main.gui.AppGui</mainClass>
-       <arguments>
-        <argument />
-       </arguments>
-      </configuration>
-     </execution>
-    </executions>
-   </plugin>
+   <!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>exec-maven-plugin</artifactId> 
+    <version>1.1.1</version> <executions> <execution> <phase>test</phase> <goals> 
+    <goal>java</goal> </goals> <configuration> <mainClass>dbs.project.main.gui.AppGui</mainClass> 
+    <arguments> <argument /> </arguments> </configuration> </execution> </executions> 
+    </plugin> -->
 
   </plugins>
  </build>
 
  <dependencies>
-   <dependency>
-    <groupId>junit</groupId>
-    <artifactId>junit</artifactId>
-    <version>4.8.1</version>
+  <dependency>
+   <groupId>junit</groupId>
+   <artifactId>junit</artifactId>
+   <version>4.8.1</version>
   </dependency>
   <dependency>
    <groupId>javassist</groupId>
