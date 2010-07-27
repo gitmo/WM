@@ -28,7 +28,7 @@ public class AdvisorTest {
 
 	@Test
 	public void testAdvisorStringStringDateIntInt() {
-		advisor = new Advisor("firstname", "lastname", new Date(100), 12, 23);
+		advisor = new Advisor("firstname", "lastname", new Date(100), 12, 23, "Trainer");
 		assertNotNull(advisor);
 		assertEquals("firstname",advisor.getFirstname());
 		assertEquals("lastname",advisor.getLastname());
