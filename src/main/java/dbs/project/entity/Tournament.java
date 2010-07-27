@@ -90,6 +90,9 @@ public class Tournament
 	}
 
 	public List<Stadium> getStadiums() {
+		if(stadiums == null)
+			return new LinkedList<Stadium>();
+		
 		return stadiums;
 	}
 

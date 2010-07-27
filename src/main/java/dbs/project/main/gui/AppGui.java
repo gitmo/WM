@@ -108,6 +108,7 @@ public class AppGui extends JFrame {
         refreshStatistic(tournament);
         
         mainPanel.validate();
+        mainPanel.repaint();
 	}
 
 	private void refreshStatistic(Tournament tournament) {
