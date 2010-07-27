@@ -1,19 +1,19 @@
 package dbs.project.service;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-
-import dbs.project.entity.*;
 
 import javax.swing.ListModel;
 
 import org.hibernate.cfg.NotYetImplementedException;
 
 import dbs.project.dao.TournamentDao;
+import dbs.project.entity.EventGoal;
+import dbs.project.entity.Match;
+import dbs.project.entity.Player;
 import dbs.project.entity.Tournament;
-import dbs.project.service.event.filter.*;
+import dbs.project.service.event.filter.FilterGoals;
 
 public class TournamentService {
 	public static void weAreTheChampions(Tournament tournament) {

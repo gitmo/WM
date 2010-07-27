@@ -15,7 +15,8 @@ import dbs.project.exception.NewPlayerHasPlayedBefore;
 import dbs.project.exception.PlayerDoesNotPlay;
 import dbs.project.exception.PlayersTeamNotInMatch;
 import dbs.project.exception.TeamLineUpComplete;
-import dbs.project.service.event.filter.*;
+import dbs.project.service.event.filter.FilterGoals;
+import dbs.project.service.event.filter.FilterOwnGoals;
 import dbs.project.util.Collections;
 import dbs.project.util.Tuple;
 
