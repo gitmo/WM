@@ -24,7 +24,8 @@ public class MatchService {
 	}
 	
 	public static String getResult(Match match) {
-		throw new NotYetImplementedException("getResult()");
+		Tuple<Integer> goals = getGoalsByTeam(match.getHostTeam(), match);
+		return match.getHostTeam().getName() + " " + goals.getFirst() + " : " + goals.getSecond() + " " + match.getGuestTeam().getName();
 	}
 	
 	public static void insertGoal(EventGoal goal, Player player, Match match) throws PlayerDoesNotPlay {
