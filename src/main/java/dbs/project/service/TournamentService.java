@@ -1,8 +1,13 @@
 package dbs.project.service;
 
 import java.util.ArrayList;
+
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+
 import java.util.TreeSet;
 
 import javax.swing.ListModel;
@@ -85,7 +90,6 @@ public class TournamentService {
 				topscorer.get(i).goals++;
 			}
 		}
-		
 		TreeSet<Topscorer> topscorerTree = new TreeSet<Topscorer>(topscorer);
 		if(topscorerTree.size() == 0)
 			return "Es wurden keine Tore geschoßen";

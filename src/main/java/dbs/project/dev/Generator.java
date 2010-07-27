@@ -32,7 +32,7 @@ public class Generator {
 	/**
 	 * Example: loadPlayersFromCsvFile("dev/players.csv")
 	 * @param String csvFileName
-	 * @retun List<Player>
+	 * @return List<Player>
 	 */
 	public static List<Player> loadSamplePlayersFromCsvFile(String fileName) {
 		List<Player> players = new ArrayList<Player>();
