@@ -2,6 +2,7 @@ package dbs.project.service;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
@@ -84,6 +85,24 @@ public class KnockoutStageService {
 		KnockoutStage knockoutStage = new KnockoutStage();
 		knockoutStage.setFinalMatch(root);
 		return knockoutStage;
+	}
+	
+	public static List<KnockoutMatch> getAllMatches(KnockoutStage knockoutStage) {
+		List<KnockoutMatch> matches = new LinkedList<KnockoutMatch>();
+		
+		//BFS iteration
+		Stack<KnockoutMatch> stack = new Stack<KnockoutMatch>();
+		stack.add(knockoutStage.getFinalMatch());
+		KnockoutMatch tmpNode;
+		while(stack.size() > 0) {
+			tmpNode = stack.pop();
+			if(tmpNode.getChilds().size() == 0)
+				matches.add(tmpNode);
+			else
+				stack.addAll(tmpNode.getChilds());
+		}
+		
+		return matches;
 	}
 
 }

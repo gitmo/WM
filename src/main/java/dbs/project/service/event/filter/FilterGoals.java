@@ -2,7 +2,7 @@ package dbs.project.service.event.filter;
 
 import dbs.project.entity.EventGoal;
 import dbs.project.entity.MatchEvent;
-import dbs.project.util.*;
+import dbs.project.util.Filter;
 
 public class FilterGoals implements Filter<MatchEvent>{
 

@@ -112,4 +112,13 @@ public class GroupStageService {
 		return model;
 	}
 
+	public static List<GroupMatch> getAllMatches(GroupStage groupStage) {
+		List<GroupMatch> groupMatches = new LinkedList<GroupMatch>();
+		
+		for(TournamentGroup group : groupStage.getGroups()) {
+			groupMatches.addAll(group.getMatches());
+		}
+		
+		return groupMatches;
+	}
 }

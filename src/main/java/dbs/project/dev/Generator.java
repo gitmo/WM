@@ -17,6 +17,7 @@ import dbs.project.entity.Advisor;
 import dbs.project.entity.Country;
 import dbs.project.entity.GroupStage;
 import dbs.project.entity.Player;
+import dbs.project.entity.Stadium;
 import dbs.project.entity.Team;
 import dbs.project.entity.Tournament;
 import dbs.project.service.GroupStageService;
@@ -161,13 +162,30 @@ public class Generator {
 		KnockoutStage knockoutStage = KnockoutStageService.getDefault();
 		tournament.setKnockoutStage(knockoutStage);
 		
-		tournament.setStadiums(null);
+		tournament.setStadiums(loadSampleStadiumsFromCsv("dev/stadiums.csv").subList(0, 8));
 		
 		TournamentDao.save(tournament);
 		
 		System.out.println(tournament);
 	}
 	
+	private static List<Stadium> loadSampleStadiumsFromCsv(String fileName) {
+		List<Stadium> stadiums = new ArrayList<Stadium>();
+		List<String[]> csvList = getCsvList(fileName);
+		for(String[] line : csvList) {
+			int capacity = 0;
+			try {
+				capacity = Integer.parseInt(line[1].trim());
+			} catch (NumberFormatException e) {}
+			
+			Stadium tmpStadium = new Stadium();
+			tmpStadium.setCity(line[0].trim());
+			tmpStadium.setCapacity(capacity);
+			stadiums.add(tmpStadium);
+		}
+		return stadiums;
+	}
+
 	public static void main(String[] args) throws Exception {
 		generateTournament();
 	}

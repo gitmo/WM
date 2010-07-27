@@ -5,7 +5,7 @@ import java.util.List;
 import dbs.project.entity.EventGoal;
 import dbs.project.entity.MatchEvent;
 import dbs.project.entity.Team;
-import dbs.project.util.*;
+import dbs.project.util.Filter;
 
 public class FilterOwnGoals implements Filter<MatchEvent> {
 
