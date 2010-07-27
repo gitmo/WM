@@ -3,8 +3,6 @@ package dbs.project.util;
 import java.util.LinkedList;
 import java.util.List;
 
-import dbs.project.service.event.Filter;
-
 public class Collections {
 	/**
 	 * filters a MatchEvent ĺist by a given filter implementation
