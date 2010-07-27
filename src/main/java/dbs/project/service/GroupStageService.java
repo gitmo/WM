@@ -10,6 +10,7 @@ import javax.swing.table.TableModel;
 
 import dbs.project.entity.GroupMatch;
 import dbs.project.entity.GroupStage;
+import dbs.project.entity.Stadium;
 import dbs.project.entity.Team;
 import dbs.project.entity.Tournament;
 import dbs.project.entity.TournamentGroup;
@@ -18,7 +19,7 @@ import dbs.project.service.group.StandingRow;
 public class GroupStageService {
 	private static final int MAX_TEAMS_PER_GROUP = 4;
 
-	public static GroupStage getByTeams(List<Team> teams) throws Exception {
+	public static GroupStage getByTeams(List<Team> teams, List<Stadium> stadiums) throws Exception {
 		if(teams.size() % MAX_TEAMS_PER_GROUP != 0)
 			throw new Exception("Could not generate equally groups");
 		
@@ -35,7 +36,7 @@ public class GroupStageService {
 			
 			currentGroup.setTeams(groupTeams);
 			//Benutzt nur eine Kopie von groupTeams, da es die Liste selbst verändert
-			currentGroup.setMatches(generateMatches(new LinkedList<Team>(groupTeams)));
+			currentGroup.setMatches(generateMatches(new LinkedList<Team>(groupTeams), stadiums));
 
 			allGroups.add(currentGroup);
 		}
@@ -54,7 +55,7 @@ public class GroupStageService {
 	 * @param groupTeams
 	 * @return
 	 */
-	private static List<GroupMatch> generateRecursivlyMatches(List<GroupMatch> matches, List<Team> groupTeams) {
+	private static List<GroupMatch> generateRecursivlyMatches(List<GroupMatch> matches, List<Team> groupTeams, List<Stadium> stadiums) {
 		if(groupTeams.size() <= 1)
 			return matches;
 		
@@ -64,6 +65,8 @@ public class GroupStageService {
 		//Lässt currentTeam einmal gegen jede andere Mannschaft spielen
 		for(Team opponent : groupTeams) {
 			GroupMatch match =  new GroupMatch();
+			match.setStadium(stadiums.remove(0));
+			stadiums.add(match.getStadium());
 			
 			if(homeMatch) {
 				match.setHostTeam(currentTeam);
@@ -77,12 +80,12 @@ public class GroupStageService {
 			matches.add(match);
 		}
 		
-		return generateRecursivlyMatches(matches, groupTeams);
+		return generateRecursivlyMatches(matches, groupTeams, stadiums);
 	}
 	
-	public static List<GroupMatch> generateMatches(List<Team> groupTeams) {
+	public static List<GroupMatch> generateMatches(List<Team> groupTeams, List<Stadium> stadiums) {
 		//Generiert rekursiv die Spiele.
-		return generateRecursivlyMatches(new LinkedList<GroupMatch>(),groupTeams);
+		return generateRecursivlyMatches(new LinkedList<GroupMatch>(),groupTeams, stadiums);
 	}
 
 	public static TableModel getTableModel(Tournament tournament) {

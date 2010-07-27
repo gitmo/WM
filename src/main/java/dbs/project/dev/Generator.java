@@ -164,15 +164,15 @@ public class Generator {
 		tournament.setName("WM " + year);
 		tournament.setYear(year);
 		
-		GroupStage groupStage = GroupStageService.getByTeams(teams);
+		List<Stadium> stadiums = loadSampleStadiumsFromCsv("dev/stadiums.csv");
+		Collections.shuffle(stadiums);
+		tournament.setStadiums(stadiums.subList(0, 8));
+		
+		GroupStage groupStage = GroupStageService.getByTeams(teams, tournament.getStadiums());
 		tournament.setGroupPhase(groupStage);
 		
 		KnockoutStage knockoutStage = KnockoutStageService.getDefault();
 		tournament.setKnockoutStage(knockoutStage);
-		
-		List<Stadium> stadiums = loadSampleStadiumsFromCsv("dev/stadiums.csv");
-		Collections.shuffle(stadiums);
-		tournament.setStadiums(stadiums.subList(0, 8));
 		
 		TournamentDao.save(tournament);
 		

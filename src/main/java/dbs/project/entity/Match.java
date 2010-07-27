@@ -1,4 +1,5 @@
 package dbs.project.entity;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public abstract class Match
     @Cascade(CascadeType.ALL)
     Tournament tournament;
 
-   
+    Date date;
 
 	boolean played  = false;
     
@@ -137,7 +138,11 @@ public abstract class Match
 	public String toString() {
     	StringBuilder sb = new StringBuilder();
     	
-    	sb.append(getHostTeam() + " vs " + getGuestTeam());
+    	sb.append(getHostTeam());
+    	sb.append(" vs ");
+    	sb.append(getGuestTeam());
+    	sb.append(" am "+getDate());
+    	sb.append(" in "+getStadium());
     	
     	return sb.toString();
 	}
@@ -172,6 +177,17 @@ public abstract class Match
 
 	public void setAddTimeSecond(int addTimeSecond) {
 		this.addTimeSecond = addTimeSecond;
+	}
+
+	public Date getDate() {
+		if(date == null)
+			return new Date();
+		
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 

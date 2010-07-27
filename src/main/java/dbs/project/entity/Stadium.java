@@ -43,4 +43,9 @@ public class Stadium
 	public void setCapacity(Integer capacity) {
 		this.capacity = capacity;
 	}
+	
+	@Override
+	public String toString() {
+		return getCity();
+	}
 }
