@@ -1,0 +1,20 @@
+TODOs zur Deadline
+- [ ] Jar
+    - [ ] runnable
+    - [ ] sources
+- [ ] namen.txt
+- [ ] Test-Cases
+- [ ] create.sql
+    - [ ] mit inserts
+    - [ ] comments
+- [ ] Authentifizierungs-Layer
+- [ ] Stored Procedures
+- [ ] Anwendungsfälle dokumentieren
+- [ ] Objektmodell
+    - [ ] grafisch
+    - [ ] dokumentieren
+    - [ ] Designentscheidungen
+- [ ] Datenbankschema
+    - [ ] grafisch
+- [ ] getter: keine Null values
+- [ ] setter: nichts schreiben wenn nichts drin
