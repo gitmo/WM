@@ -1,10 +1,11 @@
-package dbs.project.service.event;
+package dbs.project.service.event.filter;
 
 import java.util.List;
 
 import dbs.project.entity.EventGoal;
 import dbs.project.entity.MatchEvent;
 import dbs.project.entity.Team;
+import dbs.project.util.*;
 
 public class FilterOwnGoals implements Filter<MatchEvent> {
 

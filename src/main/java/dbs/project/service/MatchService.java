@@ -11,8 +11,7 @@ import dbs.project.entity.MatchEvent;
 import dbs.project.entity.Player;
 import dbs.project.entity.Team;
 import dbs.project.exception.PlayerDoesNotPlay;
-import dbs.project.service.event.FilterGoals;
-import dbs.project.service.event.FilterOwnGoals;
+import dbs.project.service.event.filter.*;
 import dbs.project.util.Collections;
 import dbs.project.util.Tuple;
 
