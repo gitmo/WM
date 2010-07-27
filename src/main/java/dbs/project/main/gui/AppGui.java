@@ -175,6 +175,8 @@ public class AppGui extends JFrame {
 		groupStageComponents.removeAll();
 		for (TournamentGroup group : groups) {
 			JLabel groupLabel = new JLabel(group.getName());
+			groupLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10,
+					0));
 
 			JPanel tablePanel = new JPanel();
 			JTable tmpJTable = new JTable();
