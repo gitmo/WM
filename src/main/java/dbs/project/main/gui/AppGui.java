@@ -1,5 +1,6 @@
 package dbs.project.main.gui;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,13 +16,17 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.JTree;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.plaf.DimensionUIResource;
 import javax.swing.tree.TreeModel;
 
 import dbs.project.dev.Generator;
+import dbs.project.entity.Stadium;
 import dbs.project.entity.Tournament;
 import dbs.project.entity.TournamentGroup;
 import dbs.project.service.KnockoutStageService;
@@ -33,9 +38,8 @@ public class AppGui extends JFrame {
 
 	private final String APP_NAME = "Weltmeisterschaft DB";
 	
-    private JPanel mainPanel;
     private JList tournamentsList;
-    private JPanel groupStageComponents;
+    private JPanel mainPanel, groupStageComponents, statistic;
     private JTree knockoutTree;
 
     public AppGui() {
@@ -67,15 +71,23 @@ public class AppGui extends JFrame {
 
     private void initTab() {
     	JTabbedPane tabbComponents = new JTabbedPane();
+    	
+    	//Vorrunde
     	groupStageComponents = new JPanel();
 		groupStageComponents.setLayout(new BoxLayout(groupStageComponents, BoxLayout.Y_AXIS));
-        
         tabbComponents.add("Vorrunde", new JScrollPane(groupStageComponents));
 
+        //Finalrunde
         knockoutTree = new JTree();
         tabbComponents.add("Finalrunde", knockoutTree);
         knockoutTree.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
+        //Statistik
+        statistic = new JPanel();
+        statistic.setLayout(new BoxLayout(statistic, BoxLayout.Y_AXIS));
+        statistic.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        tabbComponents.add("Statisik", new JScrollPane(statistic));
+        
         
         if(tournamentsList.getModel().getSize() > 0) {
         	Tournament firstTournament = (Tournament) tournamentsList.getModel().getElementAt(0);
@@ -87,8 +99,63 @@ public class AppGui extends JFrame {
 
 	private void refreshTabs(Tournament tournament) {
 		List<TournamentGroup> groups = tournament.getGroupPhase().getGroups();
-		groupStageComponents.removeAll();
 		
+		//Updates tables
+		refreshTables(groups);
+        
+        //Updates tree
+        refreshTree(tournament);
+        
+        //Updates statistic
+        refreshStatistic(tournament);
+        
+        mainPanel.validate();
+	}
+
+	private void refreshStatistic(Tournament tournament) {
+		statistic.removeAll();
+		
+		addLine(statistic, "Torschützenkönig", TournamentService.getTopscorers(tournament));
+		
+		addLine(statistic, "Spieler mit den meisten Karten", TournamentService.getPlayerWithMostCards(tournament));
+
+		JLabel stadiumLabel = new JLabel("Stadione");
+		stadiumLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		
+		JPanel stadiumList = new JPanel();
+		stadiumList.setLayout(new BoxLayout(stadiumList, BoxLayout.Y_AXIS));
+		for(Stadium stadium : TournamentService.getAllStadiums(tournament)) {
+			JTextField tmpText = new JTextField(stadium.getCity());
+			tmpText.setMaximumSize(new DimensionUIResource(200, 20));
+			tmpText.setEditable(false);
+			
+			stadiumList.add(tmpText);
+		}
+		
+		JPanel stadiums = new JPanel();
+		stadiums.setLayout(new BoxLayout(stadiums, BoxLayout.X_AXIS));
+		stadiums.add(stadiumLabel);
+		stadiums.add(stadiumList);
+		statistic.add(stadiums);
+		
+		
+	}
+
+	private void addLine(JPanel component, String label, String text) {
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+		JLabel tmpLabel = new JLabel(label);
+		tmpLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		JTextField tmpText = new JTextField(text);
+		tmpText.setMaximumSize(new DimensionUIResource(200, 20));
+		tmpText.setEditable(false);
+		panel.add(tmpLabel);
+		panel.add(tmpText);
+		component.add(panel);
+	}
+
+	private void refreshTables(List<TournamentGroup> groups) {
+		groupStageComponents.removeAll();
         for(TournamentGroup group : groups) {
         	JLabel groupLabel = new JLabel(group.getName());
         	JTable tmpJTable = new JTable();
@@ -101,11 +168,11 @@ public class AppGui extends JFrame {
             groupStageComponents.add(groupLabel);
             groupStageComponents.add(tmpScrollPane);
         }
-        
-        TreeModel treeModel = KnockoutStageService.getAsTreeModel(tournament.getKnockoutPhase());
+	}
+
+	private void refreshTree(Tournament tournament) {
+		TreeModel treeModel = KnockoutStageService.getAsTreeModel(tournament.getKnockoutPhase());
         knockoutTree.setModel(treeModel);
-        
-        mainPanel.validate();
 	}
 
 	private void initLeftComponents() {
