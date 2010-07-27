@@ -1,7 +1,6 @@
 
 package dbs.project.service;
 import dbs.project.dao.EventSubstitutionDao;
-import dbs.project.entity.EventSubstitution;
 import dbs.project.entity.Match;
 import dbs.project.entity.Player;
 
