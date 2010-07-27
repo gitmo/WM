@@ -16,6 +16,7 @@ public class CountryTest {
 
 	@After
 	public void tearDown() throws Exception {
+		c = null;
 	}
 
 	@Test
