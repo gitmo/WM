@@ -47,8 +47,11 @@ public class TournamentService {
 
 	public static List<Stadium> getAllStadiums(Tournament tournament) {
 		List<Stadium> stadiums = new LinkedList<Stadium>();
-		for(int i=0; i<5; i++)
-			stadiums.add(new Stadium().setCity("Bla "+i));
+		for(int i=0; i<5; i++) {
+			Stadium tmpStadium = new Stadium();
+			tmpStadium.setCity("Bla "+i);
+			stadiums.add(tmpStadium);
+		}
 		return stadiums;
 	}
 }

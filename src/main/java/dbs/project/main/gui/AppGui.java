@@ -1,6 +1,5 @@
 package dbs.project.main.gui;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,7 +16,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.JTree;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;

@@ -24,10 +24,8 @@ public class Stadium
 		return city;
 	}
 
-	public Stadium setCity(String city) {
+	public void setCity(String city) {
 		this.city = city;
-		
-		return this;
 	}
 
 	public Country getCountry() {
