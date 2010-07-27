@@ -81,8 +81,6 @@ public class MatchService {
 			goalsAgainst = goalEvents.size();
 		}
 		
-		
-		
 		goals.setFirst(goalsScored);
 		goals.setSecond(goalsAgainst);
 		

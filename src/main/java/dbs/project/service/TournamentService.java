@@ -1,6 +1,9 @@
 package dbs.project.service;
 
+import java.util.LinkedList;
 import java.util.List;
+
+import dbs.project.entity.*;
 
 import javax.swing.ListModel;
 
@@ -30,5 +33,15 @@ public class TournamentService {
 		}
 		
 		return new ListModel();
+	}
+
+	public static String getTopscorers(Tournament tournament) {
+		// TODO Auto-generated method stub
+		return "Niemand";
+	}
+
+	public static String getPlayerWithMostCards(Tournament tournament) {
+		// TODO Auto-generated method stub
+		return "Niemand";
 	}
 }
