@@ -44,4 +44,5 @@ public class TournamentDao extends DaoBase {
 		return (List<Tournament>) session.createQuery("From Tournament").list();
 	}
 	
+	
 }

@@ -20,8 +20,10 @@ import dbs.project.entity.Player;
 import dbs.project.entity.Stadium;
 import dbs.project.entity.Team;
 import dbs.project.entity.Tournament;
+import dbs.project.exception.TooManyTournaments;
 import dbs.project.service.GroupStageService;
 import dbs.project.service.KnockoutStageService;
+import dbs.project.service.TournamentService;
 import dbs.project.stage.KnockoutStage;
 
 public class Generator {
@@ -153,6 +155,12 @@ public class Generator {
 		Random random = new Random();
 		
 		int year = 1970 + random.nextInt(50);
+		while(TournamentService.getAllyears().contains(year)){
+			if(TournamentService.getAllyears().size()>50)
+				throw new TooManyTournaments();
+			else year = 1970 + random.nextInt(50);
+		}
+		
 		tournament.setName("WM " + year);
 		tournament.setYear(year);
 		
