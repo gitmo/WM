@@ -84,7 +84,10 @@ public class AppGui extends JFrame {
         statistic = new JPanel();
         statistic.setLayout(new BoxLayout(statistic, BoxLayout.Y_AXIS));
         statistic.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        tabbComponents.add("Statisik", new JScrollPane(statistic));
+        statistic.setAlignmentX(0F);
+        JScrollPane bla = new JScrollPane(statistic);
+        bla.setAlignmentX(0F);
+        tabbComponents.add("Statisik", bla);
         
         
         if(tournamentsList.getModel().getSize() > 0) {
@@ -119,10 +122,12 @@ public class AppGui extends JFrame {
 		addLine(statistic, "Spieler mit den meisten Karten", TournamentService.getPlayerWithMostCards(tournament));
 
 		JLabel stadiumLabel = new JLabel("Stadione");
-		stadiumLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		stadiumLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
+		stadiumLabel.setAlignmentY(0F);
 		
 		JPanel stadiumList = new JPanel();
 		stadiumList.setLayout(new BoxLayout(stadiumList, BoxLayout.Y_AXIS));
+		stadiumList.setAlignmentY(0F);
 		for(Stadium stadium : tournament.getStadiums()) {
 			JTextField tmpText = new JTextField(stadium.getCity());
 			tmpText.setMaximumSize(new DimensionUIResource(200, 20));
@@ -135,6 +140,7 @@ public class AppGui extends JFrame {
 		stadiums.setLayout(new BoxLayout(stadiums, BoxLayout.X_AXIS));
 		stadiums.add(stadiumLabel);
 		stadiums.add(stadiumList);
+		stadiums.setAlignmentX(0F);
 		statistic.add(stadiums);
 		
 		
@@ -143,11 +149,18 @@ public class AppGui extends JFrame {
 	private void addLine(JPanel component, String label, String text) {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+		panel.setAlignmentY(0F);
+		panel.setAlignmentX(0F);
+		
 		JLabel tmpLabel = new JLabel(label);
 		tmpLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		tmpLabel.setAlignmentX(0F);
+		
 		JTextField tmpText = new JTextField(text);
-		tmpText.setMaximumSize(new DimensionUIResource(200, 20));
+		tmpText.setMaximumSize(new DimensionUIResource(400, 20));
 		tmpText.setEditable(false);
+		tmpText.setAlignmentX(1F);
+		
 		panel.add(tmpLabel);
 		panel.add(tmpText);
 		component.add(panel);
