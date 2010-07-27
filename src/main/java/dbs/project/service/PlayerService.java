@@ -8,7 +8,6 @@ import dbs.project.entity.EventSubstitution;
 import dbs.project.entity.KnockoutMatch;
 import dbs.project.entity.Match;
 import dbs.project.entity.Player;
-import dbs.project.entity.Team;
 import dbs.project.exception.PlayerDoesNotPlay;
 import dbs.project.service.event.filter.FilterSubstitutions;
 import dbs.project.util.Collections;
