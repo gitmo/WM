@@ -22,13 +22,11 @@ public class EventGoal extends MatchEvent
 	
 	public EventGoal() {}
 
-	public EventGoal(Player player,int minute, int addTime, Match match) {
-		super(player,minute,addTime);
-		this.scorringTeam = PlayerService.getTeamOfPlayer(player, match);
-	}
-
-	public EventGoal(Player player,int minute, Match match) {
-		super(player,minute);
-		this.scorringTeam = PlayerService.getTeamOfPlayer(player, match);
+	public EventGoal(Player player, Team team, int minute, int addTime){
+		super();
+		this.setScorringTeam(team);
+		this.setMinute(minute);
+		this.setAddTime(addTime);
+		this.setInvolvedPlayer(player);
 	}
 }

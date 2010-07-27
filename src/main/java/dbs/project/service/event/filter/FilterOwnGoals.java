@@ -13,7 +13,7 @@ public class FilterOwnGoals implements Filter<MatchEvent> {
 		if(!new FilterGoals().apply(goal))
 			return false;
 		
-		List<Team> teams = (List<Team>) goal.getInvolvedPlayer().getTeams().values();
+		List<Team> teams = (List<Team>) goal.getInvolvedPlayer().getTeams();
 		
 		return teams.contains(((EventGoal) goal).getScorringTeam()) ? true : false;
 	}
