@@ -2,6 +2,8 @@ package dbs.project.dao;
 
 import java.util.List;
 
+import org.hibernate.criterion.Restrictions;
+
 import dbs.project.entity.Team;
 
 public class TeamDao extends DaoBase {
@@ -33,12 +35,13 @@ public class TeamDao extends DaoBase {
 	}
 	
 	/**
-	 * Tries to find a team
+	 * Tries to find a team by name
 	 * @param name
 	 * @return
 	 */
-	public static Team find(String name) {
-		return (Team) session.load(Team.class, name);
+	@SuppressWarnings("unchecked")
+	public static List<Team> findByName(String name) {
+		return (List<Team>) session.createCriteria(Team.class).add(Restrictions.eq("name", name)).list();
 	}
 	
 	/**

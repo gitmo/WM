@@ -4,7 +4,7 @@ Gruppe A
 16/06 20:30	Tshwane/Pretoria	Südafrika	Südafrika	--:--	Uruguay
 17/06 20:30	Polokwane	Frankreich	--:--	Mexiko
 22/06 16:00	Rustenburg	Mexiko	--:--	Uruguay
-22/06 16:00	Mangaung / Bloemfontein	Fran§kreich	--:--	Südafrika
+22/06 16:00	Mangaung / Bloemfontein	Frankreich	--:--	Südafrika
 
 Gruppe B
 12/06 16:00	Johannesburg - JEP	Argentinien	--:--	Nigeria

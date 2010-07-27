@@ -1,11 +1,16 @@
 package dbs.project.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.criterion.Restrictions;
 
 import dbs.project.entity.EventSubstitution;
+import dbs.project.entity.Match;
+import dbs.project.entity.MatchEvent;
 import dbs.project.entity.Player;
+import dbs.project.service.event.filter.FilterSubstitutions;
+import dbs.project.util.Collections;
 
 public class EventSubstitutionDao extends DaoBase{
 
@@ -44,5 +49,18 @@ public class EventSubstitutionDao extends DaoBase{
 	}
 	
 	
+	public static List<EventSubstitution> findByMatch(Match match){
+		List<EventSubstitution> res = new ArrayList<EventSubstitution>();
+		res = Collections.filterAndChangeType(match.getEvents(), new FilterSubstitutions(),res);
+		return res;
+	}
+	
+	
+	public static List<EventSubstitution> findByPlayerAndMatch(Player player, Match match){
+		List<EventSubstitution> res = findByPlayer(player);
+		res.retainAll(findByMatch(match));
+		return res;
+		
+	}
 	
 }
