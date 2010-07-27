@@ -19,6 +19,14 @@ import dbs.project.service.group.StandingRow;
 public class GroupStageService {
 	private static final int MAX_TEAMS_PER_GROUP = 4;
 
+	/**
+	 * generates a GroupStage out of a list of Teams
+	 * 
+	 * @param teams
+	 * @param stadiums
+	 * @return
+	 * @throws Exception
+	 */
 	public static GroupStage getByTeams(List<Team> teams, List<Stadium> stadiums)
 			throws Exception {
 		if (teams.size() % MAX_TEAMS_PER_GROUP != 0)
@@ -88,6 +96,13 @@ public class GroupStageService {
 		return generateRecursivlyMatches(matches, groupTeams, stadiums);
 	}
 
+	/**
+	 * generates the groupGames for a list of teams
+	 * 
+	 * @param groupTeams
+	 * @param stadiums
+	 * @return
+	 */
 	public static List<GroupMatch> generateMatches(List<Team> groupTeams,
 			List<Stadium> stadiums) {
 		// Generiert rekursiv die Spiele.
@@ -95,6 +110,13 @@ public class GroupStageService {
 				groupTeams, stadiums);
 	}
 
+	/**
+	 * JTable requires a TableModel for data representation
+	 * getTableModel returns the TableModel for a tournament (for the GUI)
+	 * 
+	 * @param tournament
+	 * @return
+	 */
 	public static TableModel getTableModel(Tournament tournament) {
 		List<TournamentGroup> groups = tournament.getGroupPhase().getGroups();
 		List<Team> teams = groups.get(0).getTeams();
@@ -120,6 +142,12 @@ public class GroupStageService {
 		return model;
 	}
 
+	/**
+	 * return all Matches in a GroupStage
+	 * 
+	 * @param groupStage
+	 * @return
+	 */
 	public static List<GroupMatch> getAllMatches(GroupStage groupStage) {
 		List<GroupMatch> groupMatches = new LinkedList<GroupMatch>();
 

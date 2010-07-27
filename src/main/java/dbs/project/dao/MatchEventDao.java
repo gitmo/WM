@@ -7,6 +7,7 @@ import dbs.project.entity.MatchEvent;
 public class MatchEventDao extends DaoBase {
 
 	/**
+	 * returns all MatchEvents
 	 * 
 	 * @return
 	 */

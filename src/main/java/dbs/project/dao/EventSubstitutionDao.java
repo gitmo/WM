@@ -50,6 +50,12 @@ public class EventSubstitutionDao extends DaoBase {
 						Restrictions.eq("involvedPlayer", player))).list();
 	}
 
+	/**
+	 * Searches all EventSubstitution for a Match
+	 * 
+	 * @param match
+	 * @return
+	 */
 	public static List<EventSubstitution> findByMatch(Match match) {
 		List<EventSubstitution> res = new ArrayList<EventSubstitution>();
 		Collections.filterAndChangeType(match.getEvents(),
@@ -57,6 +63,13 @@ public class EventSubstitutionDao extends DaoBase {
 		return res;
 	}
 
+	/**
+	 * Searches all EventSubstitution for a player in a match
+	 * 
+	 * @param player
+	 * @param match
+	 * @return
+	 */
 	public static List<EventSubstitution> findByPlayerAndMatch(Player player,
 			Match match) {
 		List<EventSubstitution> res = findByPlayer(player);

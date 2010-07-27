@@ -20,6 +20,11 @@ public class TeamDao extends DaoBase {
 		session.getTransaction().commit();
 	}
 
+	/**
+	 * saves a list of teams
+	 * 
+	 * @param teams
+	 */
 	public static void saveAll(List<Team> teams) {
 		for (Team team : teams)
 			save(team);

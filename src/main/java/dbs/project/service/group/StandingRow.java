@@ -84,10 +84,9 @@ public class StandingRow implements Comparable<StandingRow> {
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(this.getTeamName() + "\t\t");
+		sb.append(String.format("%15s\t\t", this.getTeamName()));
 		sb.append(this.getPoints() + "\t\t");
-		sb
-				.append(this.getGoalsScored() + ":" + this.getGoalsAgainst()
+		sb.append(this.getGoalsScored() + ":" + this.getGoalsAgainst()
 						+ "\t\t");
 		sb.append(this.getPlayedGames() + "\n");
 

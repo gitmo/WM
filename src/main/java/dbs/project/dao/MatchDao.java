@@ -21,6 +21,10 @@ public class MatchDao extends DaoBase {
 		session.getTransaction().commit();
 	}
 
+	/**
+	 * saves all matches in the list
+	 * @param matches
+	 */
 	public static void saveAll(List<Match> matches) {
 		for (Match match : matches)
 			save(match);
@@ -49,6 +53,13 @@ public class MatchDao extends DaoBase {
 				Restrictions.eq("name", name)).list();
 	}
 
+	/**
+	 * searches all matches where team1 and team2 meet
+	 * 
+	 * @param team1
+	 * @param team2
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public static List<Match> findByTeams(Team team1, Team team2) {
 		return (List<Match>) session.createCriteria(Match.class).add(

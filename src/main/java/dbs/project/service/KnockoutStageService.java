@@ -17,6 +17,13 @@ public class KnockoutStageService {
 			"Viertelfinal", "Achtelfinale" };
 	private static final int[] matchLevelCount = { 1, 1, 1, 1 };
 
+	/**
+	 * JTree requires a TreeModel for DataRepresentation
+	 * getAsTreeModel returns the KnockoutStage in a TreeModel
+	 * 
+	 * @param knockoutStage
+	 * @return
+	 */
 	public static TreeModel getAsTreeModel(KnockoutStage knockoutStage) {
 		class KnockoutTree implements TreeModel {
 			KnockoutMatch root;
@@ -68,6 +75,12 @@ public class KnockoutStageService {
 
 	}
 
+	/**
+	 * generates recursively the KnockoutPhase
+	 * 
+	 * @param parent
+	 * @param height
+	 */
 	private static void addRecursivlyKnockoutMatch(KnockoutMatch parent,
 			int height) {
 		if (height > 3)
