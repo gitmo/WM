@@ -1,11 +1,13 @@
 package dbs.project.main.gui;
 
 import java.awt.BorderLayout;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -23,6 +25,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.DimensionUIResource;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeModel;
 
 import dbs.project.dev.TournamentGenerator;
@@ -69,6 +72,17 @@ public class AppGui extends JFrame {
 
 		this.add(mainPanel);
 	}
+	
+	protected ImageIcon createImageIcon(String path,
+            String description) {
+		java.net.URL imgURL = getClass().getResource(path);
+		if (imgURL != null) {
+			return new ImageIcon(imgURL, description);
+		} else {
+			System.err.println("Couldn't find file: " + path);
+			return null;
+		}
+	}
 
 	private void initTab() {
 		JTabbedPane tabbComponents = new JTabbedPane();
@@ -83,7 +97,15 @@ public class AppGui extends JFrame {
 		knockoutTree = new JTree();
 		tabbComponents.add("Finalrunde", knockoutTree);
 		knockoutTree.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
+		ImageIcon icon = createImageIcon("../../../../images/fussball.jpg","Fussballspiel");
+		if (icon != null) {
+		    DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
+		    renderer.setLeafIcon(icon);
+		    renderer.setOpenIcon(icon);
+		    renderer.setClosedIcon(icon);
+		    knockoutTree.setCellRenderer(renderer);
+		}
+	
 		// Statistik
 		statistic = new JPanel();
 		statistic.setLayout(new BoxLayout(statistic, BoxLayout.Y_AXIS));
