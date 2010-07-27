@@ -9,7 +9,7 @@ import dbs.project.entity.EventSubstitution;
 import dbs.project.entity.Match;
 import dbs.project.entity.MatchEvent;
 import dbs.project.entity.Player;
-import dbs.project.service.event.FilterSubstitutions;
+import dbs.project.service.event.filter.FilterSubstitutions;
 import dbs.project.util.Collections;
 
 public class EventSubstitutionDao extends DaoBase{
