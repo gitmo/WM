@@ -95,7 +95,7 @@ public class KnockoutStageService {
 		
 		//BFS iteration
 		Stack<KnockoutMatch> stack = new Stack<KnockoutMatch>();
-//		stack.add(knockoutStage.getFinalMatch());
+		stack.add(knockoutStage.getFinalMatch());
 		KnockoutMatch tmpNode;
 		while(stack.size() > 0) {
 			tmpNode = stack.pop();
