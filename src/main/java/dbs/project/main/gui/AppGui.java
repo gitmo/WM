@@ -38,9 +38,11 @@ import dbs.project.service.TournamentService;
 import dbs.project.service.group.StandingRow;
 
 public class AppGui extends JFrame {
+
 	private static final long serialVersionUID = 1L;
 
 	private final String APP_NAME = "Weltmeisterschaft DB";
+	private static final String FUSSBALL_JPG = "../../../../images/fussball.jpg";
 
 	private JList tournamentsList;
 	private JPanel mainPanel, groupStageComponents, statistic;
@@ -96,8 +98,7 @@ public class AppGui extends JFrame {
 		knockoutTree = new JTree();
 		tabbComponents.add("Finalrunde", knockoutTree);
 		knockoutTree.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		ImageIcon icon = createImageIcon("../../../../images/fussball.jpg",
-				"Fussballspiel");
+		ImageIcon icon = createImageIcon(FUSSBALL_JPG, "Fussballspiel");
 		if (icon != null) {
 			DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
 			renderer.setLeafIcon(icon);
@@ -143,11 +144,11 @@ public class AppGui extends JFrame {
 	private void refreshStatistic(Tournament tournament) {
 		statistic.removeAll();
 
-		addLine(statistic, "Torschützenkönig", TournamentService
-				.getTopscorers(tournament));
+		addLine(statistic, "Torschützenkönig",
+				TournamentService.getTopscorers(tournament));
 
-		addLine(statistic, "Spieler mit den meisten Karten", TournamentService
-				.getPlayerWithMostCards(tournament));
+		addLine(statistic, "Spieler mit den meisten Karten",
+				TournamentService.getPlayerWithMostCards(tournament));
 
 		JLabel stadiumLabel = new JLabel("Stadien");
 		stadiumLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
