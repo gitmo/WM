@@ -300,11 +300,30 @@ public class AppGui extends JFrame {
 		};
 		generateResults.addActionListener(resultButtonPressed);
 
+		JButton refreshData = new JButton();
+		refreshData.setText("Daten aktualisieren");
+		ActionListener refreshDataButtonPressed = new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				try {
+					int i = tournamentsList.getSelectedIndex();
+					Tournament selectedTournament = (Tournament) tournamentsList
+							.getModel().getElementAt(i);
+					refreshTabs(selectedTournament);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				refreshList();
+			}
+		};
+		refreshData.addActionListener(refreshDataButtonPressed);
+
 		// Liste hinzufügen
 		components.add(tournamentsScrollPane);
 		// Button hinzufügen
 		components.add(refreshTournament);
 		components.add(generateResults);
+		components.add(refreshData);
 
 		mainPanel.add(components);
 	}
