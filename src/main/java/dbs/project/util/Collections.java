@@ -7,13 +7,13 @@ public class Collections {
 	/**
 	 * filters a MatchEvent ĺist by a given filter implementation
 	 * 
-	 * @param events
+	 * @param list
 	 * @param filter
 	 * @return filtered list
 	 */
-	public static <T> List<T> filter(List<T> events, Filter<T> filter) {
+	public static <T> List<T> filter(List<T> list, Filter<T> filter) {
 		List<T> filteredEvents = new LinkedList<T>();
-		for (T event : events)
+		for (T event : list)
 			if (filter.apply(event))
 				filteredEvents.add(event);
 
@@ -21,10 +21,10 @@ public class Collections {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <T, E> void filterAndChangeType(List<T> events,
-			Filter<T> filter, List<E> newEvents) {
-		for (T event : events)
-			if (filter.apply(event))
-				newEvents.add((E) event);
+	public static <T, E> void filterAndChangeType(List<T> list,
+			Filter<T> filter, List<E> newList) {
+		for (T item : list)
+			if (filter.apply(item))
+				newList.add((E) item);
 	}
 }
