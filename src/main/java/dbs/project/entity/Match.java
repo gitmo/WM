@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -29,16 +28,6 @@ public abstract class Match {
 	@ManyToOne(optional = true)
 	@Cascade(CascadeType.ALL)
 	protected Team guestTeam;
-
-	@OneToMany
-	@Cascade(CascadeType.ALL)
-	@Column(nullable = true)
-	protected List<Player> hostLineup;
-
-	@OneToMany
-	@Cascade(CascadeType.ALL)
-	@Column(nullable = true)
-	protected List<Player> guestLineup;
 
 	@ManyToOne
 	@Cascade(CascadeType.ALL)
@@ -77,27 +66,6 @@ public abstract class Match {
 
 	public void setGuestTeam(Team guestTeam) {
 		this.guestTeam = guestTeam;
-	}
-
-	public List<Player> getHostLineup() {
-		if (hostLineup == null)
-			return new LinkedList<Player>();
-
-		return hostLineup;
-	}
-
-	public void setHostLineup(List<Player> hostLineup) {
-		this.hostLineup = hostLineup;
-	}
-
-	public List<Player> getGuestLineup() {
-		if (guestLineup == null)
-			return new LinkedList<Player>();
-		return guestLineup;
-	}
-
-	public void setGuestLineup(List<Player> guestLineup) {
-		this.guestLineup = guestLineup;
 	}
 
 	public Stadium getStadium() {

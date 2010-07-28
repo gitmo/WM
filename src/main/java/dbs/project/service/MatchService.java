@@ -1,8 +1,14 @@
 package dbs.project.service;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
+import dbs.project.collections.filter.FilterGoal;
+import dbs.project.collections.filter.FilterLineUp;
+import dbs.project.collections.filter.FilterMatchEnd;
+import dbs.project.collections.filter.FilterOwnGoal;
+import dbs.project.collections.filter.FilterTeam;
 import dbs.project.dao.MatchDao;
 import dbs.project.entity.Match;
 import dbs.project.entity.MatchEvent;
@@ -10,18 +16,18 @@ import dbs.project.entity.Player;
 import dbs.project.entity.Team;
 import dbs.project.entity.event.MatchEndEvent;
 import dbs.project.entity.event.player.GoalEvent;
+import dbs.project.entity.event.player.LineUpEvent;
 import dbs.project.entity.event.player.SubstitutionEvent;
 import dbs.project.exception.NewPlayerHasPlayedBefore;
 import dbs.project.exception.NoMatchWhistleEvent;
 import dbs.project.exception.NotInSameTeam;
 import dbs.project.exception.PlayerDoesNotPlay;
+import dbs.project.exception.PlayerDoesNotPlayForTeam;
 import dbs.project.exception.PlayersTeamNotInMatch;
 import dbs.project.exception.TeamLineUpComplete;
 import dbs.project.exception.TiedMatch;
-import dbs.project.service.event.filter.FilterGoals;
-import dbs.project.service.event.filter.FilterMatchEnd;
-import dbs.project.service.event.filter.FilterOwnGoals;
 import dbs.project.util.Collections;
+import dbs.project.util.MatchMinute;
 import dbs.project.util.Tuple;
 
 public class MatchService {
@@ -67,24 +73,27 @@ public class MatchService {
 	 * 
 	 * @param player
 	 * @param match
+	 * @throws TeamLineUpComplete 
 	 * @throws PlayersTeamNotInMatch
-	 * @throws TeamLineUpComplete
 	 */
-	public static void insertPlayerToMatch(Player player, Match match)
-			throws PlayersTeamNotInMatch, TeamLineUpComplete {
-		if (player.getTeams().contains(match.getGuestTeam())) {
-			if (match.getGuestLineup().size() < 11)
-				match.getGuestLineup().add(player);
-			else
-				throw new TeamLineUpComplete();
-		} else if (player.getTeams().contains(match.getHostTeam())) {
-			if (match.getHostLineup().size() < 11)
-				match.getHostLineup().add(player);
-			else
-				throw new TeamLineUpComplete();
-		} else
-			throw new PlayersTeamNotInMatch();
+	public static void insertPlayerToMatch(Player player, Match match) throws PlayerDoesNotPlayForTeam, TeamLineUpComplete {
+		Team team = null;
+		if(player.getTeams().contains(match.getHostTeam()))
+			team = match.getHostTeam();
+		else if(player.getTeams().contains(match.getGuestTeam()))
+			team =match.getGuestTeam();
+		else
+			throw new PlayerDoesNotPlayForTeam();
+		
+		if(getLineupSize(team, match) > 11)
+			throw new TeamLineUpComplete();
+		
+		LineUpEvent event = new LineUpEvent(player,team);
+		match.addEvent(event);
+	}
 
+	private static int getLineupSize(Team team, Match match) {
+		return getLineupForTeam(team, match).size();
 	}
 
 	/**
@@ -151,10 +160,10 @@ public class MatchService {
 		Tuple<Integer, Integer> goals = new Tuple<Integer, Integer>();
 		int goalsScored, goalsAgainst;
 		List<MatchEvent> goalEvents = Collections.filter(match.getEvents(),
-				new FilterGoals());
+				new FilterGoal());
 		if (match.getHostTeam() == team) {
 			List<MatchEvent> realGoals = Collections.filter(goalEvents,
-					new FilterOwnGoals());
+					new FilterOwnGoal());
 			goalsScored = realGoals.size();
 			goalsAgainst = goalEvents.size();
 		} else {
@@ -192,7 +201,7 @@ public class MatchService {
 		return getPointsByTeam(match.getHostTeam(), match) == 0 ? true : false;
 	}
 
-	public static Tuple<Integer, Integer> getFinalWhistleTime(Match match)
+	public static MatchMinute getFinalWhistleTime(Match match)
 			throws NoMatchWhistleEvent {
 		ArrayList<MatchEndEvent> end = new ArrayList<MatchEndEvent>();
 		Collections.filterAndChangeType(match.getEvents(),
@@ -203,5 +212,33 @@ public class MatchService {
 
 		MatchEndEvent finalWhislte = end.get(end.size() - 1);
 		return finalWhislte.getMinute();
+	}
+	
+	public static List<Player> getHostLineup(Match match) {
+		return getLineupForTeam(match.getHostTeam(), match);
+	}
+	
+	public static List<Player> getGuestLineup(Match match) {
+		return getLineupForTeam(match.getGuestTeam(), match);
+	}
+	
+	public static List<Player> getLineupForTeam(Team team, Match match) {
+		
+		List<MatchEvent> teamEvents = Collections.filter(match.getEvents(), new FilterTeam(team));
+		List<LineUpEvent> events = new LinkedList<LineUpEvent>();
+		Collections.filterAndChangeType(teamEvents, new FilterLineUp(), events);
+		
+		List<Player> players = new LinkedList<Player>();
+		for(LineUpEvent event : events) {
+			players.add(event.getInvolvedPlayer());
+		}
+		
+		return players;
+	}
+	
+	public static void setLineup(List<Player> players,Match match) throws PlayerDoesNotPlayForTeam, TeamLineUpComplete {
+		for(Player player : players) {
+			insertPlayerToMatch(player, match);
+		}
 	}
 }

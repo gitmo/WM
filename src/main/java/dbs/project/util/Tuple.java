@@ -1,8 +1,8 @@
 package dbs.project.util;
 
 public class Tuple<T, S> {
-	private T first;
-	private S second;
+	protected T first;
+	protected S second;
 
 	public Tuple() {
 	}

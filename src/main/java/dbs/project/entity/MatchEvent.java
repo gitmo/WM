@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
+import dbs.project.util.MatchMinute;
 import dbs.project.util.Tuple;
 
 @Entity
@@ -29,8 +30,8 @@ public abstract class MatchEvent {
 		setMinute(minute, additionalTime);
 	}
 
-	public Tuple<Integer, Integer> getMinute() {
-		return new Tuple<Integer, Integer>(minute, additionalMinute);
+	public MatchMinute getMinute() {
+		return new MatchMinute(minute, additionalMinute);
 	}
 
 	public void setMinute(int minute) {

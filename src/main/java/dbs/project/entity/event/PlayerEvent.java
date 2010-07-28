@@ -10,6 +10,7 @@ import org.hibernate.annotations.CascadeType;
 
 import dbs.project.entity.MatchEvent;
 import dbs.project.entity.Player;
+import dbs.project.util.MatchMinute;
 import dbs.project.util.Tuple;
 
 @Entity
@@ -32,8 +33,8 @@ public abstract class PlayerEvent extends MatchEvent {
 		setInvolvedPlayer(involvedPlayer);
 	}
 
-	public Tuple<Integer, Integer> getMinute() {
-		return new Tuple<Integer, Integer>(minute, additionalMinute);
+	public MatchMinute getMinute() {
+		return new MatchMinute(minute, additionalMinute);
 	}
 
 	public void setMinute(int minute) {

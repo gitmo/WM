@@ -1,4 +1,4 @@
-package dbs.project.service.event.filter;
+package dbs.project.collections.filter;
 
 import dbs.project.entity.MatchEvent;
 import dbs.project.util.Filter;

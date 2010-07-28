@@ -20,8 +20,8 @@ public class LineUpEvent extends PlayerEvent {
 		super();
 	}
 	
-	public LineUpEvent(int in, Player player, Team team) {
-		super(in, player);
+	public LineUpEvent(Player player, Team team) {
+		super(0, player);
 	}
 	
 	public Team getTeam() {
