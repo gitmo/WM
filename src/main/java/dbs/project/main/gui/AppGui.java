@@ -30,6 +30,7 @@ import javax.swing.tree.TreeModel;
 import dbs.project.entity.Stadium;
 import dbs.project.entity.Tournament;
 import dbs.project.entity.TournamentGroup;
+import dbs.project.generator.GroupStageGenerator;
 import dbs.project.generator.TournamentGenerator;
 import dbs.project.service.GroupService;
 import dbs.project.service.KnockoutMatchService;
@@ -265,22 +266,43 @@ public class AppGui extends JFrame {
 		JButton refreshTournament = new JButton();
 		refreshTournament.setText("Turnier generieren");
 		refreshTournament.setName("tournamentCreateButton");
-		ActionListener buttonPressed = new ActionListener() {
+		ActionListener refreshButtonPressed = new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				try {
 					TournamentGenerator.generateTournament();
 				} catch (Exception e) {
+					e.printStackTrace();
 				}
 
 				refreshList();
 			}
 		};
-		refreshTournament.addActionListener(buttonPressed);
+		refreshTournament.addActionListener(refreshButtonPressed);
+
+		JButton generateResults = new JButton();
+		generateResults.setText("Gruppenphase spielen");
+		ActionListener resultButtonPressed = new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				try {
+					int i = tournamentsList.getSelectedIndex();
+					Tournament selectedTournament = (Tournament) tournamentsList
+							.getModel().getElementAt(i);
+					GroupStageGenerator.enterResults(selectedTournament
+							.getGroupStage());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				refreshList();
+			}
+		};
+		generateResults.addActionListener(resultButtonPressed);
 
 		// Liste hinzufügen
 		components.add(tournamentsScrollPane);
 		// Button hinzufügen
 		components.add(refreshTournament);
+		components.add(generateResults);
 
 		mainPanel.add(components);
 	}

@@ -1,5 +1,6 @@
 package dbs.project.service.group;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
@@ -66,9 +67,9 @@ public class StandingRow implements Comparable<StandingRow> {
 	}
 
 	public int compareTo(StandingRow row) {
-		if (this.getPoints() > row.getGoalsScored()) {
+		if (this.getPoints() > row.getPoints()) {
 			return -1;
-		} else if (this.getPoints() < row.getGoalsScored()) {
+		} else if (this.getPoints() < row.getPoints()) {
 			return 1;
 		} else {
 			if (this.getGoalDifference() > row.getGoalDifference()) {
@@ -125,7 +126,7 @@ public class StandingRow implements Comparable<StandingRow> {
 			standings.add(teamRow);
 		}
 
-		// Collections.sort(standings);
+		Collections.sort(standings);
 
 		return standings;
 	}

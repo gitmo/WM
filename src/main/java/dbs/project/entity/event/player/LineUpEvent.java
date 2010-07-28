@@ -1,7 +1,7 @@
 package dbs.project.entity.event.player;
 
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -12,9 +12,9 @@ import dbs.project.entity.event.PlayerEvent;
 
 @Entity
 public class LineUpEvent extends PlayerEvent {
-	@OneToMany
+	@ManyToOne
 	@Cascade(CascadeType.ALL)
-	Team team;
+	protected Team team;
 
 	public LineUpEvent() {
 		super();

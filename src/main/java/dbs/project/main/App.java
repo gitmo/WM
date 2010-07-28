@@ -1,28 +1,18 @@
 package dbs.project.main;
 
-import dbs.project.dao.TournamentGroupDao;
-import dbs.project.entity.TournamentGroup;
-import dbs.project.exception.NoGroupMatchesSet;
-import dbs.project.service.GroupService;
+import dbs.project.dao.TournamentDao;
+import dbs.project.entity.Tournament;
+import dbs.project.generator.GroupStageGenerator;
 
 public class App {
 
 	public static void main(String[] args) {
 		System.out.println("WM");
 
-		// for(Tournament tournament : TournamentDao.fetchAll())
-		// System.out.println(tournament);
+		for (Tournament tournament : TournamentDao.fetchAll())
+			// System.out.println(tournament.getGroupStage().getGroups().get(0).getTeams().get(0).getPlayers());
+			GroupStageGenerator.enterResults(tournament.getGroupStage());
 
-		for (TournamentGroup group : TournamentGroupDao.fetchAll()) {
-			System.out.println(group.getName());
-			try {
-				GroupService.printStandings(group);
-			} catch (NoGroupMatchesSet e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			System.out.println("\n\n");
-		}
 	}
 
 }

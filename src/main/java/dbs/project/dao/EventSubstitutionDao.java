@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.hibernate.criterion.Restrictions;
 
-import dbs.project.collections.filter.FilterSubstitution;
+import dbs.project.collections.filter.FilterSubstitutionEvent;
 import dbs.project.entity.Match;
 import dbs.project.entity.Player;
 import dbs.project.entity.event.player.SubstitutionEvent;
@@ -59,7 +59,7 @@ public class EventSubstitutionDao extends DaoBase {
 	public static List<SubstitutionEvent> findByMatch(Match match) {
 		List<SubstitutionEvent> res = new ArrayList<SubstitutionEvent>();
 		Collections.filterAndChangeType(match.getEvents(),
-				new FilterSubstitution(), res);
+				new FilterSubstitutionEvent(), res);
 		return res;
 	}
 
