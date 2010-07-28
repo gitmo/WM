@@ -4,6 +4,7 @@ import java.util.List;
 
 import dbs.project.entity.GroupMatch;
 import dbs.project.entity.TournamentGroup;
+import dbs.project.exception.NoGroupMatchesSet;
 import dbs.project.service.group.StandingRow;
 
 public class GroupService {
@@ -15,8 +16,12 @@ public class GroupService {
 	 * rank \t Team \t points \t scoredGoals:receivedGoals \t playedGames
 	 * 
 	 * @param group
+	 * @throws NoGroupMatchesSet 
 	 */
-	public static void printStandings(TournamentGroup group) {
+	public static void printStandings(TournamentGroup group) throws NoGroupMatchesSet {
+		
+		if(group.getMatches()==null)
+			throw new NoGroupMatchesSet();
 		List<StandingRow> rows = StandingRow.getRows(group.getTeams(), group
 				.getMatches());
 
