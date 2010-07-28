@@ -116,6 +116,9 @@ public class GroupStageGenerator {
 	public static void enterResults(GroupStage groupStage) {
 		Random randomizer = new Random();
 		for (Match match : GroupStageService.getAllMatches(groupStage)) {
+			if(match.isPlayed())
+				continue;
+			
 			MatchGenerator.insertPlayersToMatch(match);
 			int hazard, minute;
 			for (int i = 0; i < 10; i++) {
