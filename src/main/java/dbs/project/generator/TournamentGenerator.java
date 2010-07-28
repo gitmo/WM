@@ -9,10 +9,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Random;
 
 import au.com.bytecode.opencsv.CSVReader;
+import dbs.project.dao.StadiumDao;
 import dbs.project.dao.TournamentDao;
 import dbs.project.entity.Advisor;
 import dbs.project.entity.Country;
@@ -118,9 +120,10 @@ public class TournamentGenerator {
 		List<Team> teams = loadSampleTeamsFromCsv(teamFile);
 		List<Player> players = loadSamplePlayersFromCsvFile(playerFile);
 		Random random = new Random();
-
+		
 		for (Team team : teams) {
 			// team.setTrikotNumbers(new HashMap<Integer, Player>());
+			System.out.println("Populating " + team);
 			for (int i = 0; i < 23; i++) {
 				if (players.size() > 0) {
 					int tmpIndex = random.nextInt(players.size());
@@ -154,15 +157,14 @@ public class TournamentGenerator {
 
 		Random random = new Random();
 
-		Calendar tournamentYear = Calendar.getInstance();
-		tournamentYear.setTimeInMillis(0);
+		Calendar tournamentYear = new GregorianCalendar();
 		int year = random.nextInt(50);
 		year -= year % 4;
 		tournamentYear.set(Calendar.YEAR, 1970 + year);
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy");
 
 		String yearString = formatter.format(tournamentYear.getTime());
-		tournament.setName("WM " + yearString);
+		tournament.setName("Weltmeisterschaft");
 		tournament.setYear(Integer.parseInt(yearString));
 
 		List<Stadium> stadiums = loadSampleStadiumsFromCsv("dev/stadiums.csv");
@@ -194,7 +196,9 @@ public class TournamentGenerator {
 			}
 
 			Stadium tmpStadium = new Stadium();
+			tmpStadium.setName(line[0].trim());
 			tmpStadium.setCity(line[0].trim());
+			tmpStadium.setCountry(new Country("Honolulu"));
 			tmpStadium.setCapacity(capacity);
 			stadiums.add(tmpStadium);
 		}
