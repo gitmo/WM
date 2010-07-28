@@ -20,7 +20,6 @@ import dbs.project.exception.TiedMatch;
 import dbs.project.exception.TournamentNotOver;
 import dbs.project.service.event.filter.FilterCards;
 import dbs.project.service.event.filter.FilterGoals;
-import dbs.project.stage.KnockoutStage;
 
 public class TournamentService {
 
@@ -145,12 +144,12 @@ public class TournamentService {
 		return topscorerTree.first().player.toString();
 	}
 
-	public static List<KnockoutMatch> getAllMatches(KnockoutStage knockoutStage) {
+	public static List<KnockoutMatch> getAllMatches(KnockoutMatch root) {
 		List<KnockoutMatch> matches = new LinkedList<KnockoutMatch>();
 
 		// BFS iteration
 		Stack<KnockoutMatch> stack = new Stack<KnockoutMatch>();
-		stack.add(knockoutStage.getFinalMatch());
+		stack.add(root);
 		KnockoutMatch tmpNode;
 		while (stack.size() > 0) {
 			tmpNode = stack.pop();
