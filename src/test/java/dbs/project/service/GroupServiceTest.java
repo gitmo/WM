@@ -12,9 +12,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import dbs.project.dao.TournamentGroupDao;
 import dbs.project.entity.GroupMatch;
-import dbs.project.entity.Match;
 import dbs.project.entity.Stadium;
 import dbs.project.entity.Team;
 import dbs.project.entity.TournamentGroup;
@@ -23,7 +21,6 @@ import dbs.project.exception.NoGroupMatchesSet;
 public class GroupServiceTest {
 
 	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-	private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 
 	TournamentGroup group;
 	
@@ -122,7 +119,6 @@ public class GroupServiceTest {
 	@After
 	public void tearDown() throws Exception {
 		System.setOut(null);
-		System.setErr(null);
 	}
 
 	@Test
@@ -130,7 +126,6 @@ public class GroupServiceTest {
 		try {
 			GroupService.printStandings(group);
 		} catch (NoGroupMatchesSet e) {
-			// TODO Auto-generated catch block
 			fail("group has no matches");
 		}
 		assertEquals("1.	          team1		0		0:0		0\n\n2.	          team2		0		0:0		0\n\n3.	          team3		0		0:0		0\n\n4.	          team4		0		0:0		0\n\n", outContent.toString());
