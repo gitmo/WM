@@ -4,7 +4,7 @@ import dbs.project.entity.MatchEvent;
 import dbs.project.entity.event.player.LineUpEvent;
 import dbs.project.util.collections.Filter;
 
-public class FilterLineUp implements Filter<MatchEvent> {
+public class FilterLineUpEvent implements Filter<MatchEvent> {
 
 	public boolean apply(MatchEvent event) {
 		return (event instanceof LineUpEvent) ? true : false;

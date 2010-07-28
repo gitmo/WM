@@ -8,8 +8,8 @@ import java.util.TreeSet;
 
 import javax.swing.ListModel;
 
-import dbs.project.collections.filter.FilterCard;
-import dbs.project.collections.filter.FilterGoal;
+import dbs.project.collections.filter.FilterCardEvent;
+import dbs.project.collections.filter.FilterGoalEvent;
 import dbs.project.dao.TournamentDao;
 import dbs.project.entity.KnockoutMatch;
 import dbs.project.entity.Match;
@@ -65,6 +65,10 @@ public class TournamentService {
 		class Topscorer implements Comparable<Topscorer> {
 			Player player;
 			int goals = 0;
+			
+			public Topscorer(Player player) {
+				this.player = player;
+			}
 
 			public int compareTo(Topscorer o) {
 				if (this.goals > o.goals)
@@ -74,27 +78,43 @@ public class TournamentService {
 				else
 					return 0;
 			}
+			
+			@Override
+			public boolean equals(Object obj) {
+				if(obj instanceof Topscorer)
+					return player == ((Topscorer) obj).player;
+				
+				return false;
+			}
 		}
 
 		List<Match> allMatches = TournamentService.getAllMatches(tournament);
 		if (allMatches.size() == 0)
 			return "Es wurden noch keine Spiele gespielt";
 
-		ArrayList<Topscorer> topscorer = new ArrayList<Topscorer>();
+		ArrayList<Topscorer> topscorers = new ArrayList<Topscorer>();
 		for (Match match : allMatches) {
 			List<GoalEvent> allGoals = new LinkedList<GoalEvent>();
 			Collections.filterAndChangeType(match.getEvents(),
-					new FilterGoal(), allGoals);
+					new FilterGoalEvent(), allGoals);
+			int i=-1;
 			for (GoalEvent eventGoal : allGoals) {
-				int i = topscorer.indexOf(eventGoal.getInvolvedPlayer());
-				topscorer.get(i).goals++;
+				Topscorer player = new Topscorer(eventGoal.getInvolvedPlayer());
+				i = topscorers.indexOf(player);
+				if(i<0)
+					topscorers.add(player);
+				else
+					topscorers.get(i).goals++;
 			}
 		}
-		TreeSet<Topscorer> topscorerTree = new TreeSet<Topscorer>(topscorer);
-		if (topscorerTree.size() == 0)
-			return "Es wurden keine Tore geschoßen";
 
-		return topscorerTree.first().player.toString();
+		if (topscorers.size() == 0)
+			return "Es wurden keine Tore geschoßen";
+		
+		java.util.Collections.sort(topscorers);
+		
+		Topscorer topscorer = topscorers.get(0);
+		return String.format("%s %d Tore",topscorer.player.getName(), topscorer.goals);
 	}
 
 	public static List<Match> getAllMatches(Tournament tournament) {
@@ -111,6 +131,10 @@ public class TournamentService {
 		class PlayerWithCards implements Comparable<PlayerWithCards> {
 			Player player;
 			int cards = 0;
+			
+			public PlayerWithCards(Player player) {
+				this.player = player;
+			}
 
 			public int compareTo(PlayerWithCards o) {
 				if (this.cards > o.cards)
@@ -119,6 +143,14 @@ public class TournamentService {
 					return 1;
 				else
 					return 0;
+			}
+			
+			@Override
+			public boolean equals(Object obj) {
+				if(obj instanceof PlayerWithCards)
+					return player == ((PlayerWithCards) obj).player;
+				
+				return false;
 			}
 		}
 
@@ -130,19 +162,26 @@ public class TournamentService {
 		for (Match match : allMatches) {
 			List<CardEvent> allCards = new LinkedList<CardEvent>();
 			Collections.filterAndChangeType(match.getEvents(),
-					new FilterCard(), allCards);
+					new FilterCardEvent(), allCards);
+			int i = -1;
 			for (CardEvent eventCard : allCards) {
-				int i = playersWithCards.indexOf(eventCard.getInvolvedPlayer());
-				playersWithCards.get(i).cards++;
+				PlayerWithCards player = new PlayerWithCards(eventCard.getInvolvedPlayer());
+				i = playersWithCards.indexOf(player);
+				if(i<0)
+					playersWithCards.add(player);
+				else
+					playersWithCards.get(i).cards++;
 			}
 		}
 
-		TreeSet<PlayerWithCards> topscorerTree = new TreeSet<PlayerWithCards>(
-				playersWithCards);
-		if (topscorerTree.size() == 0)
+		if (playersWithCards.size() == 0)
 			return "Es wurden keine Karten vergeben";
+		
+		java.util.Collections.sort(playersWithCards);
 
-		return topscorerTree.first().player.toString();
+		PlayerWithCards player = playersWithCards.get(0);
+		return String.format("%s %d Karten",player.player.getName(), player.cards);
+	
 	}
 
 	public static List<KnockoutMatch> getAllMatches(KnockoutMatch root) {

@@ -3,7 +3,7 @@ package dbs.project.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import dbs.project.collections.filter.FilterSubstitution;
+import dbs.project.collections.filter.FilterSubstitutionEvent;
 import dbs.project.dao.EventSubstitutionDao;
 import dbs.project.entity.Match;
 import dbs.project.entity.Player;
@@ -31,7 +31,7 @@ public class PlayerService {
 		MatchMinute out = null;
 		List<SubstitutionEvent> subs = new ArrayList<SubstitutionEvent>();
 		Collections.filterAndChangeType(match.getEvents(),
-				new FilterSubstitution(), subs);
+				new FilterSubstitutionEvent(), subs);
 
 		if (MatchService.getGuestLineup(match).contains(player))
 			in = new MatchMinute(0, 0);

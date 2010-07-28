@@ -5,10 +5,10 @@ import dbs.project.entity.Team;
 import dbs.project.entity.event.PlayerEvent;
 import dbs.project.util.collections.Filter;
 
-public class FilterTeam implements Filter<MatchEvent> {
+public class FilterEventsByTeam implements Filter<MatchEvent> {
 	private Team team;
 
-	public FilterTeam(Team team) {
+	public FilterEventsByTeam(Team team) {
 		this.team = team;
 	}
 

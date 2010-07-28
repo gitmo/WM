@@ -13,7 +13,7 @@ import dbs.project.entity.Player;
 import dbs.project.util.MatchMinute;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public abstract class PlayerEvent extends MatchEvent {
 	@ManyToOne
 	@Cascade(CascadeType.ALL)

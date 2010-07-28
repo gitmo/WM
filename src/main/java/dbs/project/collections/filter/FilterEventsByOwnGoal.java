@@ -7,15 +7,18 @@ import dbs.project.entity.Team;
 import dbs.project.entity.event.player.GoalEvent;
 import dbs.project.util.collections.Filter;
 
-public class FilterOwnGoal implements Filter<MatchEvent> {
-
+public class FilterEventsByOwnGoal implements Filter<MatchEvent> {
+	protected Team team;
+	
+	public FilterEventsByOwnGoal(Team team) {
+		this.team = team;
+	}
+	
 	public boolean apply(MatchEvent goal) {
-		if (!new FilterGoal().apply(goal))
+		if (!new FilterGoalEvent().apply(goal))
 			return false;
 
-		List<Team> teams = ((GoalEvent) goal).getInvolvedPlayer().getTeams();
-
-		return teams.contains(((GoalEvent) goal).getScorringTeam()) ? true
+		return team == ((GoalEvent) goal).getScorringTeam() ? true
 				: false;
 	}
 

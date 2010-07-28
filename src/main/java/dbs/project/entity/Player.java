@@ -41,4 +41,8 @@ public class Player extends Person {
 				getFirstname(), getLastname(), getBirthday(), getHeight(),
 				getWeight());
 	}
+
+	public String getName() {
+		return getFirstname() + " " + getLastname();
+	}
 }

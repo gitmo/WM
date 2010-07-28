@@ -4,17 +4,21 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import dbs.project.collections.filter.FilterGoal;
-import dbs.project.collections.filter.FilterLineUp;
-import dbs.project.collections.filter.FilterMatchEnd;
-import dbs.project.collections.filter.FilterOwnGoal;
-import dbs.project.collections.filter.FilterTeam;
+import dbs.project.collections.filter.FilterGoalEvent;
+import dbs.project.collections.filter.FilterLineUpEvent;
+import dbs.project.collections.filter.FilterMatchEndEvent;
+import dbs.project.collections.filter.FilterEventsByOwnGoal;
+import dbs.project.collections.filter.FilterPlayersByTeam;
+import dbs.project.collections.filter.FilterSubstitutionEvent;
+import dbs.project.collections.filter.FilterEventsByTeam;
 import dbs.project.dao.MatchDao;
 import dbs.project.entity.Match;
 import dbs.project.entity.MatchEvent;
 import dbs.project.entity.Player;
 import dbs.project.entity.Team;
 import dbs.project.entity.event.MatchEndEvent;
+import dbs.project.entity.event.PlayerEvent;
+import dbs.project.entity.event.player.CardEvent;
 import dbs.project.entity.event.player.GoalEvent;
 import dbs.project.entity.event.player.LineUpEvent;
 import dbs.project.entity.event.player.SubstitutionEvent;
@@ -79,18 +83,20 @@ public class MatchService {
 	public static void insertPlayerToMatch(Player player, Match match)
 			throws PlayerDoesNotPlayForTeam, TeamLineUpComplete {
 		Team team = null;
-		if (player.getTeams().contains(match.getHostTeam()))
+		if (match.getHostTeam().getPlayers().contains(player))
 			team = match.getHostTeam();
-		else if (player.getTeams().contains(match.getGuestTeam()))
+		else if (match.getGuestTeam().getPlayers().contains(player))
 			team = match.getGuestTeam();
 		else
 			throw new PlayerDoesNotPlayForTeam();
 
+		System.out.println(getLineupSize(team, match));
 		if (getLineupSize(team, match) > 11)
 			throw new TeamLineUpComplete();
 
-		LineUpEvent event = new LineUpEvent(player, team);
+		MatchEvent event = new LineUpEvent(player, team);
 		match.addEvent(event);
+		MatchDao.save(match);
 	}
 
 	private static int getLineupSize(Team team, Match match) {
@@ -107,6 +113,7 @@ public class MatchService {
 	public static String getResult(Match match) {
 		Tuple<Integer, Integer> goals = getGoalsByTeam(match.getHostTeam(),
 				match);
+		
 		return match.getHostTeam().getName() + " - "
 				+ match.getGuestTeam().getName() + " " + goals.getFirst()
 				+ " : " + goals.getSecond() + " ";
@@ -161,16 +168,12 @@ public class MatchService {
 		Tuple<Integer, Integer> goals = new Tuple<Integer, Integer>();
 		int goalsScored, goalsAgainst;
 		List<MatchEvent> goalEvents = Collections.filter(match.getEvents(),
-				new FilterGoal());
-		if (match.getHostTeam() == team) {
-			List<MatchEvent> realGoals = Collections.filter(goalEvents,
-					new FilterOwnGoal());
-			goalsScored = realGoals.size();
-			goalsAgainst = goalEvents.size();
-		} else {
-			goalsScored = goalEvents.size();
-			goalsAgainst = goalEvents.size();
-		}
+				new FilterGoalEvent());
+		
+		List<MatchEvent> realGoals = Collections.filter(goalEvents,
+				new FilterEventsByOwnGoal(team));
+		goalsScored = realGoals.size();
+		goalsAgainst = goalEvents.size() - goalsScored;
 
 		goals.setFirst(goalsScored);
 		goals.setSecond(goalsAgainst);
@@ -206,7 +209,7 @@ public class MatchService {
 			throws NoMatchWhistleEvent {
 		ArrayList<MatchEndEvent> end = new ArrayList<MatchEndEvent>();
 		Collections.filterAndChangeType(match.getEvents(),
-				new FilterMatchEnd(), end);
+				new FilterMatchEndEvent(), end);
 
 		if (end.size() < 1)
 			throw new NoMatchWhistleEvent();
@@ -222,19 +225,22 @@ public class MatchService {
 	public static List<Player> getGuestLineup(Match match) {
 		return getLineupForTeam(match.getGuestTeam(), match);
 	}
-
-	public static List<Player> getLineupForTeam(Team team, Match match) {
-
-		List<MatchEvent> teamEvents = Collections.filter(match.getEvents(),
-				new FilterTeam(team));
-		List<LineUpEvent> events = new LinkedList<LineUpEvent>();
-		Collections.filterAndChangeType(teamEvents, new FilterLineUp(), events);
+	
+	public static List<Player> getLineup(Match match) {
+		List<LineUpEvent> lineupEvents = new LinkedList<LineUpEvent>();
+		Collections.filterAndChangeType(match.getEvents(), new FilterLineUpEvent(), lineupEvents);
 
 		List<Player> players = new LinkedList<Player>();
-		for (LineUpEvent event : events) {
+		for (LineUpEvent event : lineupEvents) {
 			players.add(event.getInvolvedPlayer());
 		}
+		return players;
+	}
 
+	public static List<Player> getLineupForTeam(Team team, Match match) {
+		List<Player> players = getLineup(match);
+		players = Collections.filter(players, new FilterPlayersByTeam(team));
+		System.out.println("getLineupForTeam "+team.getName()+": "+players.size());
 		return players;
 	}
 
@@ -243,5 +249,36 @@ public class MatchService {
 		for (Player player : players) {
 			insertPlayerToMatch(player, match);
 		}
+	}
+
+	public static void addCard(int minute, Player affectedPlayer, String color,
+			Match match) {
+
+		CardEvent card = new CardEvent(minute, affectedPlayer, color);
+		
+		match.addEvent(card);
+		MatchDao.save(match);
+	}
+
+	public static List<Tuple<Player, Player>> getSubstitutedPlayersByTeam(Team team,
+			Match match) {
+		List<MatchEvent> teamEvents = new LinkedList<MatchEvent>();
+		teamEvents = Collections.filter(match.getEvents(), new FilterEventsByTeam(team));
+		
+		List<SubstitutionEvent> substitutionEvents = new LinkedList<SubstitutionEvent>();
+		Collections.filterAndChangeType(teamEvents, new FilterSubstitutionEvent(), substitutionEvents);
+		
+		List<Tuple<Player, Player>> players = new LinkedList<Tuple<Player, Player>>();
+		for(SubstitutionEvent event : substitutionEvents)
+			players.add(new Tuple<Player, Player>(event.getInvolvedPlayer(), event.getNewPlayer()));
+		
+		System.out.println("getSubstitutedPlayersByTeam: "+players.size());
+		return players;
+	}
+
+	public static void setFinalWhistle(int i, Match match) {
+		MatchEndEvent end = new MatchEndEvent(90);
+		match.addEvent(end);
+		MatchDao.save(match);
 	}
 }

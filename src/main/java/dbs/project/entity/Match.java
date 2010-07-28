@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import dbs.project.service.MatchService;
+
 @Entity
 public abstract class Match {
 	@Id
@@ -129,13 +131,8 @@ public abstract class Match {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(getHostTeam());
-		sb.append(" vs ");
-		sb.append(getGuestTeam());
-		sb.append(" am " + getDate());
-		sb.append(" in " + getStadium());
 
-		return sb.toString();
+		return MatchService.getResult(this);
 	}
 
 }

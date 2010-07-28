@@ -270,6 +270,7 @@ public class AppGui extends JFrame {
 				try {
 					TournamentGenerator.generateTournament();
 				} catch (Exception e) {
+					e.printStackTrace();
 				}
 
 				refreshList();
