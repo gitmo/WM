@@ -78,7 +78,7 @@ public class StandingRow implements Comparable<StandingRow> {
 				return 1;
 			} else {
 				// *TODO* direkter Vergleich
-				//return this.getTeam().compareTo(row.getTeam());
+				// return this.getTeam().compareTo(row.getTeam());
 				return 0;
 			}
 		}

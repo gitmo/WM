@@ -47,20 +47,22 @@ public class GroupService {
 
 		return sb.toString();
 	}
-	
+
 	public static boolean areAllMatchesPlayed(TournamentGroup group) {
-		for(Match match : group.getMatches())
-			if(!match.isPlayed())
+		for (Match match : group.getMatches())
+			if (!match.isPlayed())
 				return false;
-		
+
 		return true;
 	}
 
 	public static Team getFirst(TournamentGroup group) {
-		return StandingRow.getRows(group.getTeams(), group.getMatches()).get(0).getTeam();
+		return StandingRow.getRows(group.getTeams(), group.getMatches()).get(0)
+				.getTeam();
 	}
 
 	public static Team getSecond(TournamentGroup group) {
-		return StandingRow.getRows(group.getTeams(), group.getMatches()).get(1).getTeam();
+		return StandingRow.getRows(group.getTeams(), group.getMatches()).get(1)
+				.getTeam();
 	}
 }

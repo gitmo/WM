@@ -17,7 +17,7 @@ import dbs.project.helper.TestHelper;
 public class GroupStageServiceTest {
 
 	Tournament tournament;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		tournament = TestHelper.manualTournament();
@@ -32,7 +32,7 @@ public class GroupStageServiceTest {
 	public void testGetTableModel() {
 		TableModel tModel = null;
 		tModel = GroupStageService.getTableModel(tournament);
-		
+
 		assertNotNull(tModel);
 		assertEquals(4, tModel.getColumnCount());
 		assertEquals("Team", tModel.getColumnName(0));
@@ -40,17 +40,18 @@ public class GroupStageServiceTest {
 		assertEquals("Punkte", tModel.getColumnName(2));
 		assertEquals("Tordifferenz", tModel.getColumnName(3));
 		assertEquals(4, tModel.getRowCount());
-		
+
 	}
 
 	@Test
 	public void testGetAllMatches() {
-		List<GroupMatch> groupMatches = GroupStageService.getAllMatches(tournament.getGroupStage());
-		
+		List<GroupMatch> groupMatches = GroupStageService
+				.getAllMatches(tournament.getGroupStage());
+
 		List<GroupMatch> manualGroupMatchs = TestHelper.manualGroupMatches();
-		
+
 		groupMatches.containsAll(manualGroupMatchs);
-		
+
 	}
 
 }

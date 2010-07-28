@@ -2,7 +2,6 @@ package dbs.project.dao;
 
 import java.util.List;
 
-import dbs.project.entity.Country;
 import dbs.project.entity.KnockoutMatch;
 
 public class KnockoutMatchDao extends DaoBase {
@@ -51,7 +50,8 @@ public class KnockoutMatchDao extends DaoBase {
 	 */
 	@SuppressWarnings("unchecked")
 	public static List<KnockoutMatch> fetchAll() {
-		return (List<KnockoutMatch>) session.createQuery("From KnockoutMatch").list();
+		return (List<KnockoutMatch>) session.createQuery("From KnockoutMatch")
+				.list();
 	}
 
 }

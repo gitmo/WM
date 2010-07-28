@@ -28,8 +28,8 @@ public class TournamentGroup {
 	@OneToMany
 	@Cascade(CascadeType.ALL)
 	protected List<GroupMatch> matches;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected Tournament tournament;
 

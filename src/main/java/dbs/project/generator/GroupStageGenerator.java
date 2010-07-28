@@ -31,8 +31,8 @@ public class GroupStageGenerator {
 	 * @return
 	 * @throws Exception
 	 */
-	public static GroupStage getByTeams(List<Team> teams, List<Stadium> stadiums, Tournament tournament)
-			throws Exception {
+	public static GroupStage getByTeams(List<Team> teams,
+			List<Stadium> stadiums, Tournament tournament) throws Exception {
 		if (teams.size() % MAX_TEAMS_PER_GROUP != 0)
 			throw new Exception("Could not generate equally groups");
 
@@ -119,9 +119,9 @@ public class GroupStageGenerator {
 	public static void enterResults(GroupStage groupStage) {
 		Random randomizer = new Random();
 		for (Match match : GroupStageService.getAllMatches(groupStage)) {
-			if(match.isPlayed())
+			if (match.isPlayed())
 				continue;
-			
+
 			MatchGenerator.insertPlayersToMatch(match);
 			int hazard, minute;
 			for (int i = 0; i < 10; i++) {

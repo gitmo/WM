@@ -286,12 +286,12 @@ public class MatchService {
 		MatchEndEvent end = new MatchEndEvent(90);
 		match.addEvent(end);
 		match.setPlayed(true);
-		if(match instanceof GroupMatch) {
+		if (match instanceof GroupMatch) {
 			TournamentGroup group = ((GroupMatch) match).getGroup();
-			if(GroupService.areAllMatchesPlayed(group))
+			if (GroupService.areAllMatchesPlayed(group))
 				KnockoutMatchService.generateMatches(group);
 		}
-		
+
 		MatchDao.save(match);
 	}
 }

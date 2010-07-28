@@ -5,7 +5,6 @@ import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -14,10 +13,10 @@ import org.hibernate.annotations.CascadeType;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class GroupMatch extends Match {
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	TournamentGroup group;
-	
+
 	public GroupMatch() {
 		super();
 	}

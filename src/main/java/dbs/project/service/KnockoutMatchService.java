@@ -1,6 +1,5 @@
 package dbs.project.service;
 
-import java.text.NumberFormat;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
@@ -95,45 +94,50 @@ public class KnockoutMatchService {
 	}
 
 	public static void generateMatches(TournamentGroup group) {
-		rekGenerateMatches(group.getTournament().getFinalMatch(), group.getTournament().getGroupStage());
+		rekGenerateMatches(group.getTournament().getFinalMatch(), group
+				.getTournament().getGroupStage());
 	}
 
-	private static void rekGenerateMatches(KnockoutMatch node, GroupStage groupStage) {
-		//Achtelfinale
-		if(node.getChilds().size() < 1) {
-			System.out.println("Achtelfinale");
-			int i = Integer.parseInt(node.getName().substring("Achtelfinale ".length()));
+	private static void rekGenerateMatches(KnockoutMatch node,
+			GroupStage groupStage) {
+		// Achtelfinale
+		if (node.getChilds().size() < 1) {
+			int i = Integer.parseInt(node.getName().substring(
+					"Achtelfinale ".length()));
 			Team hostTeam, guestTeam;
-			if(i%2 == 0) {
+			if (i % 2 == 0) {
 				hostTeam = GroupService.getFirst(groupStage.getGroups().get(i));
-				guestTeam = GroupService.getSecond(groupStage.getGroups().get((i+1)));
+				guestTeam = GroupService.getSecond(groupStage.getGroups().get(
+						(i + 1)));
 			} else {
 				hostTeam = GroupService.getFirst(groupStage.getGroups().get(i));
-				guestTeam = GroupService.getSecond(groupStage.getGroups().get(i-1));
+				guestTeam = GroupService.getSecond(groupStage.getGroups().get(
+						i - 1));
 			}
-			
+
 			node.setHostTeam(hostTeam);
 			node.setGuestTeam(guestTeam);
 			KnockoutMatchDao.save(node);
 			return;
 		}
-		
+
 		KnockoutMatch hostChild = node.getChilds().get(0);
 		KnockoutMatch guestChild = node.getChilds().get(1);
-		
-		if(hostChild.isPlayed() &&  guestChild.isPlayed()) {
+
+		if (hostChild.isPlayed() && guestChild.isPlayed()) {
 			Team hostTeam = null, guestTeam = null;
 			try {
 				hostTeam = MatchService.getWinner(hostChild);
 				guestTeam = MatchService.getWinner(guestChild);
-			} catch(TiedMatch e) {}
-			
+			} catch (TiedMatch e) {
+			}
+
 			node.setHostTeam(hostTeam);
 			node.setHostTeam(guestTeam);
 		}
 
-		rekGenerateMatches(hostChild,groupStage);
-		rekGenerateMatches(guestChild,groupStage);
+		rekGenerateMatches(hostChild, groupStage);
+		rekGenerateMatches(guestChild, groupStage);
 	}
 
 }

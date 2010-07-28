@@ -43,7 +43,7 @@ public class KnockoutGenerator {
 
 	public static Tuple<KnockoutMatch, KnockoutMatch> getDefault() {
 		KnockoutMatch root = new KnockoutMatch("Finale");
-		for(int i=0; i<matchLevel.length; i++)
+		for (int i = 0; i < matchLevel.length; i++)
 			matchLevelCount[i] = 1;
 		addRecursivlyKnockoutMatch(root, 1);
 

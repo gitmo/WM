@@ -137,12 +137,11 @@ public class GroupServiceTest {
 	public void testGetSchedule() {
 
 		StringBuilder outPut = new StringBuilder();
-		for(GroupMatch match : group.getMatches()){
-			outPut.append(match.toString()+"\n");
+		for (GroupMatch match : group.getMatches()) {
+			outPut.append(match.toString() + "\n");
 		}
-		
-		assertEquals(outPut.toString(),
-				GroupService.getSchedule(group));
+
+		assertEquals(outPut.toString(), GroupService.getSchedule(group));
 
 	}
 

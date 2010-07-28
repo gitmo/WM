@@ -15,7 +15,6 @@ import dbs.project.entity.Match;
 import dbs.project.entity.Player;
 import dbs.project.entity.Team;
 import dbs.project.entity.Tournament;
-import dbs.project.entity.TournamentGroup;
 import dbs.project.entity.event.player.CardEvent;
 import dbs.project.entity.event.player.GoalEvent;
 import dbs.project.exception.TiedMatch;
