@@ -368,6 +368,159 @@ public class TestHelper {
 		
 	}
 	
+	public static List<GroupMatch> manualGroupMatches(){
+		//generate teams for group A
+		Team teamA1 = new Team("teamA1",null,null,null,null);
+		Team teamA2 = new Team("teamA2",null,null,null,null);
+		Team teamA3 = new Team("teamA3",null,null,null,null);
+		Team teamA4 = new Team("teamA4",null,null,null,null);
+		
+		//generate groupmatches for team A
+		GroupMatch groupMatchA1 = new GroupMatch();
+		GroupMatch groupMatchA2 = new GroupMatch();
+		GroupMatch groupMatchA3 = new GroupMatch();
+		GroupMatch groupMatchA4 = new GroupMatch();
+		GroupMatch groupMatchA5 = new GroupMatch();
+		GroupMatch groupMatchA6 = new GroupMatch();
+		
+		groupMatchA1.setHostTeam(teamA1);
+		groupMatchA1.setGuestTeam(teamA2);
+		
+		groupMatchA2.setHostTeam(teamA3);
+		groupMatchA2.setGuestTeam(teamA1);
+		
+		groupMatchA3.setHostTeam(teamA1);
+		groupMatchA3.setGuestTeam(teamA4);
+		
+		groupMatchA4.setHostTeam(teamA2);
+		groupMatchA4.setGuestTeam(teamA3);
+
+		groupMatchA5.setHostTeam(teamA4);
+		groupMatchA5.setGuestTeam(teamA2);
+		
+		groupMatchA6.setHostTeam(teamA3);
+		groupMatchA6.setGuestTeam(teamA4);
+		
+		
+		//matches of group A in a list
+		ArrayList<GroupMatch> matches = new ArrayList<GroupMatch>();
+		matches.add(groupMatchA1);
+		matches.add(groupMatchA2);
+		matches.add(groupMatchA3);
+		matches.add(groupMatchA4);
+		matches.add(groupMatchA5);
+		matches.add(groupMatchA6);
+		
+		//generate groupMatches for team B
+		GroupMatch groupMatchB1 = new GroupMatch();
+		GroupMatch groupMatchB2 = new GroupMatch();
+		GroupMatch groupMatchB3 = new GroupMatch();
+		GroupMatch groupMatchB4 = new GroupMatch();
+		GroupMatch groupMatchB5 = new GroupMatch();
+		GroupMatch groupMatchB6 = new GroupMatch();
+		
+		matches.add(groupMatchB1);
+		matches.add(groupMatchB2);
+		matches.add(groupMatchB3);
+		matches.add(groupMatchB4);
+		matches.add(groupMatchB5);
+		matches.add(groupMatchB6);
+		
+		//generate groupmatches for team C
+		GroupMatch groupMatchC1 = new GroupMatch();
+		GroupMatch groupMatchC2 = new GroupMatch();
+		GroupMatch groupMatchC3 = new GroupMatch();
+		GroupMatch groupMatchC4 = new GroupMatch();
+		GroupMatch groupMatchC5 = new GroupMatch();
+		GroupMatch groupMatchC6 = new GroupMatch();
+		
+		matches.add(groupMatchC1);
+		matches.add(groupMatchC2);
+		matches.add(groupMatchC3);
+		matches.add(groupMatchC4);
+		matches.add(groupMatchC5);
+		matches.add(groupMatchC6);
+		
+		//generate groupmatches for team D
+		GroupMatch groupMatchD1 = new GroupMatch();
+		GroupMatch groupMatchD2 = new GroupMatch();
+		GroupMatch groupMatchD3 = new GroupMatch();
+		GroupMatch groupMatchD4 = new GroupMatch();
+		GroupMatch groupMatchD5 = new GroupMatch();
+		GroupMatch groupMatchD6 = new GroupMatch();
+	
+		matches.add(groupMatchD1);
+		matches.add(groupMatchD2);
+		matches.add(groupMatchD3);
+		matches.add(groupMatchD4);
+		matches.add(groupMatchD5);
+		matches.add(groupMatchD6);
+
+		//generate groupmatches for team E
+		GroupMatch groupMatchE1 = new GroupMatch();
+		GroupMatch groupMatchE2 = new GroupMatch();
+		GroupMatch groupMatchE3 = new GroupMatch();
+		GroupMatch groupMatchE4 = new GroupMatch();
+		GroupMatch groupMatchE5 = new GroupMatch();
+		GroupMatch groupMatchE6 = new GroupMatch();
+	
+		matches.add(groupMatchE1);
+		matches.add(groupMatchE2);
+		matches.add(groupMatchE3);
+		matches.add(groupMatchE4);
+		matches.add(groupMatchE5);
+		matches.add(groupMatchE6);
+		
+		//generate groupmatches for team F
+		GroupMatch groupMatchF1 = new GroupMatch();
+		GroupMatch groupMatchF2 = new GroupMatch();
+		GroupMatch groupMatchF3 = new GroupMatch();
+		GroupMatch groupMatchF4 = new GroupMatch();
+		GroupMatch groupMatchF5 = new GroupMatch();
+		GroupMatch groupMatchF6 = new GroupMatch();
+		
+		matches.add(groupMatchF1);
+		matches.add(groupMatchF2);
+		matches.add(groupMatchF3);
+		matches.add(groupMatchF4);
+		matches.add(groupMatchF5);
+		matches.add(groupMatchF6);
+		
+		//generate groupmatches for team G
+		GroupMatch groupMatchG1 = new GroupMatch();
+		GroupMatch groupMatchG2 = new GroupMatch();
+		GroupMatch groupMatchG3 = new GroupMatch();
+		GroupMatch groupMatchG4 = new GroupMatch();
+		GroupMatch groupMatchG5 = new GroupMatch();
+		GroupMatch groupMatchG6 = new GroupMatch();
+		
+		matches.add(groupMatchG1);
+		matches.add(groupMatchG2);
+		matches.add(groupMatchG3);
+		matches.add(groupMatchG4);
+		matches.add(groupMatchG5);
+		matches.add(groupMatchG6);
+
+	
+		//generate groupmatches for team H
+		GroupMatch groupMatchH1 = new GroupMatch();
+		GroupMatch groupMatchH2 = new GroupMatch();
+		GroupMatch groupMatchH3 = new GroupMatch();
+		GroupMatch groupMatchH4 = new GroupMatch();
+		GroupMatch groupMatchH5 = new GroupMatch();
+		GroupMatch groupMatchH6 = new GroupMatch();
+		
+		List<GroupMatch> matchesH = new ArrayList<GroupMatch>();
+		matchesH.add(groupMatchH1);
+		matchesH.add(groupMatchH2);
+		matchesH.add(groupMatchH3);
+		matchesH.add(groupMatchH4);
+		matchesH.add(groupMatchH5);
+		matchesH.add(groupMatchH6);
+		
+		return matches;
+	}
+	
 	@Test
 	public void testHelper() {
 		Tournament tournament = null;

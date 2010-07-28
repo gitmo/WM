@@ -2,7 +2,6 @@ package dbs.project.service;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.TableModel;
@@ -12,11 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import dbs.project.entity.GroupMatch;
-import dbs.project.entity.GroupStage;
-import dbs.project.entity.Stadium;
-import dbs.project.entity.Team;
 import dbs.project.entity.Tournament;
-import dbs.project.entity.TournamentGroup;
 import dbs.project.helper.TestHelper;
 
 public class GroupStageServiceTest {
@@ -50,7 +45,12 @@ public class GroupStageServiceTest {
 
 	@Test
 	public void testGetAllMatches() {
-		fail("Not yet implemented");
+		List<GroupMatch> groupMatches = GroupStageService.getAllMatches(tournament.getGroupStage());
+		
+		List<GroupMatch> manualGroupMatchs = TestHelper.manualGroupMatches();
+		
+		groupMatches.containsAll(manualGroupMatchs);
+		
 	}
 
 }
