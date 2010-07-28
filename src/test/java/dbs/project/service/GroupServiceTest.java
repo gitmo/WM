@@ -12,6 +12,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import dbs.project.dao.TournamentGroupDao;
 import dbs.project.entity.GroupMatch;
 import dbs.project.entity.Match;
 import dbs.project.entity.Stadium;
@@ -67,19 +68,6 @@ public class GroupServiceTest {
 		match6.setHostTeam(team2);
 		match6.setGuestTeam(team4);
 		
-		List<GroupMatch> matchs = new ArrayList<GroupMatch>();
-		matchs.add(match1);
-		matchs.add(match2);
-		matchs.add(match3);
-		matchs.add(match4);
-		matchs.add(match5);
-		matchs.add(match6);
-		
-		group = new TournamentGroup();
-		
-		group.setTeams(teams);
-		group.setMatches(matchs);
-		
 		Date date1 = new Date(1000);
 		Date date2 = new Date(24);
 		Date date3 = new Date(23);
@@ -101,12 +89,12 @@ public class GroupServiceTest {
 		Stadium stadium5 = new Stadium();
 		Stadium stadium6 = new Stadium();
 		
-		stadium1.setCity("city1");
-		stadium2.setCity("city2");
-		stadium3.setCity("city3");
-		stadium4.setCity("city4");
-		stadium5.setCity("city5");
-		stadium6.setCity("city6");
+		stadium1.setName("stadium1");
+		stadium2.setName("stadium2");
+		stadium3.setName("stadium3");
+		stadium4.setName("stadium4");
+		stadium5.setName("stadium5");
+		stadium6.setName("stadium6");
 		
 		match1.setStadium(stadium1);
 		match2.setStadium(stadium2);
@@ -115,6 +103,20 @@ public class GroupServiceTest {
 		match5.setStadium(stadium5);
 		match6.setStadium(stadium6);
 
+		List<GroupMatch> matchs = new ArrayList<GroupMatch>();
+		matchs.add(match1);
+		matchs.add(match2);
+		matchs.add(match3);
+		matchs.add(match4);
+		matchs.add(match5);
+		matchs.add(match6);
+		
+		group = new TournamentGroup();
+		
+		group.setTeams(teams);
+		group.setMatches(matchs);
+		
+		
 	}
 
 	@After
@@ -138,7 +140,7 @@ public class GroupServiceTest {
 	@Test
 	public void testGetSchedule() {
 		
-		assertEquals("team1 vs team2 am Thu Jan 01 01:00:01 CET 1970 in city1\nteam3 vs team4 am Thu Jan 01 01:00:00 CET 1970 in city2\nteam2 vs team3 am Thu Jan 01 01:00:00 CET 1970 in city3\nteam4 vs team1 am Thu Jan 01 01:00:00 CET 1970 in city4\nteam3 vs team1 am Thu Jan 01 01:00:00 CET 1970 in city5\nteam2 vs team4 am Thu Jan 01 01:00:02 CET 1970 in city6\n", GroupService.getSchedule(group));
+		assertEquals("team1 vs team2 am Thu Jan 01 01:00:01 CET 1970 in stadium1\nteam3 vs team4 am Thu Jan 01 01:00:00 CET 1970 in stadium2\nteam2 vs team3 am Thu Jan 01 01:00:00 CET 1970 in stadium3\nteam4 vs team1 am Thu Jan 01 01:00:00 CET 1970 in stadium4\nteam3 vs team1 am Thu Jan 01 01:00:00 CET 1970 in stadium5\nteam2 vs team4 am Thu Jan 01 01:00:02 CET 1970 in stadium6\n", GroupService.getSchedule(group));
 
 	}
 
