@@ -3,7 +3,7 @@ package dbs.project.collections.filter;
 import dbs.project.entity.MatchEvent;
 import dbs.project.entity.Team;
 import dbs.project.entity.event.PlayerEvent;
-import dbs.project.util.Filter;
+import dbs.project.util.collections.Filter;
 
 public class FilterTeam implements Filter<MatchEvent> {
 	private Team team;

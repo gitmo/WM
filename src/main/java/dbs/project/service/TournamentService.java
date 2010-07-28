@@ -20,6 +20,7 @@ import dbs.project.entity.event.player.CardEvent;
 import dbs.project.entity.event.player.GoalEvent;
 import dbs.project.exception.TiedMatch;
 import dbs.project.exception.TournamentNotOver;
+import dbs.project.util.Collections;
 
 public class TournamentService {
 
@@ -82,7 +83,7 @@ public class TournamentService {
 		ArrayList<Topscorer> topscorer = new ArrayList<Topscorer>();
 		for (Match match : allMatches) {
 			List<GoalEvent> allGoals = new LinkedList<GoalEvent>();
-			dbs.project.util.Collections.filterAndChangeType(match.getEvents(),
+			Collections.filterAndChangeType(match.getEvents(),
 					new FilterGoal(), allGoals);
 			for (GoalEvent eventGoal : allGoals) {
 				int i = topscorer.indexOf(eventGoal.getInvolvedPlayer());
@@ -128,7 +129,7 @@ public class TournamentService {
 		ArrayList<PlayerWithCards> playersWithCards = new ArrayList<PlayerWithCards>();
 		for (Match match : allMatches) {
 			List<CardEvent> allCards = new LinkedList<CardEvent>();
-			dbs.project.util.Collections.filterAndChangeType(match.getEvents(),
+			Collections.filterAndChangeType(match.getEvents(),
 					new FilterCard(), allCards);
 			for (CardEvent eventCard : allCards) {
 				int i = playersWithCards.indexOf(eventCard.getInvolvedPlayer());

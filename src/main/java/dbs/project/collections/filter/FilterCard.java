@@ -2,7 +2,7 @@ package dbs.project.collections.filter;
 
 import dbs.project.entity.MatchEvent;
 import dbs.project.entity.event.player.CardEvent;
-import dbs.project.util.Filter;
+import dbs.project.util.collections.Filter;
 
 public class FilterCard implements Filter<MatchEvent> {
 
