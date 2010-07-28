@@ -14,11 +14,12 @@ public class CardEvent extends PlayerEvent {
 	}
 
 	public CardEvent(int minute, Player involvedPlayer, String color) {
-		super(minute,involvedPlayer);
+		super(minute, involvedPlayer);
 		setColor(color);
 	}
 
-	public CardEvent(int minute, int additionalTime, Player involvedPlayer, String color) {
+	public CardEvent(int minute, int additionalTime, Player involvedPlayer,
+			String color) {
 		super(minute, additionalTime, involvedPlayer);
 		setColor(color);
 	}

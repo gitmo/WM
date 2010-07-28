@@ -11,7 +11,6 @@ import org.hibernate.annotations.CascadeType;
 import dbs.project.entity.MatchEvent;
 import dbs.project.entity.Player;
 import dbs.project.util.MatchMinute;
-import dbs.project.util.Tuple;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)

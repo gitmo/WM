@@ -73,22 +73,23 @@ public class MatchService {
 	 * 
 	 * @param player
 	 * @param match
-	 * @throws TeamLineUpComplete 
+	 * @throws TeamLineUpComplete
 	 * @throws PlayersTeamNotInMatch
 	 */
-	public static void insertPlayerToMatch(Player player, Match match) throws PlayerDoesNotPlayForTeam, TeamLineUpComplete {
+	public static void insertPlayerToMatch(Player player, Match match)
+			throws PlayerDoesNotPlayForTeam, TeamLineUpComplete {
 		Team team = null;
-		if(player.getTeams().contains(match.getHostTeam()))
+		if (player.getTeams().contains(match.getHostTeam()))
 			team = match.getHostTeam();
-		else if(player.getTeams().contains(match.getGuestTeam()))
-			team =match.getGuestTeam();
+		else if (player.getTeams().contains(match.getGuestTeam()))
+			team = match.getGuestTeam();
 		else
 			throw new PlayerDoesNotPlayForTeam();
-		
-		if(getLineupSize(team, match) > 11)
+
+		if (getLineupSize(team, match) > 11)
 			throw new TeamLineUpComplete();
-		
-		LineUpEvent event = new LineUpEvent(player,team);
+
+		LineUpEvent event = new LineUpEvent(player, team);
 		match.addEvent(event);
 	}
 
@@ -213,31 +214,33 @@ public class MatchService {
 		MatchEndEvent finalWhislte = end.get(end.size() - 1);
 		return finalWhislte.getMinute();
 	}
-	
+
 	public static List<Player> getHostLineup(Match match) {
 		return getLineupForTeam(match.getHostTeam(), match);
 	}
-	
+
 	public static List<Player> getGuestLineup(Match match) {
 		return getLineupForTeam(match.getGuestTeam(), match);
 	}
-	
+
 	public static List<Player> getLineupForTeam(Team team, Match match) {
-		
-		List<MatchEvent> teamEvents = Collections.filter(match.getEvents(), new FilterTeam(team));
+
+		List<MatchEvent> teamEvents = Collections.filter(match.getEvents(),
+				new FilterTeam(team));
 		List<LineUpEvent> events = new LinkedList<LineUpEvent>();
 		Collections.filterAndChangeType(teamEvents, new FilterLineUp(), events);
-		
+
 		List<Player> players = new LinkedList<Player>();
-		for(LineUpEvent event : events) {
+		for (LineUpEvent event : events) {
 			players.add(event.getInvolvedPlayer());
 		}
-		
+
 		return players;
 	}
-	
-	public static void setLineup(List<Player> players,Match match) throws PlayerDoesNotPlayForTeam, TeamLineUpComplete {
-		for(Player player : players) {
+
+	public static void setLineup(List<Player> players, Match match)
+			throws PlayerDoesNotPlayForTeam, TeamLineUpComplete {
+		for (Player player : players) {
 			insertPlayerToMatch(player, match);
 		}
 	}

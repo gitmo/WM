@@ -22,7 +22,6 @@ import dbs.project.entity.Player;
 import dbs.project.entity.Stadium;
 import dbs.project.entity.Team;
 import dbs.project.entity.Tournament;
-import dbs.project.service.GroupStageService;
 import dbs.project.util.Tuple;
 
 public class TournamentGenerator {
@@ -170,8 +169,8 @@ public class TournamentGenerator {
 		Collections.shuffle(stadiums);
 		tournament.setStadiums(stadiums.subList(0, 8));
 
-		GroupStage groupStage = GroupStageService.getByTeams(teams, tournament
-				.getStadiums());
+		GroupStage groupStage = GroupStageGenerator.getByTeams(teams,
+				tournament.getStadiums());
 		tournament.setGroupStage(groupStage);
 
 		Tuple<KnockoutMatch, KnockoutMatch> knockoutStage = KnockoutGenerator

@@ -11,12 +11,13 @@ public class FilterTeam implements Filter<MatchEvent> {
 	public FilterTeam(Team team) {
 		this.team = team;
 	}
-	
+
 	public boolean apply(MatchEvent event) {
-		if(!(event instanceof PlayerEvent))
+		if (!(event instanceof PlayerEvent))
 			return false;
-		
-		boolean teamInvolved = ((PlayerEvent) event).getInvolvedPlayer().getTeams().contains(team);
+
+		boolean teamInvolved = ((PlayerEvent) event).getInvolvedPlayer()
+				.getTeams().contains(team);
 		return teamInvolved ? true : false;
 	}
 }

@@ -15,11 +15,12 @@ public class GroupService {
 	 * Style: rank \t Team \t points \t scoredGoals:receivedGoals \t playedGames
 	 * 
 	 * @param group
-	 * @throws NoGroupMatchesSet 
+	 * @throws NoGroupMatchesSet
 	 */
-	public static void printStandings(TournamentGroup group) throws NoGroupMatchesSet {
-		
-		if(group.getMatches()==null)
+	public static void printStandings(TournamentGroup group)
+			throws NoGroupMatchesSet {
+
+		if (group.getMatches() == null)
 			throw new NoGroupMatchesSet();
 		List<StandingRow> rows = StandingRow.getRows(group.getTeams(), group
 				.getMatches());

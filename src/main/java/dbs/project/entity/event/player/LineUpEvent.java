@@ -15,15 +15,15 @@ public class LineUpEvent extends PlayerEvent {
 	@OneToMany
 	@Cascade(CascadeType.ALL)
 	Team team;
-	
+
 	public LineUpEvent() {
 		super();
 	}
-	
+
 	public LineUpEvent(Player player, Team team) {
 		super(0, player);
 	}
-	
+
 	public Team getTeam() {
 		return team;
 	}

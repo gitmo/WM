@@ -7,10 +7,9 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 import dbs.project.util.MatchMinute;
-import dbs.project.util.Tuple;
 
 @Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class MatchEvent {
 	@Id
 	@GeneratedValue

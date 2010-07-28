@@ -19,14 +19,14 @@ public class SubstitutionEvent extends PlayerEvent {
 		super();
 	}
 
-	public SubstitutionEvent(int minute,Player out, Player in) {
-		super(minute,out);
+	public SubstitutionEvent(int minute, Player out, Player in) {
+		super(minute, out);
 		setNewPlayer(in);
 	}
 
-	public SubstitutionEvent(int minute,
-			int additionalTime,Player out, Player in) {
-		super(minute, additionalTime,out);
+	public SubstitutionEvent(int minute, int additionalTime, Player out,
+			Player in) {
+		super(minute, additionalTime, out);
 		setNewPlayer(in);
 	}
 

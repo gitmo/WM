@@ -25,9 +25,8 @@ public class PlayerService {
 	 * @throws PlayerDoesNotPlay
 	 * @throws NoMatchWhistleEvent
 	 */
-	public static Tuple<MatchMinute, MatchMinute> playerOnField(
-			Player player, Match match) throws PlayerDoesNotPlay,
-			NoMatchWhistleEvent {
+	public static Tuple<MatchMinute, MatchMinute> playerOnField(Player player,
+			Match match) throws PlayerDoesNotPlay, NoMatchWhistleEvent {
 		MatchMinute in = null;
 		MatchMinute out = null;
 		List<SubstitutionEvent> subs = new ArrayList<SubstitutionEvent>();
@@ -53,15 +52,13 @@ public class PlayerService {
 		for (SubstitutionEvent es : subs) {
 			if (es.getInvolvedPlayer() == player) {
 				out = es.getMinute();
-				return new Tuple<MatchMinute, MatchMinute>(
-						in, out);
+				return new Tuple<MatchMinute, MatchMinute>(in, out);
 			}
 		}
 
 		out = MatchService.getFinalWhistleTime(match);
 
-		return new Tuple<MatchMinute, MatchMinute>(in,
-				out);
+		return new Tuple<MatchMinute, MatchMinute>(in, out);
 
 	}
 

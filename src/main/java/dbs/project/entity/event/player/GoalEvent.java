@@ -20,13 +20,13 @@ public class GoalEvent extends PlayerEvent {
 		super();
 	}
 
-	public GoalEvent(int minute,Player player, Team team) {
+	public GoalEvent(int minute, Player player, Team team) {
 		super(minute, player);
 		setScorringTeam(team);
 	}
 
-	public GoalEvent(int minute, int additionalTime,Player player, Team team) {
-		super(minute, additionalTime,player);
+	public GoalEvent(int minute, int additionalTime, Player player, Team team) {
+		super(minute, additionalTime, player);
 		setScorringTeam(team);
 	}
 
