@@ -15,11 +15,11 @@ import dbs.project.service.MatchService;
 import dbs.project.util.Tuple;
 
 public class StandingRow implements Comparable<StandingRow> {
-	private String teamName;
+	private Team team;
 	private int points = 0, playedGames = 0, goalsScored = 0, goalsAgainst = 0;
 
-	public StandingRow(String name) {
-		this.teamName = name;
+	public StandingRow(Team team) {
+		this.team = team;
 	}
 
 	public Integer getPoints() {
@@ -50,12 +50,12 @@ public class StandingRow implements Comparable<StandingRow> {
 		this.goalsAgainst += goals;
 	}
 
-	public String getTeamName() {
-		return teamName;
+	public Team getTeam() {
+		return this.team;
 	}
 
-	public void setTeamName(String teamName) {
-		this.teamName = teamName;
+	public void setTeamName(Team team) {
+		this.team = team;
 	}
 
 	public Integer getPlayedGames() {
@@ -78,14 +78,15 @@ public class StandingRow implements Comparable<StandingRow> {
 				return 1;
 			} else {
 				// *TODO* direkter Vergleich
-				return this.getTeamName().compareTo(row.getTeamName());
+				//return this.getTeam().compareTo(row.getTeam());
+				return 0;
 			}
 		}
 	}
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(String.format("%15s\t\t", this.getTeamName()));
+		sb.append(String.format("%15s\t\t", this.getTeam().getName()));
 		sb.append(this.getPoints() + "\t\t");
 		sb
 				.append(this.getGoalsScored() + ":" + this.getGoalsAgainst()
@@ -101,7 +102,7 @@ public class StandingRow implements Comparable<StandingRow> {
 		List<StandingRow> standings = new LinkedList<StandingRow>();
 
 		for (Team team : teams) {
-			StandingRow teamRow = new StandingRow(team.getName());
+			StandingRow teamRow = new StandingRow(team);
 			for (GroupMatch match : matches) {
 				// Falls unser Team nicht gespielt hat, ignoriere das Spiel
 				if (!match.getHostTeam().equals(team)
@@ -142,7 +143,7 @@ public class StandingRow implements Comparable<StandingRow> {
 		for (StandingRow sr : StandingRow.getRows(group.getTeams(), group
 				.getMatches())) {
 			Vector<String> row = new Vector<String>();
-			row.add(sr.getTeamName());
+			row.add(sr.getTeam().getName());
 			row.add(sr.getPlayedGames().toString());
 			row.add(sr.getPoints().toString());
 			row.add(sr.getGoalsScored() + ":" + sr.getGoalsAgainst());

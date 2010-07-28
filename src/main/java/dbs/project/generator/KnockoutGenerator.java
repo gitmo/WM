@@ -10,7 +10,7 @@ public class KnockoutGenerator {
 
 	private static final String[] matchLevel = { "Finale", "Halbfinale",
 			"Viertelfinal", "Achtelfinale" };
-	private static final int[] matchLevelCount = { 1, 1, 1, 1 };
+	private static final int[] matchLevelCount = new int[4];
 
 	/**
 	 * generates recursively the KnockoutPhase
@@ -43,6 +43,8 @@ public class KnockoutGenerator {
 
 	public static Tuple<KnockoutMatch, KnockoutMatch> getDefault() {
 		KnockoutMatch root = new KnockoutMatch("Finale");
+		for(int i=0; i<matchLevel.length; i++)
+			matchLevelCount[i] = 1;
 		addRecursivlyKnockoutMatch(root, 1);
 
 		KnockoutMatch thirdPlace = new KnockoutMatch("Spiel um Platz 3");

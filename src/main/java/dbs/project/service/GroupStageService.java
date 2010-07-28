@@ -31,7 +31,7 @@ public class GroupStageService {
 
 		for (StandingRow sr : StandingRow.getRows(teams, matches)) {
 			Vector<String> row = new Vector<String>();
-			row.add(sr.getTeamName());
+			row.add(sr.getTeam().getName());
 			row.add(sr.getPlayedGames().toString());
 			row.add(sr.getPoints().toString());
 			row.add(sr.getGoalsScored() + ":" + sr.getGoalsAgainst());

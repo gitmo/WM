@@ -4,6 +4,7 @@ import java.util.List;
 
 import dbs.project.entity.GroupMatch;
 import dbs.project.entity.Match;
+import dbs.project.entity.Team;
 import dbs.project.entity.TournamentGroup;
 import dbs.project.exception.NoGroupMatchesSet;
 import dbs.project.service.group.StandingRow;
@@ -53,5 +54,13 @@ public class GroupService {
 				return false;
 		
 		return true;
+	}
+
+	public static Team getFirst(TournamentGroup group) {
+		return StandingRow.getRows(group.getTeams(), group.getMatches()).get(0).getTeam();
+	}
+
+	public static Team getSecond(TournamentGroup group) {
+		return StandingRow.getRows(group.getTeams(), group.getMatches()).get(1).getTeam();
 	}
 }

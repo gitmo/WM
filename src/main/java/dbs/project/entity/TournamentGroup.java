@@ -4,8 +4,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.Cascade;
@@ -26,6 +28,10 @@ public class TournamentGroup {
 	@OneToMany
 	@Cascade(CascadeType.ALL)
 	protected List<GroupMatch> matches;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
+	protected Tournament tournament;
 
 	public TournamentGroup() {
 	}
@@ -58,6 +64,14 @@ public class TournamentGroup {
 
 	public void setMatches(List<GroupMatch> matches) {
 		this.matches = matches;
+	}
+
+	public Tournament getTournament() {
+		return tournament;
+	}
+
+	public void setTournament(Tournament tournament) {
+		this.tournament = tournament;
 	}
 
 	public String toString() {

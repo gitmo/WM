@@ -12,10 +12,12 @@ import dbs.project.collections.filter.FilterMatchEndEvent;
 import dbs.project.collections.filter.FilterPlayersByTeam;
 import dbs.project.collections.filter.FilterSubstitutionEvent;
 import dbs.project.dao.MatchDao;
+import dbs.project.entity.GroupMatch;
 import dbs.project.entity.Match;
 import dbs.project.entity.MatchEvent;
 import dbs.project.entity.Player;
 import dbs.project.entity.Team;
+import dbs.project.entity.TournamentGroup;
 import dbs.project.entity.event.MatchEndEvent;
 import dbs.project.entity.event.player.CardEvent;
 import dbs.project.entity.event.player.GoalEvent;
@@ -284,6 +286,12 @@ public class MatchService {
 		MatchEndEvent end = new MatchEndEvent(90);
 		match.addEvent(end);
 		match.setPlayed(true);
+		if(match instanceof GroupMatch) {
+			TournamentGroup group = ((GroupMatch) match).getGroup();
+			if(GroupService.areAllMatchesPlayed(group))
+				KnockoutMatchService.generateMatches(group);
+		}
+		
 		MatchDao.save(match);
 	}
 }

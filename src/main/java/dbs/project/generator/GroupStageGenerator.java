@@ -10,6 +10,7 @@ import dbs.project.entity.Match;
 import dbs.project.entity.Player;
 import dbs.project.entity.Stadium;
 import dbs.project.entity.Team;
+import dbs.project.entity.Tournament;
 import dbs.project.entity.TournamentGroup;
 import dbs.project.entity.event.player.GoalEvent;
 import dbs.project.exception.NewPlayerHasPlayedBefore;
@@ -30,7 +31,7 @@ public class GroupStageGenerator {
 	 * @return
 	 * @throws Exception
 	 */
-	public static GroupStage getByTeams(List<Team> teams, List<Stadium> stadiums)
+	public static GroupStage getByTeams(List<Team> teams, List<Stadium> stadiums, Tournament tournament)
 			throws Exception {
 		if (teams.size() % MAX_TEAMS_PER_GROUP != 0)
 			throw new Exception("Could not generate equally groups");
@@ -41,6 +42,7 @@ public class GroupStageGenerator {
 		for (int i = 0; i < numberOfGroups; i++) {
 			TournamentGroup currentGroup = new TournamentGroup();
 			currentGroup.setName(String.format("Group %c", i + 65));
+			currentGroup.setTournament(tournament);
 
 			List<Team> groupTeams = new LinkedList<Team>();
 			for (int j = 0; j < MAX_TEAMS_PER_GROUP; j++)
@@ -50,7 +52,7 @@ public class GroupStageGenerator {
 			// Benutzt nur eine Kopie von groupTeams, da es die Liste selbst
 			// verändert
 			currentGroup.setMatches(generateMatches(new LinkedList<Team>(
-					groupTeams), stadiums));
+					groupTeams), stadiums, currentGroup));
 
 			allGroups.add(currentGroup);
 		}
@@ -71,7 +73,7 @@ public class GroupStageGenerator {
 	 */
 	private static List<GroupMatch> generateRecursivlyMatches(
 			List<GroupMatch> matches, List<Team> groupTeams,
-			List<Stadium> stadiums) {
+			List<Stadium> stadiums, TournamentGroup group) {
 		if (groupTeams.size() <= 1)
 			return matches;
 
@@ -83,6 +85,7 @@ public class GroupStageGenerator {
 			GroupMatch match = new GroupMatch();
 			match.setStadium(stadiums.remove(0));
 			stadiums.add(match.getStadium());
+			match.setGroup(group);
 
 			if (homeMatch) {
 				match.setHostTeam(currentTeam);
@@ -96,7 +99,7 @@ public class GroupStageGenerator {
 			matches.add(match);
 		}
 
-		return generateRecursivlyMatches(matches, groupTeams, stadiums);
+		return generateRecursivlyMatches(matches, groupTeams, stadiums, group);
 	}
 
 	/**
@@ -107,10 +110,10 @@ public class GroupStageGenerator {
 	 * @return
 	 */
 	public static List<GroupMatch> generateMatches(List<Team> groupTeams,
-			List<Stadium> stadiums) {
+			List<Stadium> stadiums, TournamentGroup group) {
 		// Generiert rekursiv die Spiele.
 		return generateRecursivlyMatches(new LinkedList<GroupMatch>(),
-				groupTeams, stadiums);
+				groupTeams, stadiums, group);
 	}
 
 	public static void enterResults(GroupStage groupStage) {

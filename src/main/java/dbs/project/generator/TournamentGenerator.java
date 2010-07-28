@@ -171,7 +171,7 @@ public class TournamentGenerator {
 		tournament.setStadiums(stadiums.subList(0, 8));
 
 		GroupStage groupStage = GroupStageGenerator.getByTeams(teams,
-				tournament.getStadiums());
+				tournament.getStadiums(), tournament);
 		tournament.setGroupStage(groupStage);
 
 		Tuple<KnockoutMatch, KnockoutMatch> knockoutStage = KnockoutGenerator

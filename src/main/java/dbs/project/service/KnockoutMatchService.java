@@ -1,5 +1,6 @@
 package dbs.project.service;
 
+import java.text.NumberFormat;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
@@ -8,7 +9,12 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
+import dbs.project.dao.KnockoutMatchDao;
+import dbs.project.entity.GroupStage;
 import dbs.project.entity.KnockoutMatch;
+import dbs.project.entity.Team;
+import dbs.project.entity.TournamentGroup;
+import dbs.project.exception.TiedMatch;
 
 public class KnockoutMatchService {
 
@@ -86,6 +92,48 @@ public class KnockoutMatchService {
 		}
 
 		return matches;
+	}
+
+	public static void generateMatches(TournamentGroup group) {
+		rekGenerateMatches(group.getTournament().getFinalMatch(), group.getTournament().getGroupStage());
+	}
+
+	private static void rekGenerateMatches(KnockoutMatch node, GroupStage groupStage) {
+		//Achtelfinale
+		if(node.getChilds().size() < 1) {
+			System.out.println("Achtelfinale");
+			int i = Integer.parseInt(node.getName().substring("Achtelfinale ".length()));
+			Team hostTeam, guestTeam;
+			if(i%2 == 0) {
+				hostTeam = GroupService.getFirst(groupStage.getGroups().get(i));
+				guestTeam = GroupService.getSecond(groupStage.getGroups().get((i+1)));
+			} else {
+				hostTeam = GroupService.getFirst(groupStage.getGroups().get(i));
+				guestTeam = GroupService.getSecond(groupStage.getGroups().get(i-1));
+			}
+			
+			node.setHostTeam(hostTeam);
+			node.setGuestTeam(guestTeam);
+			KnockoutMatchDao.save(node);
+			return;
+		}
+		
+		KnockoutMatch hostChild = node.getChilds().get(0);
+		KnockoutMatch guestChild = node.getChilds().get(1);
+		
+		if(hostChild.isPlayed() &&  guestChild.isPlayed()) {
+			Team hostTeam = null, guestTeam = null;
+			try {
+				hostTeam = MatchService.getWinner(hostChild);
+				guestTeam = MatchService.getWinner(guestChild);
+			} catch(TiedMatch e) {}
+			
+			node.setHostTeam(hostTeam);
+			node.setHostTeam(guestTeam);
+		}
+
+		rekGenerateMatches(hostChild,groupStage);
+		rekGenerateMatches(guestChild,groupStage);
 	}
 
 }
