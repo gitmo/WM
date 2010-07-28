@@ -4,20 +4,19 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import dbs.project.collections.filter.FilterEventsByOwnGoal;
+import dbs.project.collections.filter.FilterEventsByTeam;
 import dbs.project.collections.filter.FilterGoalEvent;
 import dbs.project.collections.filter.FilterLineUpEvent;
 import dbs.project.collections.filter.FilterMatchEndEvent;
-import dbs.project.collections.filter.FilterEventsByOwnGoal;
 import dbs.project.collections.filter.FilterPlayersByTeam;
 import dbs.project.collections.filter.FilterSubstitutionEvent;
-import dbs.project.collections.filter.FilterEventsByTeam;
 import dbs.project.dao.MatchDao;
 import dbs.project.entity.Match;
 import dbs.project.entity.MatchEvent;
 import dbs.project.entity.Player;
 import dbs.project.entity.Team;
 import dbs.project.entity.event.MatchEndEvent;
-import dbs.project.entity.event.PlayerEvent;
 import dbs.project.entity.event.player.CardEvent;
 import dbs.project.entity.event.player.GoalEvent;
 import dbs.project.entity.event.player.LineUpEvent;
@@ -113,7 +112,7 @@ public class MatchService {
 	public static String getResult(Match match) {
 		Tuple<Integer, Integer> goals = getGoalsByTeam(match.getHostTeam(),
 				match);
-		
+
 		return match.getHostTeam().getName() + " - "
 				+ match.getGuestTeam().getName() + " " + goals.getFirst()
 				+ " : " + goals.getSecond() + " ";
@@ -169,7 +168,7 @@ public class MatchService {
 		int goalsScored, goalsAgainst;
 		List<MatchEvent> goalEvents = Collections.filter(match.getEvents(),
 				new FilterGoalEvent());
-		
+
 		List<MatchEvent> realGoals = Collections.filter(goalEvents,
 				new FilterEventsByOwnGoal(team));
 		goalsScored = realGoals.size();
@@ -225,10 +224,11 @@ public class MatchService {
 	public static List<Player> getGuestLineup(Match match) {
 		return getLineupForTeam(match.getGuestTeam(), match);
 	}
-	
+
 	public static List<Player> getLineup(Match match) {
 		List<LineUpEvent> lineupEvents = new LinkedList<LineUpEvent>();
-		Collections.filterAndChangeType(match.getEvents(), new FilterLineUpEvent(), lineupEvents);
+		Collections.filterAndChangeType(match.getEvents(),
+				new FilterLineUpEvent(), lineupEvents);
 
 		List<Player> players = new LinkedList<Player>();
 		for (LineUpEvent event : lineupEvents) {
@@ -240,7 +240,8 @@ public class MatchService {
 	public static List<Player> getLineupForTeam(Team team, Match match) {
 		List<Player> players = getLineup(match);
 		players = Collections.filter(players, new FilterPlayersByTeam(team));
-		System.out.println("getLineupForTeam "+team.getName()+": "+players.size());
+		System.out.println("getLineupForTeam " + team.getName() + ": "
+				+ players.size());
 		return players;
 	}
 
@@ -255,24 +256,27 @@ public class MatchService {
 			Match match) {
 
 		CardEvent card = new CardEvent(minute, affectedPlayer, color);
-		
+
 		match.addEvent(card);
 		MatchDao.save(match);
 	}
 
-	public static List<Tuple<Player, Player>> getSubstitutedPlayersByTeam(Team team,
-			Match match) {
+	public static List<Tuple<Player, Player>> getSubstitutedPlayersByTeam(
+			Team team, Match match) {
 		List<MatchEvent> teamEvents = new LinkedList<MatchEvent>();
-		teamEvents = Collections.filter(match.getEvents(), new FilterEventsByTeam(team));
-		
+		teamEvents = Collections.filter(match.getEvents(),
+				new FilterEventsByTeam(team));
+
 		List<SubstitutionEvent> substitutionEvents = new LinkedList<SubstitutionEvent>();
-		Collections.filterAndChangeType(teamEvents, new FilterSubstitutionEvent(), substitutionEvents);
-		
+		Collections.filterAndChangeType(teamEvents,
+				new FilterSubstitutionEvent(), substitutionEvents);
+
 		List<Tuple<Player, Player>> players = new LinkedList<Tuple<Player, Player>>();
-		for(SubstitutionEvent event : substitutionEvents)
-			players.add(new Tuple<Player, Player>(event.getInvolvedPlayer(), event.getNewPlayer()));
-		
-		System.out.println("getSubstitutedPlayersByTeam: "+players.size());
+		for (SubstitutionEvent event : substitutionEvents)
+			players.add(new Tuple<Player, Player>(event.getInvolvedPlayer(),
+					event.getNewPlayer()));
+
+		System.out.println("getSubstitutedPlayersByTeam: " + players.size());
 		return players;
 	}
 

@@ -18,11 +18,12 @@ public class MatchGenerator {
 		Team[] teams = new Team[2];
 		teams[0] = match.getHostTeam();
 		teams[1] = match.getGuestTeam();
-		
-		int j=0;
-		for(int i=0; i<22; i++) {
-			List<Player> players = TeamService.getPlayersOnTheBench(match, teams[j]);
-				
+
+		int j = 0;
+		for (int i = 0; i < 22; i++) {
+			List<Player> players = TeamService.getPlayersOnTheBench(match,
+					teams[j]);
+
 			Player newPlayer = players.get(randomizer.nextInt(players.size()));
 			try {
 				MatchService.insertPlayerToMatch(newPlayer, match);
@@ -30,7 +31,7 @@ public class MatchGenerator {
 			} catch (TeamLineUpComplete e) {
 			}
 
-			j=(++j)%2;
+			j = (++j) % 2;
 		}
 	}
 

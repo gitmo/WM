@@ -11,9 +11,7 @@ import dbs.project.entity.Player;
 import dbs.project.entity.Stadium;
 import dbs.project.entity.Team;
 import dbs.project.entity.TournamentGroup;
-import dbs.project.entity.event.player.CardEvent;
 import dbs.project.entity.event.player.GoalEvent;
-import dbs.project.entity.event.player.SubstitutionEvent;
 import dbs.project.exception.NewPlayerHasPlayedBefore;
 import dbs.project.exception.NotInSameTeam;
 import dbs.project.exception.PlayerDoesNotPlay;
@@ -114,45 +112,49 @@ public class GroupStageGenerator {
 		return generateRecursivlyMatches(new LinkedList<GroupMatch>(),
 				groupTeams, stadiums);
 	}
-	
+
 	public static void enterResults(GroupStage groupStage) {
 		Random randomizer = new Random();
-		for(Match match : GroupStageService.getAllMatches(groupStage)) {
+		for (Match match : GroupStageService.getAllMatches(groupStage)) {
 			MatchGenerator.insertPlayersToMatch(match);
 			int hazard, minute;
-			for(int i=0; i<10; i++) {
+			for (int i = 0; i < 10; i++) {
 				Team affectedTeam;
-				if(randomizer.nextBoolean())
+				if (randomizer.nextBoolean())
 					affectedTeam = match.getGuestTeam();
 				else
 					affectedTeam = match.getHostTeam();
-				
-				List<Player> players = TeamService.getPlayingPlayersForTeam(match, affectedTeam);
+
+				List<Player> players = TeamService.getPlayingPlayersForTeam(
+						match, affectedTeam);
 				Player affectedPlayer = players.get(randomizer.nextInt(11));
-				
+
 				hazard = randomizer.nextInt(100);
 				minute = randomizer.nextInt(90);
-				if(hazard < 20) {
+				if (hazard < 20) {
 					GoalEvent goal = new GoalEvent();
 					goal.setMinute(minute);
 					goal.setScorringTeam(affectedTeam);
-					
+
 					try {
 						MatchService.insertGoal(goal, affectedPlayer, match);
-					} catch (PlayerDoesNotPlay e) {}
-				} else if(hazard < 40) {
+					} catch (PlayerDoesNotPlay e) {
+					}
+				} else if (hazard < 40) {
 					String color = randomizer.nextBoolean() ? "rot" : "gelb";
 					MatchService.addCard(minute, affectedPlayer, color, match);
-				} else if(hazard < 60) {
-					Player newPlayer = TeamService.getPlayersOnTheBench(match, affectedTeam).get(0);
+				} else if (hazard < 60) {
+					Player newPlayer = TeamService.getPlayersOnTheBench(match,
+							affectedTeam).get(0);
 					try {
-						MatchService.substitutePlayers(affectedPlayer, newPlayer, minute, match);
+						MatchService.substitutePlayers(affectedPlayer,
+								newPlayer, minute, match);
 					} catch (NewPlayerHasPlayedBefore e) {
 					} catch (PlayerDoesNotPlay e) {
 					} catch (NotInSameTeam e) {
 					}
 				}
-				MatchService.setFinalWhistle(90,match);
+				MatchService.setFinalWhistle(90, match);
 				match.setPlayed(true);
 			}
 		}

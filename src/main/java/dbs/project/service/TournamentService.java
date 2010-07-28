@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
-import java.util.TreeSet;
 
 import javax.swing.ListModel;
 
@@ -65,7 +64,7 @@ public class TournamentService {
 		class Topscorer implements Comparable<Topscorer> {
 			Player player;
 			int goals = 0;
-			
+
 			public Topscorer(Player player) {
 				this.player = player;
 			}
@@ -78,12 +77,12 @@ public class TournamentService {
 				else
 					return 0;
 			}
-			
+
 			@Override
 			public boolean equals(Object obj) {
-				if(obj instanceof Topscorer)
+				if (obj instanceof Topscorer)
 					return player == ((Topscorer) obj).player;
-				
+
 				return false;
 			}
 		}
@@ -97,11 +96,11 @@ public class TournamentService {
 			List<GoalEvent> allGoals = new LinkedList<GoalEvent>();
 			Collections.filterAndChangeType(match.getEvents(),
 					new FilterGoalEvent(), allGoals);
-			int i=-1;
+			int i = -1;
 			for (GoalEvent eventGoal : allGoals) {
 				Topscorer player = new Topscorer(eventGoal.getInvolvedPlayer());
 				i = topscorers.indexOf(player);
-				if(i<0)
+				if (i < 0)
 					topscorers.add(player);
 				else
 					topscorers.get(i).goals++;
@@ -110,11 +109,12 @@ public class TournamentService {
 
 		if (topscorers.size() == 0)
 			return "Es wurden keine Tore geschoßen";
-		
+
 		java.util.Collections.sort(topscorers);
-		
+
 		Topscorer topscorer = topscorers.get(0);
-		return String.format("%s %d Tore",topscorer.player.getName(), topscorer.goals);
+		return String.format("%s %d Tore", topscorer.player.getName(),
+				topscorer.goals);
 	}
 
 	public static List<Match> getAllMatches(Tournament tournament) {
@@ -131,7 +131,7 @@ public class TournamentService {
 		class PlayerWithCards implements Comparable<PlayerWithCards> {
 			Player player;
 			int cards = 0;
-			
+
 			public PlayerWithCards(Player player) {
 				this.player = player;
 			}
@@ -144,12 +144,12 @@ public class TournamentService {
 				else
 					return 0;
 			}
-			
+
 			@Override
 			public boolean equals(Object obj) {
-				if(obj instanceof PlayerWithCards)
+				if (obj instanceof PlayerWithCards)
 					return player == ((PlayerWithCards) obj).player;
-				
+
 				return false;
 			}
 		}
@@ -165,9 +165,10 @@ public class TournamentService {
 					new FilterCardEvent(), allCards);
 			int i = -1;
 			for (CardEvent eventCard : allCards) {
-				PlayerWithCards player = new PlayerWithCards(eventCard.getInvolvedPlayer());
+				PlayerWithCards player = new PlayerWithCards(eventCard
+						.getInvolvedPlayer());
 				i = playersWithCards.indexOf(player);
-				if(i<0)
+				if (i < 0)
 					playersWithCards.add(player);
 				else
 					playersWithCards.get(i).cards++;
@@ -176,12 +177,13 @@ public class TournamentService {
 
 		if (playersWithCards.size() == 0)
 			return "Es wurden keine Karten vergeben";
-		
+
 		java.util.Collections.sort(playersWithCards);
 
 		PlayerWithCards player = playersWithCards.get(0);
-		return String.format("%s %d Karten",player.player.getName(), player.cards);
-	
+		return String.format("%s %d Karten", player.player.getName(),
+				player.cards);
+
 	}
 
 	public static List<KnockoutMatch> getAllMatches(KnockoutMatch root) {

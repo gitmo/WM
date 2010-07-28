@@ -131,7 +131,6 @@ public abstract class Match {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 
-
 		return MatchService.getResult(this);
 	}
 

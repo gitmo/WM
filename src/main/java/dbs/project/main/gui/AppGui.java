@@ -278,15 +278,17 @@ public class AppGui extends JFrame {
 			}
 		};
 		refreshTournament.addActionListener(refreshButtonPressed);
-		
+
 		JButton generateResults = new JButton();
 		generateResults.setText("Gruppenphase spielen");
 		ActionListener resultButtonPressed = new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				try {
 					int i = tournamentsList.getSelectedIndex();
-					Tournament selectedTournament = (Tournament) tournamentsList.getModel().getElementAt(i);
-					GroupStageGenerator.enterResults(selectedTournament.getGroupStage());
+					Tournament selectedTournament = (Tournament) tournamentsList
+							.getModel().getElementAt(i);
+					GroupStageGenerator.enterResults(selectedTournament
+							.getGroupStage());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -301,7 +303,7 @@ public class AppGui extends JFrame {
 		// Button hinzufügen
 		components.add(refreshTournament);
 		components.add(generateResults);
-		
+
 		mainPanel.add(components);
 	}
 

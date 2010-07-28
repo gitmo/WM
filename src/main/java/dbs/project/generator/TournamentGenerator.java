@@ -14,8 +14,6 @@ import java.util.List;
 import java.util.Random;
 
 import au.com.bytecode.opencsv.CSVReader;
-import dbs.project.dao.StadiumDao;
-import dbs.project.dao.TeamDao;
 import dbs.project.dao.TournamentDao;
 import dbs.project.entity.Advisor;
 import dbs.project.entity.Country;
@@ -121,7 +119,7 @@ public class TournamentGenerator {
 		List<Team> teams = loadSampleTeamsFromCsv(teamFile);
 		List<Player> players = loadSamplePlayersFromCsvFile(playerFile);
 		Random random = new Random();
-		
+
 		for (Team team : teams) {
 			// team.setTrikotNumbers(new HashMap<Integer, Player>());
 			System.out.println("Populating " + team);

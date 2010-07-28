@@ -15,7 +15,7 @@ import org.hibernate.annotations.CascadeType;
 public class Tournament {
 	@Id
 	protected int year;
-	
+
 	protected String name;
 
 	@OneToMany

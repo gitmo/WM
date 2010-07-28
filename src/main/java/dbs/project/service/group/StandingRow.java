@@ -126,7 +126,6 @@ public class StandingRow implements Comparable<StandingRow> {
 			standings.add(teamRow);
 		}
 
-		
 		Collections.sort(standings);
 
 		return standings;
