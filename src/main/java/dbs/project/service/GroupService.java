@@ -3,6 +3,7 @@ package dbs.project.service;
 import java.util.List;
 
 import dbs.project.entity.GroupMatch;
+import dbs.project.entity.Match;
 import dbs.project.entity.TournamentGroup;
 import dbs.project.exception.NoGroupMatchesSet;
 import dbs.project.service.group.StandingRow;
@@ -44,5 +45,13 @@ public class GroupService {
 			sb.append(match + "\n");
 
 		return sb.toString();
+	}
+	
+	public static boolean areAllMatchesPlayed(TournamentGroup group) {
+		for(Match match : group.getMatches())
+			if(!match.isPlayed())
+				return false;
+		
+		return true;
 	}
 }
