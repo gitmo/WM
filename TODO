@@ -3,6 +3,7 @@ TODOs zur Deadline
     - [ ] runnable
     - [ ] sources
 - [ ] namen.txt
+- [ ] Collections.filter mit HSQL-Criteria Methoden ersetzen
 - [ ] Test-Cases
     - [ ] service klassen
     - [ ] utility klassen
@@ -18,5 +19,5 @@ TODOs zur Deadline
     - [ ] Designentscheidungen
 - [ ] Datenbankschema
     - [ ] grafisch
-- [ ] getter: keine Null values
-- [ ] setter: nichts schreiben wenn nichts drin
+- [X] getter: keine Null values
+- [X] setter: nichts schreiben wenn nichts drin

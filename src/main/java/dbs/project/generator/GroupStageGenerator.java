@@ -158,7 +158,6 @@ public class GroupStageGenerator {
 					}
 				}
 				MatchService.setFinalWhistle(90, match);
-				match.setPlayed(true);
 			}
 		}
 	}

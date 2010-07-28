@@ -283,6 +283,7 @@ public class MatchService {
 	public static void setFinalWhistle(int i, Match match) {
 		MatchEndEvent end = new MatchEndEvent(90);
 		match.addEvent(end);
+		match.setPlayed(true);
 		MatchDao.save(match);
 	}
 }
