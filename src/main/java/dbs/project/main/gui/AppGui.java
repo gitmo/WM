@@ -264,6 +264,7 @@ public class AppGui extends JFrame {
 		};
 		tournamentsList.addListSelectionListener(listListener);
 
+		// Button: create new tournament
 		JButton refreshTournament = new JButton();
 		refreshTournament.setText("Turnier generieren");
 		refreshTournament.setName("tournamentCreateButton");
@@ -280,6 +281,7 @@ public class AppGui extends JFrame {
 		};
 		refreshTournament.addActionListener(refreshButtonPressed);
 
+		// Button: simulate group stage
 		JButton generateResults = new JButton();
 		generateResults.setText("Gruppenphase spielen");
 		ActionListener resultButtonPressed = new ActionListener() {
@@ -300,15 +302,18 @@ public class AppGui extends JFrame {
 		};
 		generateResults.addActionListener(resultButtonPressed);
 
+		// Button: refresh
 		JButton refreshData = new JButton();
 		refreshData.setText("Daten aktualisieren");
 		ActionListener refreshDataButtonPressed = new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				try {
 					int i = tournamentsList.getSelectedIndex();
-					Tournament selectedTournament = (Tournament) tournamentsList
-							.getModel().getElementAt(i);
-					refreshTabs(selectedTournament);
+					if (i != -1) { // there's a tournament selected
+						Tournament selectedTournament = (Tournament) tournamentsList
+								.getModel().getElementAt(i);
+						refreshTabs(selectedTournament);
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
