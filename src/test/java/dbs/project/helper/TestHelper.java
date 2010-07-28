@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import dbs.project.entity.GroupMatch;
 import dbs.project.entity.GroupStage;
+import dbs.project.entity.KnockoutMatch;
 import dbs.project.entity.Stadium;
 import dbs.project.entity.Team;
 import dbs.project.entity.Tournament;
@@ -519,6 +520,147 @@ public class TestHelper {
 		matchesH.add(groupMatchH6);
 		
 		return matches;
+	}
+	
+	public static KnockoutMatch manualKnockoutMatches(){
+		
+		//generate teams
+		Team team1 = new Team("team1", null, null, null, null);
+		Team team2 = new Team("team2", null, null, null, null);
+		Team team3 = new Team("team3", null, null, null, null);
+		Team team4 = new Team("team4", null, null, null, null);
+		Team team5 = new Team("team5", null, null, null, null);
+		Team team6 = new Team("team6", null, null, null, null);
+		Team team7 = new Team("team7", null, null, null, null);
+		Team team8 = new Team("team8", null, null, null, null);
+		Team team9 = new Team("team9", null, null, null, null);
+		Team team10 = new Team("team10", null, null, null, null);
+		Team team11 = new Team("team11", null, null, null, null);
+		Team team12 = new Team("team12", null, null, null, null);
+		Team team13 = new Team("team13", null, null, null, null);
+		Team team14 = new Team("team14", null, null, null, null);
+		Team team15 = new Team("team15", null, null, null, null);
+		Team team16 = new Team("team16", null, null, null, null);
+		
+		//generate bestOf16
+		KnockoutMatch bestOfSixteen1= new KnockoutMatch();
+		bestOfSixteen1.setHostTeam(team1);
+		bestOfSixteen1.setGuestTeam(team2);
+		
+		KnockoutMatch bestOfSixteen2= new KnockoutMatch();
+		bestOfSixteen2.setHostTeam(team3);
+		bestOfSixteen2.setGuestTeam(team4);
+		
+		KnockoutMatch bestOfSixteen3= new KnockoutMatch();
+		bestOfSixteen3.setHostTeam(team5);
+		bestOfSixteen3.setGuestTeam(team6);
+		
+		KnockoutMatch bestOfSixteen4= new KnockoutMatch();
+		bestOfSixteen4.setHostTeam(team7);
+		bestOfSixteen4.setGuestTeam(team8);
+		
+		KnockoutMatch bestOfSixteen5= new KnockoutMatch();
+		bestOfSixteen5.setHostTeam(team9);
+		bestOfSixteen5.setGuestTeam(team10);
+		
+		KnockoutMatch bestOfSixteen6= new KnockoutMatch();
+		bestOfSixteen6.setHostTeam(team11);
+		bestOfSixteen6.setGuestTeam(team12);
+		
+		KnockoutMatch bestOfSixteen7= new KnockoutMatch();
+		bestOfSixteen7.setHostTeam(team13);
+		bestOfSixteen7.setGuestTeam(team14);
+		
+		KnockoutMatch bestOfSixteen8= new KnockoutMatch();
+		bestOfSixteen8.setHostTeam(team15);
+		bestOfSixteen8.setGuestTeam(team16);
+		
+		//generate quarterFinale
+		KnockoutMatch quarterFinal1 = new KnockoutMatch();
+		quarterFinal1.setHostTeam(team1);
+		quarterFinal1.setGuestTeam(team3);
+		
+		KnockoutMatch quarterFinal2 = new KnockoutMatch();
+		quarterFinal2.setHostTeam(team5);
+		quarterFinal2.setGuestTeam(team7);
+		
+		KnockoutMatch quarterFinal3 = new KnockoutMatch();
+		quarterFinal3.setHostTeam(team9);
+		quarterFinal3.setGuestTeam(team11);
+		
+		KnockoutMatch quarterFinal4 = new KnockoutMatch();
+		quarterFinal4.setHostTeam(team13);
+		quarterFinal4.setGuestTeam(team15);
+		
+		//generate halfFinale
+		KnockoutMatch halfFinal1 = new KnockoutMatch();
+		halfFinal1.setHostTeam(team1);
+		halfFinal1.setGuestTeam(team7);
+		
+		KnockoutMatch halfFinal2 = new KnockoutMatch();
+		halfFinal2.setHostTeam(team9);
+		halfFinal2.setGuestTeam(team15);
+		
+		//generate finalMatch
+		KnockoutMatch finalMatch = new KnockoutMatch();
+		finalMatch.setHostTeam(team1);
+		finalMatch.setGuestTeam(team15);
+		
+		//halfFinals in list
+		List<KnockoutMatch> halfFinals = new ArrayList<KnockoutMatch>();
+		halfFinals.add(halfFinal1);
+		halfFinals.add(halfFinal2);
+		
+		//QuarterFinals in lists
+		List<KnockoutMatch> quarterFinals1 = new ArrayList<KnockoutMatch>();
+		quarterFinals1.add(quarterFinal1);
+		quarterFinals1.add(quarterFinal2);
+		
+		List<KnockoutMatch> quarterFinals2 = new ArrayList<KnockoutMatch>();
+		quarterFinals2.add(quarterFinal3);
+		quarterFinals2.add(quarterFinal4);
+		
+		//bestOfSixteen in lists
+		List<KnockoutMatch> bestOfSixteens1 = new ArrayList<KnockoutMatch>();
+		bestOfSixteens1.add(bestOfSixteen1);
+		bestOfSixteens1.add(bestOfSixteen2);
+		
+		List<KnockoutMatch> bestOfSixteens2 = new ArrayList<KnockoutMatch>();
+		bestOfSixteens2.add(bestOfSixteen3);
+		bestOfSixteens2.add(bestOfSixteen4);
+				
+		List<KnockoutMatch> bestOfSixteens3 = new ArrayList<KnockoutMatch>();
+		bestOfSixteens3.add(bestOfSixteen5);
+		bestOfSixteens3.add(bestOfSixteen6);
+				
+		List<KnockoutMatch> bestOfSixteens4 = new ArrayList<KnockoutMatch>();
+		bestOfSixteens4.add(bestOfSixteen7);
+		bestOfSixteens4.add(bestOfSixteen8);
+			
+		
+		//set children
+		finalMatch.setChilds(halfFinals);
+		
+		halfFinal1.setChilds(quarterFinals1);
+		halfFinal2.setChilds(quarterFinals2);
+		
+		quarterFinal1.setChilds(bestOfSixteens1);
+		quarterFinal2.setChilds(bestOfSixteens2);
+		quarterFinal3.setChilds(bestOfSixteens3);
+		quarterFinal4.setChilds(bestOfSixteens4);
+		
+		//set children of bestOfSixteen to null
+		bestOfSixteen1.setChilds(null);
+		bestOfSixteen2.setChilds(null);
+		bestOfSixteen3.setChilds(null);
+		bestOfSixteen4.setChilds(null);
+		bestOfSixteen5.setChilds(null);
+		bestOfSixteen6.setChilds(null);
+		bestOfSixteen7.setChilds(null);
+		bestOfSixteen8.setChilds(null);
+		
+		
+		return finalMatch;
 	}
 	
 	@Test

@@ -136,8 +136,12 @@ public class GroupServiceTest {
 	@Test
 	public void testGetSchedule() {
 
-		assertEquals(
-				"team1 vs team2 am Thu Jan 01 01:00:01 CET 1970 in stadium1\nteam3 vs team4 am Thu Jan 01 01:00:00 CET 1970 in stadium2\nteam2 vs team3 am Thu Jan 01 01:00:00 CET 1970 in stadium3\nteam4 vs team1 am Thu Jan 01 01:00:00 CET 1970 in stadium4\nteam3 vs team1 am Thu Jan 01 01:00:00 CET 1970 in stadium5\nteam2 vs team4 am Thu Jan 01 01:00:02 CET 1970 in stadium6\n",
+		StringBuilder outPut = new StringBuilder();
+		for(GroupMatch match : group.getMatches()){
+			outPut.append(match.toString()+"\n");
+		}
+		
+		assertEquals(outPut.toString(),
 				GroupService.getSchedule(group));
 
 	}
