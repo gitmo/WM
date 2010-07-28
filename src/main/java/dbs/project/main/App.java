@@ -2,6 +2,7 @@ package dbs.project.main;
 
 import dbs.project.dao.TournamentGroupDao;
 import dbs.project.entity.TournamentGroup;
+import dbs.project.exception.NoGroupMatchesSet;
 import dbs.project.service.GroupService;
 
 public class App {
@@ -14,7 +15,12 @@ public class App {
 
 		for (TournamentGroup group : TournamentGroupDao.fetchAll()) {
 			System.out.println(group.getName());
-			GroupService.printStandings(group);
+			try {
+				GroupService.printStandings(group);
+			} catch (NoGroupMatchesSet e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			System.out.println("\n\n");
 		}
 	}
