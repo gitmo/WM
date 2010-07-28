@@ -3,29 +3,31 @@ package dbs.project.service;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 import java.util.TreeSet;
 
 import javax.swing.ListModel;
 
 import dbs.project.dao.TournamentDao;
-import dbs.project.entity.EventCard;
-import dbs.project.entity.EventGoal;
+import dbs.project.entity.KnockoutMatch;
 import dbs.project.entity.Match;
 import dbs.project.entity.Player;
 import dbs.project.entity.Team;
 import dbs.project.entity.Tournament;
+import dbs.project.entity.event.player.CardEvent;
+import dbs.project.entity.event.player.GoalEvent;
 import dbs.project.exception.TiedMatch;
 import dbs.project.exception.TournamentNotOver;
 import dbs.project.service.event.filter.FilterCards;
 import dbs.project.service.event.filter.FilterGoals;
+import dbs.project.stage.KnockoutStage;
 
 public class TournamentService {
 
 	public static List<Team> weAreTheChampions(Tournament tournament)
 			throws TournamentNotOver {
-		Match finalMatch = tournament.getKnockoutPhase().getFinalMatch();
-		Match forThirdPlace = tournament.getKnockoutPhase()
-				.getMatchForThirdPlace();
+		Match finalMatch = tournament.getFinalMatch();
+		Match forThirdPlace = tournament.getMatchForThirdPlace();
 		if (!finalMatch.isPlayed() || !forThirdPlace.isPlayed())
 			throw new TournamentNotOver();
 
@@ -80,10 +82,10 @@ public class TournamentService {
 
 		ArrayList<Topscorer> topscorer = new ArrayList<Topscorer>();
 		for (Match match : allMatches) {
-			List<EventGoal> allGoals = new LinkedList<EventGoal>();
+			List<GoalEvent> allGoals = new LinkedList<GoalEvent>();
 			dbs.project.util.Collections.filterAndChangeType(match.getEvents(),
 					new FilterGoals(), allGoals);
-			for (EventGoal eventGoal : allGoals) {
+			for (GoalEvent eventGoal : allGoals) {
 				int i = topscorer.indexOf(eventGoal.getInvolvedPlayer());
 				topscorer.get(i).goals++;
 			}
@@ -98,9 +100,10 @@ public class TournamentService {
 	public static List<Match> getAllMatches(Tournament tournament) {
 		List<Match> matches = new LinkedList<Match>();
 		matches.addAll(GroupStageService.getAllMatches(tournament
-				.getGroupPhase()));
-		matches.addAll(KnockoutStageService.getAllMatches(tournament
-				.getKnockoutPhase()));
+				.getGroupStage()));
+		matches.addAll(KnockoutMatchService.getAllMatches(tournament
+				.getFinalMatch()));
+		matches.add(tournament.getMatchForThirdPlace());
 		return matches;
 	}
 
@@ -125,10 +128,10 @@ public class TournamentService {
 
 		ArrayList<PlayerWithCards> playersWithCards = new ArrayList<PlayerWithCards>();
 		for (Match match : allMatches) {
-			List<EventCard> allCards = new LinkedList<EventCard>();
+			List<CardEvent> allCards = new LinkedList<CardEvent>();
 			dbs.project.util.Collections.filterAndChangeType(match.getEvents(),
 					new FilterCards(), allCards);
-			for (EventCard eventCard : allCards) {
+			for (CardEvent eventCard : allCards) {
 				int i = playersWithCards.indexOf(eventCard.getInvolvedPlayer());
 				playersWithCards.get(i).cards++;
 			}
@@ -140,6 +143,24 @@ public class TournamentService {
 			return "Es wurden keine Karten vergeben";
 
 		return topscorerTree.first().player.toString();
+	}
+
+	public static List<KnockoutMatch> getAllMatches(KnockoutStage knockoutStage) {
+		List<KnockoutMatch> matches = new LinkedList<KnockoutMatch>();
+
+		// BFS iteration
+		Stack<KnockoutMatch> stack = new Stack<KnockoutMatch>();
+		stack.add(knockoutStage.getFinalMatch());
+		KnockoutMatch tmpNode;
+		while (stack.size() > 0) {
+			tmpNode = stack.pop();
+			if (tmpNode.getChilds().size() == 0)
+				matches.add(tmpNode);
+			else
+				stack.addAll(tmpNode.getChilds());
+		}
+
+		return matches;
 	}
 
 }

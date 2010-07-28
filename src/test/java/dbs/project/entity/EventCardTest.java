@@ -1,17 +1,21 @@
 package dbs.project.entity;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import dbs.project.entity.event.player.CardEvent;
+
 public class EventCardTest {
 
-	EventCard eventCard;
+	CardEvent eventCard;
+
 	@Before
 	public void setUp() throws Exception {
-		eventCard = new EventCard();
+		eventCard = new CardEvent();
 	}
 
 	@After
@@ -27,22 +31,22 @@ public class EventCardTest {
 	@Test
 	public void testEventCardPlayerIntString() {
 		Player player = new Player();
-		eventCard = new EventCard(player, 30, "red");
+		eventCard = new CardEvent(30, player, "red");
 		assertNotNull(eventCard);
 		assertEquals(player, eventCard.getInvolvedPlayer());
-		assertEquals((Integer)30, eventCard.getMinute());
-		assertEquals((Integer)0, eventCard.getAddTime());
+		assertEquals((Integer) 30, eventCard.getMinute().getFirst());
+		assertEquals((Integer) 0, eventCard.getMinute().getSecond());
 		assertEquals("red", eventCard.getColor());
 	}
 
 	@Test
 	public void testEventCardPlayerIntIntString() {
 		Player player = new Player();
-		eventCard = new EventCard(player, 45, 3, "yellow");
+		eventCard = new CardEvent(45, 3, player, "yellow");
 		assertNotNull(eventCard);
 		assertEquals(player, eventCard.getInvolvedPlayer());
-		assertEquals((Integer)45, eventCard.getMinute());
-		assertEquals((Integer)3, eventCard.getAddTime());
+		assertEquals((Integer) 45, eventCard.getMinute().getFirst());
+		assertEquals((Integer) 3, eventCard.getMinute().getSecond());
 		assertEquals("yellow", eventCard.getColor());
 	}
 

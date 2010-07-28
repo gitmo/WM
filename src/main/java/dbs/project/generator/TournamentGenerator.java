@@ -1,4 +1,4 @@
-package dbs.project.dev;
+package dbs.project.generator;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -13,18 +13,17 @@ import java.util.List;
 import java.util.Random;
 
 import au.com.bytecode.opencsv.CSVReader;
-import dbs.project.dao.TeamDao;
 import dbs.project.dao.TournamentDao;
 import dbs.project.entity.Advisor;
 import dbs.project.entity.Country;
 import dbs.project.entity.GroupStage;
+import dbs.project.entity.KnockoutMatch;
 import dbs.project.entity.Player;
 import dbs.project.entity.Stadium;
 import dbs.project.entity.Team;
 import dbs.project.entity.Tournament;
 import dbs.project.service.GroupStageService;
-import dbs.project.service.KnockoutStageService;
-import dbs.project.stage.KnockoutStage;
+import dbs.project.util.Tuple;
 
 public class TournamentGenerator {
 
@@ -52,11 +51,11 @@ public class TournamentGenerator {
 			try {
 				height = Integer.parseInt(line[3].trim());
 				weight = Integer.parseInt(line[4].trim());
-				birthday = new SimpleDateFormat("dd-MM-yyyy")
-						.parse(line[2].trim());
-			} 
-			catch (ParseException e) {}
-			catch (NumberFormatException e) {}
+				birthday = new SimpleDateFormat("dd-MM-yyyy").parse(line[2]
+						.trim());
+			} catch (ParseException e) {
+			} catch (NumberFormatException e) {
+			}
 
 			Player player = new Player(line[0].trim(), line[1].trim(), "",
 					birthday, "no club", height, weight);
@@ -102,8 +101,10 @@ public class TournamentGenerator {
 			List<Advisor> advisors = new ArrayList<Advisor>();
 
 			advisors.add(new Advisor(line[1], line[2], null, 0, 0, "Trainer"));
-			advisors.add(new Advisor(line[3], line[4], null, 0, 0, "Co-Trainer"));
-			advisors.add(new Advisor(line[5], line[6], null, 0, 0, "Mannschaftsarzt"));
+			advisors
+					.add(new Advisor(line[3], line[4], null, 0, 0, "Co-Trainer"));
+			advisors.add(new Advisor(line[5], line[6], null, 0, 0,
+					"Mannschaftsarzt"));
 
 			Team team = new Team(line[0], null, null, advisors, country);
 			teams.add(team);
@@ -117,14 +118,17 @@ public class TournamentGenerator {
 			String playerFile) {
 		List<Team> teams = loadSampleTeamsFromCsv(teamFile);
 		List<Player> players = loadSamplePlayersFromCsvFile(playerFile);
-
 		Random random = new Random();
 
 		for (Team team : teams) {
+			// team.setTrikotNumbers(new HashMap<Integer, Player>());
 			for (int i = 0; i < 23; i++) {
 				if (players.size() > 0) {
 					int tmpIndex = random.nextInt(players.size());
-					team.addPlayer(players.remove(tmpIndex));
+					Player tmpPlayer = players.remove(tmpIndex);
+					team.addPlayer(tmpPlayer);
+					System.out.println("Adding " + tmpPlayer.getLastname()
+							+ " to Team " + team.getName());
 				} else {
 					System.out.println("Warning: no players left for team "
 							+ team.getName());
@@ -140,9 +144,8 @@ public class TournamentGenerator {
 		PlayerCsvFileGenerator.generatePlayers();
 		TeamCsvFileGenerator.generateTeams();
 
-		List<Team> teams = TournamentGenerator.LoadAndPopulateTeams("dev/teams.csv",
-				"dev/players.csv");
-		TeamDao.saveAll(teams);
+		List<Team> teams = TournamentGenerator.LoadAndPopulateTeams(
+				"dev/teams.csv", "dev/players.csv");
 
 		Tournament tournament = new Tournament();
 
@@ -155,9 +158,9 @@ public class TournamentGenerator {
 		Calendar tournamentYear = Calendar.getInstance();
 		tournamentYear.setTimeInMillis(0);
 		int year = random.nextInt(50);
-		year -= year%4;
+		year -= year % 4;
 		tournamentYear.set(Calendar.YEAR, 1970 + year);
-		SimpleDateFormat formatter =  new SimpleDateFormat("yyyy");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy");
 
 		String yearString = formatter.format(tournamentYear.getTime());
 		tournament.setName("WM " + yearString);
@@ -169,10 +172,12 @@ public class TournamentGenerator {
 
 		GroupStage groupStage = GroupStageService.getByTeams(teams, tournament
 				.getStadiums());
-		tournament.setGroupPhase(groupStage);
+		tournament.setGroupStage(groupStage);
 
-		KnockoutStage knockoutStage = KnockoutStageService.getDefault();
-		tournament.setKnockoutStage(knockoutStage);
+		Tuple<KnockoutMatch, KnockoutMatch> knockoutStage = KnockoutGenerator
+				.getDefault();
+		tournament.setFinalMatch(knockoutStage.getFirst());
+		tournament.setMatchForThirdPlace(knockoutStage.getSecond());
 
 		TournamentDao.save(tournament);
 

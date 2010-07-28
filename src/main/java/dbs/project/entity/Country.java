@@ -10,12 +10,13 @@ public class Country {
 	@GeneratedValue
 	long id;
 
-	private String name;
+	protected String name;
 
-	public Country() {}
+	public Country() {
+	}
 
 	public Country(String name) {
-		this.name = name;
+		setName(name);
 	}
 
 	public String getName() {

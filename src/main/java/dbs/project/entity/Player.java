@@ -6,18 +6,18 @@ import javax.persistence.Entity;
 
 @Entity
 public class Player extends Person {
-	String nickname = "";
-	String club = "";
+	protected String nickname;
+	protected String club;
 
 	public Player() {
 	}
 
-	public Player(String first, String last, String nick, Date birthday,
-			String club, Integer height, Integer weight) {
-		super(first, last, birthday, height, weight);
+	public Player(String firstname, String lastname, String nick,
+			Date birthday, String club, Integer height, Integer weight) {
+		super(firstname, lastname, birthday, height, weight);
 
-		this.nickname = nick;
-		this.club = club;
+		setNickname(nick);
+		setClub(club);
 	}
 
 	public String getNickname() {
@@ -38,7 +38,7 @@ public class Player extends Person {
 
 	public String toString() {
 		return String.format("%s %s geboren am %s (Groesse: %d, Gewicht: %d)",
-				this.firstname, this.lastname, this.birthday, this.height,
-				this.weight);
+				getFirstname(), getLastname(), getBirthday(), getHeight(),
+				getWeight());
 	}
 }

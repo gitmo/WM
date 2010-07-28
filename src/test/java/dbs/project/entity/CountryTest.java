@@ -1,14 +1,16 @@
 package dbs.project.entity;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class CountryTest {
-	
+
 	Country country;
+
 	@Before
 	public void setUp() throws Exception {
 		country = new Country();

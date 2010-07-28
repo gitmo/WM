@@ -111,14 +111,14 @@ public class GroupStageService {
 	}
 
 	/**
-	 * JTable requires a TableModel for data representation
-	 * getTableModel returns the TableModel for a tournament (for the GUI)
+	 * JTable requires a TableModel for data representation getTableModel
+	 * returns the TableModel for a tournament (for the GUI)
 	 * 
 	 * @param tournament
 	 * @return
 	 */
 	public static TableModel getTableModel(Tournament tournament) {
-		List<TournamentGroup> groups = tournament.getGroupPhase().getGroups();
+		List<TournamentGroup> groups = tournament.getGroupStage().getGroups();
 		List<Team> teams = groups.get(0).getTeams();
 		List<GroupMatch> matches = groups.get(0).getMatches();
 		Vector<Vector<String>> data = new Vector<Vector<String>>();

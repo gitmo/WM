@@ -23,6 +23,7 @@ public class MatchDao extends DaoBase {
 
 	/**
 	 * saves all matches in the list
+	 * 
 	 * @param matches
 	 */
 	public static void saveAll(List<Match> matches) {

@@ -1,21 +1,25 @@
 package dbs.project.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dbs.project.dao.MatchDao;
-import dbs.project.entity.EventGoal;
-import dbs.project.entity.EventSubstitution;
 import dbs.project.entity.Match;
 import dbs.project.entity.MatchEvent;
 import dbs.project.entity.Player;
 import dbs.project.entity.Team;
+import dbs.project.entity.event.MatchEndEvent;
+import dbs.project.entity.event.player.GoalEvent;
+import dbs.project.entity.event.player.SubstitutionEvent;
 import dbs.project.exception.NewPlayerHasPlayedBefore;
+import dbs.project.exception.NoMatchWhistleEvent;
 import dbs.project.exception.NotInSameTeam;
 import dbs.project.exception.PlayerDoesNotPlay;
 import dbs.project.exception.PlayersTeamNotInMatch;
 import dbs.project.exception.TeamLineUpComplete;
 import dbs.project.exception.TiedMatch;
 import dbs.project.service.event.filter.FilterGoals;
+import dbs.project.service.event.filter.FilterMatchEnd;
 import dbs.project.service.event.filter.FilterOwnGoals;
 import dbs.project.util.Collections;
 import dbs.project.util.Tuple;
@@ -52,7 +56,7 @@ public class MatchService {
 		if (sameTeam)
 			throw new NotInSameTeam();
 
-		EventSubstitution substitution = new EventSubstitution(out, in, minute);
+		SubstitutionEvent substitution = new SubstitutionEvent(minute, out, in);
 		match.addEvent(substitution);
 
 		MatchDao.save(match);
@@ -91,7 +95,8 @@ public class MatchService {
 	 * @return
 	 */
 	public static String getResult(Match match) {
-		Tuple<Integer> goals = getGoalsByTeam(match.getHostTeam(), match);
+		Tuple<Integer, Integer> goals = getGoalsByTeam(match.getHostTeam(),
+				match);
 		return match.getHostTeam().getName() + " - "
 				+ match.getGuestTeam().getName() + " " + goals.getFirst()
 				+ " : " + goals.getSecond() + " ";
@@ -105,7 +110,7 @@ public class MatchService {
 	 * @param match
 	 * @throws PlayerDoesNotPlay
 	 */
-	public static void insertGoal(EventGoal goal, Player player, Match match)
+	public static void insertGoal(GoalEvent goal, Player player, Match match)
 			throws PlayerDoesNotPlay {
 		if (!PlayerService.playerHasPlayed(player, match))
 			throw new PlayerDoesNotPlay();
@@ -126,7 +131,7 @@ public class MatchService {
 		if (!match.isPlayed())
 			return 0;
 
-		Tuple<Integer> goals = getGoalsByTeam(team, match);
+		Tuple<Integer, Integer> goals = getGoalsByTeam(team, match);
 		if (goals.getFirst() > goals.getSecond())
 			return 3;
 		else if (goals.getFirst() == goals.getSecond())
@@ -142,8 +147,8 @@ public class MatchService {
 	 * @param match
 	 * @return
 	 */
-	public static Tuple<Integer> getGoalsByTeam(Team team, Match match) {
-		Tuple<Integer> goals = new Tuple<Integer>();
+	public static Tuple<Integer, Integer> getGoalsByTeam(Team team, Match match) {
+		Tuple<Integer, Integer> goals = new Tuple<Integer, Integer>();
 		int goalsScored, goalsAgainst;
 		List<MatchEvent> goalEvents = Collections.filter(match.getEvents(),
 				new FilterGoals());
@@ -185,5 +190,18 @@ public class MatchService {
 
 	private static boolean isTied(Match match) {
 		return getPointsByTeam(match.getHostTeam(), match) == 0 ? true : false;
+	}
+
+	public static Tuple<Integer, Integer> getFinalWhistleTime(Match match)
+			throws NoMatchWhistleEvent {
+		ArrayList<MatchEndEvent> end = new ArrayList<MatchEndEvent>();
+		Collections.filterAndChangeType(match.getEvents(),
+				new FilterMatchEnd(), end);
+
+		if (end.size() < 1)
+			throw new NoMatchWhistleEvent();
+
+		MatchEndEvent finalWhislte = end.get(end.size() - 1);
+		return finalWhislte.getMinute();
 	}
 }

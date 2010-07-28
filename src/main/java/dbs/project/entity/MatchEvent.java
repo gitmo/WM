@@ -5,54 +5,40 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.ManyToOne;
+
+import dbs.project.util.Tuple;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public abstract class MatchEvent {
 	@Id
 	@GeneratedValue
-	Long id;
-	private Integer minute = 0;
-	private Integer addTime = 0;
-	@ManyToOne
-	private Player involvedPlayer;
+	protected Long id;
+
+	protected int minute;
+	protected int additionalMinute = 0;
 
 	public MatchEvent() {
 	}
 
-	public MatchEvent(Player involvedPlayer, int minute) {
-		this.minute = minute;
-		this.involvedPlayer = involvedPlayer;
+	public MatchEvent(int minute) {
+		setMinute(minute);
 	}
 
-	public MatchEvent(Player involvedPlayer, int minute, int addTime) {
-		this.minute = minute;
-		this.involvedPlayer = involvedPlayer;
-		this.addTime = addTime;
+	public MatchEvent(int minute, int additionalTime) {
+		setMinute(minute, additionalTime);
 	}
 
-	public Integer getMinute() {
-		return minute;
+	public Tuple<Integer, Integer> getMinute() {
+		return new Tuple<Integer, Integer>(minute, additionalMinute);
 	}
 
-	public void setMinute(Integer minute) {
+	public void setMinute(int minute) {
 		this.minute = minute;
 	}
 
-	public Player getInvolvedPlayer() {
-		return involvedPlayer;
-	}
-
-	public void setInvolvedPlayer(Player involvedPlayer) {
-		this.involvedPlayer = involvedPlayer;
-	}
-
-	public void setAddTime(Integer addTime) {
-		this.addTime = addTime;
-	}
-
-	public Integer getAddTime() {
-		return addTime;
+	public void setMinute(int minute, int additionalTime) {
+		this.minute = minute;
+		this.additionalMinute = additionalTime;
 	}
 }

@@ -1,5 +1,6 @@
 package dbs.project.entity;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -14,17 +15,17 @@ import org.hibernate.annotations.CascadeType;
 public class TournamentGroup {
 	@Id
 	@GeneratedValue
-	long groupId;
+	protected long groupId;
 
-	String name;
-
-	@OneToMany
-	@Cascade(CascadeType.ALL)
-	List<Team> teams;
+	protected String name;
 
 	@OneToMany
 	@Cascade(CascadeType.ALL)
-	List<GroupMatch> matches;
+	protected List<Team> teams;
+
+	@OneToMany
+	@Cascade(CascadeType.ALL)
+	protected List<GroupMatch> matches;
 
 	public TournamentGroup() {
 	}
@@ -38,6 +39,9 @@ public class TournamentGroup {
 	}
 
 	public List<Team> getTeams() {
+		if (teams == null)
+			return new LinkedList<Team>();
+
 		return teams;
 	}
 
@@ -46,6 +50,9 @@ public class TournamentGroup {
 	}
 
 	public List<GroupMatch> getMatches() {
+		if (matches == null)
+			return new LinkedList<GroupMatch>();
+
 		return matches;
 	}
 

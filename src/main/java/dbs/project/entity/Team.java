@@ -1,6 +1,6 @@
 package dbs.project.entity;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -19,50 +19,36 @@ import org.hibernate.annotations.CascadeType;
 public class Team {
 	@Id
 	@GeneratedValue
-	Long id;
+	protected Long id;
 
-	String name = "";
+	protected String name;
 
-	/* TODO embedded */
 	@Transient
-	Map<Integer, Player> trikotNumbers;
+	protected Map<Integer, Player> trikotNumbers;
 
 	@OneToMany
 	@Cascade(CascadeType.ALL)
-	List<Advisor> advisors;
+	protected List<Advisor> advisors;
 
 	@ManyToOne
 	@Cascade(CascadeType.ALL)
-	Country country;
+	protected Country country;
 
 	@OneToMany
 	@Cascade(CascadeType.ALL)
-	List<Player> players;
+	protected List<Player> players;
 
 	public Team() {
-		this.advisors = new ArrayList<Advisor>();
-		this.players = new ArrayList<Player>();
 	}
 
 	public Team(String name, List<Player> players,
 			Map<Integer, Player> trikotNumbers, List<Advisor> advisors,
 			Country country) {
-		this.advisors = (advisors == null) ? new ArrayList<Advisor>()
-				: advisors;
-		this.country = country;
-		this.name = name;
-		this.players = (players == null) ? new ArrayList<Player>() : players;
-		this.trikotNumbers = trikotNumbers;
-	}
-
-	public String toString() {
-		// StringBuilder sb = new StringBuilder();
-		// for (Integer key : trikotNumbers.keySet()) {
-		// Player pl = trikotNumbers.get(key);
-		// sb.append(String.format("%s <%d>\n", pl, key));
-		// }
-		// return sb.toString();
-		return this.getName();
+		setName(name);
+		setPlayers(players);
+		setTrikotNumbers(trikotNumbers);
+		setAdvisors(advisors);
+		setCountry(country);
 	}
 
 	public String getName() {
@@ -74,6 +60,9 @@ public class Team {
 	}
 
 	public List<Player> getPlayers() {
+		if (players == null)
+			return new LinkedList<Player>();
+
 		return players;
 	}
 
@@ -82,6 +71,9 @@ public class Team {
 	}
 
 	public Map<Integer, Player> getTrikotNumbers() {
+		if (trikotNumbers == null)
+			return new HashMap<Integer, Player>();
+
 		return trikotNumbers;
 	}
 
@@ -90,6 +82,9 @@ public class Team {
 	}
 
 	public List<Advisor> getAdvisors() {
+		if (advisors == null)
+			return new LinkedList<Advisor>();
+
 		return advisors;
 	}
 
@@ -115,4 +110,9 @@ public class Team {
 	public boolean equals(Team obj) {
 		return (this.getName() == obj.getName()) ? true : false;
 	}
+
+	public String toString() {
+		return getName();
+	}
+
 }
