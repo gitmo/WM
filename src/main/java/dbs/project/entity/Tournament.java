@@ -7,46 +7,37 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
-import dbs.project.stage.KnockoutStage;
-
 @Entity
 public class Tournament {
 	@Id
-	private String name;
-	private Integer year;
+	protected String name;
+	protected int year;
 
 	@OneToMany
 	@Cascade(CascadeType.ALL)
-	private List<Country> hostCountries;
+	protected List<Country> hostCountries;
 
 	@ManyToOne
 	@Cascade(CascadeType.ALL)
-	private KnockoutMatch finalMatch;
+	protected KnockoutMatch finalMatch;
 
 	@ManyToOne
 	@Cascade(CascadeType.ALL)
-	private KnockoutMatch matchForThirdPlace;
-
-	@Transient
-	private KnockoutStage knockoutStage;
+	protected KnockoutMatch matchForThirdPlace;
 
 	@ManyToOne
 	@Cascade(CascadeType.ALL)
-	private GroupStage groupStage;
+	protected GroupStage groupStage;
 
 	@OneToMany
 	@Cascade(CascadeType.ALL)
-	private List<Stadium> stadiums;
+	protected List<Stadium> stadiums;
 
 	public Tournament() {
-		hostCountries = new LinkedList<Country>();
-		groupStage = new GroupStage();
-		stadiums = new LinkedList<Stadium>();
 	}
 
 	public String getName() {
@@ -58,14 +49,17 @@ public class Tournament {
 	}
 
 	public Integer getYear() {
-		return year;
+		return this.year;
 	}
 
-	public void setYear(Integer year) {
+	public void setYear(int year) {
 		this.year = year;
 	}
 
 	public List<Country> getHostCountries() {
+		if (hostCountries == null)
+			return new LinkedList<Country>();
+
 		return hostCountries;
 	}
 
@@ -73,22 +67,11 @@ public class Tournament {
 		this.hostCountries = hostCountries;
 	}
 
-	public KnockoutStage getKnockoutPhase() {
-		if (knockoutStage == null)
-			knockoutStage = new KnockoutStage(finalMatch, matchForThirdPlace);
-		return knockoutStage;
-	}
-
-	public void setKnockoutStage(KnockoutStage knockoutPhase) {
-		this.knockoutStage = knockoutPhase;
-		this.finalMatch = knockoutPhase.getFinalMatch();
-	}
-
-	public GroupStage getGroupPhase() {
+	public GroupStage getGroupStage() {
 		return groupStage;
 	}
 
-	public void setGroupPhase(GroupStage groupStage) {
+	public void setGroupStage(GroupStage groupStage) {
 		this.groupStage = groupStage;
 	}
 
@@ -103,6 +86,14 @@ public class Tournament {
 		this.stadiums = stadiums;
 	}
 
+	public KnockoutMatch getFinalMatch() {
+		return finalMatch;
+	}
+
+	public void setFinalMatch(KnockoutMatch finalMatch) {
+		this.finalMatch = finalMatch;
+	}
+
 	public void setMatchForThirdPlace(KnockoutMatch matchForThirdPlace) {
 		this.matchForThirdPlace = matchForThirdPlace;
 	}
@@ -112,20 +103,6 @@ public class Tournament {
 	}
 
 	public String toString() {
-		// StringBuilder sb = new StringBuilder();
-		//		
-		// sb.append("Name:\t" + getName() + "\n\n");
-		//		
-		// sb.append("Host:\t");
-		// for(Country country : getHostCountries())
-		// sb.append(country.getName());
-		// sb.append("\n\n");
-		//		
-		// sb.append("GroupStage: ");
-		// sb.append("\n\n");
-		// sb.append(getGroupPhase());
-		//		
-		// return sb.toString();
-		return getName();
+		return getName() + " " + getYear();
 	}
 }

@@ -86,7 +86,8 @@ public class StandingRow implements Comparable<StandingRow> {
 		StringBuilder sb = new StringBuilder();
 		sb.append(String.format("%15s\t\t", this.getTeamName()));
 		sb.append(this.getPoints() + "\t\t");
-		sb.append(this.getGoalsScored() + ":" + this.getGoalsAgainst()
+		sb
+				.append(this.getGoalsScored() + ":" + this.getGoalsAgainst()
 						+ "\t\t");
 		sb.append(this.getPlayedGames() + "\n");
 
@@ -107,7 +108,8 @@ public class StandingRow implements Comparable<StandingRow> {
 					continue;
 
 				// Ermittelt die Tore
-				Tuple<Integer> goals = MatchService.getGoalsByTeam(team, match);
+				Tuple<Integer, Integer> goals = MatchService.getGoalsByTeam(
+						team, match);
 				teamRow.addGoalsScored(goals.getFirst());
 				teamRow.addGoalsAgainst(goals.getSecond());
 

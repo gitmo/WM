@@ -1,5 +1,6 @@
 package dbs.project.entity;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -14,13 +15,14 @@ import org.hibernate.annotations.CascadeType;
 public class GroupStage {
 	@Id
 	@GeneratedValue
-	private long id;
+	protected long id;
 
 	@OneToMany
 	@Cascade(CascadeType.ALL)
-	private List<TournamentGroup> groups;
+	protected List<TournamentGroup> groups;
 
 	public GroupStage() {
+		super();
 	}
 
 	public long getId() {
@@ -32,6 +34,9 @@ public class GroupStage {
 	}
 
 	public List<TournamentGroup> getGroups() {
+		if (this.groups == null)
+			return new LinkedList<TournamentGroup>();
+
 		return this.groups;
 	}
 

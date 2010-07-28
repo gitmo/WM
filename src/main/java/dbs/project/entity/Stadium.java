@@ -5,19 +5,38 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 @Entity
 public class Stadium {
 	@Id
 	@GeneratedValue
-	long stadiumId;
+	protected long stadiumId;
 
-	private String city;
+	protected String name;
+
+	protected String city;
 
 	@ManyToOne
-	private Country country;
-	private Integer capacity;
+	@Cascade(CascadeType.ALL)
+	protected Country country;
+
+	protected int capacity;
 
 	public Stadium() {
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
 	}
 
 	public String getCity() {
@@ -46,6 +65,6 @@ public class Stadium {
 
 	@Override
 	public String toString() {
-		return getCity();
+		return getName();
 	}
 }

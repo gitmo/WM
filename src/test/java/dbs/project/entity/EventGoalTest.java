@@ -1,6 +1,7 @@
 package dbs.project.entity;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.After;
 import org.junit.Before;
@@ -9,6 +10,7 @@ import org.junit.Test;
 public class EventGoalTest {
 
 	EventGoal eventGoal;
+
 	@Before
 	public void setUp() throws Exception {
 		eventGoal = new EventGoal();
@@ -26,7 +28,6 @@ public class EventGoalTest {
 		assertEquals(team, eventGoal.getScorringTeam());
 	}
 
-
 	@Test
 	public void testEventGoal() {
 		assertNotNull(eventGoal);
@@ -40,8 +41,8 @@ public class EventGoalTest {
 		assertNotNull(eventGoal);
 		assertEquals(player, eventGoal.getInvolvedPlayer());
 		assertEquals(team, eventGoal.getScorringTeam());
-		assertEquals((Integer)120, eventGoal.getMinute());
-		assertEquals((Integer)2, eventGoal.getAddTime());
+		assertEquals((Integer) 120, eventGoal.getMinute().getFirst());
+		assertEquals((Integer) 2, eventGoal.getMinute().getSecond());
 	}
 
 }

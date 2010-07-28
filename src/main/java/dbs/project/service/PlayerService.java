@@ -5,9 +5,9 @@ import java.util.List;
 
 import dbs.project.dao.EventSubstitutionDao;
 import dbs.project.entity.EventSubstitution;
-import dbs.project.entity.KnockoutMatch;
 import dbs.project.entity.Match;
 import dbs.project.entity.Player;
+import dbs.project.exception.NoMatchWhistleEvent;
 import dbs.project.exception.PlayerDoesNotPlay;
 import dbs.project.service.event.filter.FilterSubstitutions;
 import dbs.project.util.Collections;
@@ -22,23 +22,25 @@ public class PlayerService {
 	 * @param match
 	 * @return
 	 * @throws PlayerDoesNotPlay
+	 * @throws NoMatchWhistleEvent
 	 */
-	public static Tuple<Tuple<Integer>> playerOnField(Player player, Match match)
-			throws PlayerDoesNotPlay {
-		Tuple<Integer> in = null;
-		Tuple<Integer> out = null;
+	public static Tuple<Tuple<Integer, Integer>, Tuple<Integer, Integer>> playerOnField(
+			Player player, Match match) throws PlayerDoesNotPlay,
+			NoMatchWhistleEvent {
+		Tuple<Integer, Integer> in = null;
+		Tuple<Integer, Integer> out = null;
 		List<EventSubstitution> subs = new ArrayList<EventSubstitution>();
 		Collections.filterAndChangeType(match.getEvents(),
 				new FilterSubstitutions(), subs);
 
 		if (match.getGuestLineup().contains(player))
-			in = new Tuple<Integer>(0, 0);
+			in = new Tuple<Integer, Integer>(0, 0);
 		else if (match.getHostLineup().contains(player))
-			in = new Tuple<Integer>(0, 0);
+			in = new Tuple<Integer, Integer>(0, 0);
 		else {
 			for (EventSubstitution es : subs) {
 				if (es.getNewPlayer() == player) {
-					in = new Tuple<Integer>(es.getMinute(), es.getAddTime());
+					in = es.getMinute();
 					break;
 				}
 			}
@@ -49,18 +51,16 @@ public class PlayerService {
 
 		for (EventSubstitution es : subs) {
 			if (es.getInvolvedPlayer() == player) {
-				out = new Tuple<Integer>(es.getMinute(), es.getAddTime());
-				return new Tuple<Tuple<Integer>>(in, out);
+				out = es.getMinute();
+				return new Tuple<Tuple<Integer, Integer>, Tuple<Integer, Integer>>(
+						in, out);
 			}
 		}
 
-		if (match.getClass() == KnockoutMatch.class) {
-			if (((KnockoutMatch) match).getExtraTime())
-				out = new Tuple<Integer>(120, ((KnockoutMatch) match)
-						.getAddTimeForth());
-		} else
-			out = new Tuple<Integer>(90, match.getAddTimeSecond());
-		return new Tuple<Tuple<Integer>>(in, out);
+		out = MatchService.getFinalWhistleTime(match);
+
+		return new Tuple<Tuple<Integer, Integer>, Tuple<Integer, Integer>>(in,
+				out);
 
 	}
 

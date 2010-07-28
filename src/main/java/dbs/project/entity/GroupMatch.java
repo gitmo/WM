@@ -7,6 +7,7 @@ import javax.persistence.InheritanceType;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class GroupMatch extends Match {
+
 	public GroupMatch() {
 		super();
 	}

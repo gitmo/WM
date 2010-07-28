@@ -1,15 +1,14 @@
 package dbs.project.main.gui;
 
 import java.awt.BorderLayout;
-
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import javax.swing.ImageIcon;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,12 +27,12 @@ import javax.swing.plaf.DimensionUIResource;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeModel;
 
-import dbs.project.dev.TournamentGenerator;
 import dbs.project.entity.Stadium;
 import dbs.project.entity.Tournament;
 import dbs.project.entity.TournamentGroup;
+import dbs.project.generator.TournamentGenerator;
 import dbs.project.service.GroupService;
-import dbs.project.service.KnockoutStageService;
+import dbs.project.service.KnockoutMatchService;
 import dbs.project.service.TournamentService;
 import dbs.project.service.group.StandingRow;
 
@@ -72,9 +71,8 @@ public class AppGui extends JFrame {
 
 		this.add(mainPanel);
 	}
-	
-	protected ImageIcon createImageIcon(String path,
-            String description) {
+
+	protected ImageIcon createImageIcon(String path, String description) {
 		java.net.URL imgURL = getClass().getResource(path);
 		if (imgURL != null) {
 			return new ImageIcon(imgURL, description);
@@ -97,15 +95,16 @@ public class AppGui extends JFrame {
 		knockoutTree = new JTree();
 		tabbComponents.add("Finalrunde", knockoutTree);
 		knockoutTree.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		ImageIcon icon = createImageIcon("../../../../images/fussball.jpg","Fussballspiel");
+		ImageIcon icon = createImageIcon("../../../../images/fussball.jpg",
+				"Fussballspiel");
 		if (icon != null) {
-		    DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
-		    renderer.setLeafIcon(icon);
-		    renderer.setOpenIcon(icon);
-		    renderer.setClosedIcon(icon);
-		    knockoutTree.setCellRenderer(renderer);
+			DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
+			renderer.setLeafIcon(icon);
+			renderer.setOpenIcon(icon);
+			renderer.setClosedIcon(icon);
+			knockoutTree.setCellRenderer(renderer);
 		}
-	
+
 		// Statistik
 		statistic = new JPanel();
 		statistic.setLayout(new BoxLayout(statistic, BoxLayout.Y_AXIS));
@@ -125,7 +124,7 @@ public class AppGui extends JFrame {
 	}
 
 	private void refreshTabs(Tournament tournament) {
-		List<TournamentGroup> groups = tournament.getGroupPhase().getGroups();
+		List<TournamentGroup> groups = tournament.getGroupStage().getGroups();
 
 		// Updates tables
 		refreshTables(groups);
@@ -197,8 +196,7 @@ public class AppGui extends JFrame {
 		groupStageComponents.removeAll();
 		for (TournamentGroup group : groups) {
 			JLabel groupLabel = new JLabel(group.getName());
-			groupLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10,
-					0));
+			groupLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
 
 			JPanel tablePanel = new JPanel();
 			JTable tmpJTable = new JTable();
@@ -232,8 +230,8 @@ public class AppGui extends JFrame {
 	}
 
 	private void refreshTree(Tournament tournament) {
-		TreeModel treeModel = KnockoutStageService.getAsTreeModel(tournament
-				.getKnockoutPhase());
+		TreeModel treeModel = KnockoutMatchService.getAsTreeModel(tournament
+				.getFinalMatch());
 		knockoutTree.setModel(treeModel);
 	}
 

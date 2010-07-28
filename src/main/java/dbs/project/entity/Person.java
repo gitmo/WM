@@ -1,6 +1,7 @@
 package dbs.project.entity;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -18,29 +19,32 @@ import org.hibernate.annotations.CascadeType;
 public abstract class Person {
 	@Id
 	@GeneratedValue
-	Long id;
-	Integer height = 0;
-	Integer weight = 0;
-	String firstname = "";
-	String lastname = "";
-	Date birthday;
+	protected Long id;
+
+	protected Integer height = 0;
+
+	protected Integer weight = 0;
+
+	protected String firstname;
+
+	protected String lastname;
+
+	protected Date birthday;
+
 	@OneToMany
 	@Cascade(CascadeType.ALL)
-	List<Team> teams;
+	protected List<Team> teams;
 
 	public Person() {
 	}
 
-	public Person(String first, String last, Date birth, int height, int weight) {
-		this.height = height;
-		this.weight = weight;
-		firstname = first;
-		lastname = last;
-		this.birthday = birth;
-	}
-
-	public String toString() {
-		return String.format("%s %s", firstname, lastname);
+	public Person(String firstname, String lastname, Date birthday, int height,
+			int weight) {
+		setFirstname(firstname);
+		setLastname(lastname);
+		setBirthday(birthday);
+		setHeight(height);
+		setWeight(weight);
 	}
 
 	public Integer getHeight() {
@@ -84,10 +88,24 @@ public abstract class Person {
 	}
 
 	public List<Team> getTeams() {
+		if (teams == null)
+			return new LinkedList<Team>();
+
 		return teams;
+	}
+
+	public void addTeam(Team team) {
+		if (teams == null)
+			teams = new LinkedList<Team>();
+
+		teams.add(team);
 	}
 
 	public void setTeams(List<Team> teams) {
 		this.teams = teams;
+	}
+
+	public String toString() {
+		return String.format("%s %s", firstname, lastname);
 	}
 }

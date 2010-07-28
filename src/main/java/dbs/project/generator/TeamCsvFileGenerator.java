@@ -1,4 +1,4 @@
-package dbs.project.dev;
+package dbs.project.generator;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

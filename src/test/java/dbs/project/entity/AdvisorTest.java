@@ -1,6 +1,7 @@
 package dbs.project.entity;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.Date;
 
@@ -11,14 +12,15 @@ import org.junit.Test;
 public class AdvisorTest {
 
 	Advisor advisor;
+
 	@Before
 	public void setUp() throws Exception {
-	advisor = new Advisor();
+		advisor = new Advisor();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-	advisor = null;
+		advisor = null;
 	}
 
 	@Test
@@ -28,12 +30,13 @@ public class AdvisorTest {
 
 	@Test
 	public void testAdvisorStringStringDateIntInt() {
-		advisor = new Advisor("firstname", "lastname", new Date(100), 12, 23, "Trainer");
+		advisor = new Advisor("firstname", "lastname", new Date(100), 12, 23,
+				"Trainer");
 		assertNotNull(advisor);
-		assertEquals("firstname",advisor.getFirstname());
-		assertEquals("lastname",advisor.getLastname());
-		assertEquals(new Date(100),advisor.getBirthday());
-		assertEquals((Integer) 12,advisor.getHeight());
+		assertEquals("firstname", advisor.getFirstname());
+		assertEquals("lastname", advisor.getLastname());
+		assertEquals(new Date(100), advisor.getBirthday());
+		assertEquals((Integer) 12, advisor.getHeight());
 		assertEquals((Integer) 23, advisor.getWeight());
 	}
 

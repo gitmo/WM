@@ -1,4 +1,4 @@
-package dbs.project.dev;
+package dbs.project.generator;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -67,11 +67,13 @@ public class PlayerCsvFileGenerator {
 
 			System.out.println("Generated Player: " + lastname);
 			if (alias % 17 == 0) {
-				bw.write(", " + lastname + ", " + formatter.format(birthday.getTime()) + ", " + height + ", "
-						+ weight + "\n");
+				bw.write(", " + lastname + ", "
+						+ formatter.format(birthday.getTime()) + ", " + height
+						+ ", " + weight + "\n");
 			} else {
-				bw.write(firstname + ", " + lastname + ", " + formatter.format(birthday.getTime()) + ", "
-						+ height + ", " + weight + "\n");
+				bw.write(firstname + ", " + lastname + ", "
+						+ formatter.format(birthday.getTime()) + ", " + height
+						+ ", " + weight + "\n");
 			}
 		}
 		bw.close();

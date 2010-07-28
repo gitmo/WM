@@ -11,8 +11,7 @@ public class GroupService {
 	/**
 	 * print Standings of group
 	 * 
-	 * Style: 
-	 * rank \t Team \t points \t scoredGoals:receivedGoals \t playedGames
+	 * Style: rank \t Team \t points \t scoredGoals:receivedGoals \t playedGames
 	 * 
 	 * @param group
 	 */
@@ -28,8 +27,7 @@ public class GroupService {
 	/**
 	 * returns a string with all games in a group
 	 * 
-	 * Style:
-	 * HostTeam vs GuestTeam am Date in Stadion
+	 * Style: HostTeam vs GuestTeam am Date in Stadion
 	 * 
 	 * @param group
 	 * @return

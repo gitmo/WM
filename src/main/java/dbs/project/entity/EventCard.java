@@ -4,19 +4,21 @@ import javax.persistence.Entity;
 
 @Entity
 public class EventCard extends MatchEvent {
-	private String color;
+	protected String color;
 
-	public EventCard() {}
+	public EventCard() {
+		super();
+	}
 
 	public EventCard(Player involvedPlayer, int minute, String color) {
 		super(involvedPlayer, minute);
-		this.color = color;
+		setColor(color);
 	}
 
-	public EventCard(Player involvedPlayer, int minute, int addTime,
-			String color) {
-		super(involvedPlayer, minute, addTime);
-		this.color = color;
+	public EventCard(Player involvedPlayer, String color, int minute,
+			int additionalTime) {
+		super(involvedPlayer, minute, additionalTime);
+		setColor(color);
 	}
 
 	public String getColor() {

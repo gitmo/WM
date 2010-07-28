@@ -6,11 +6,14 @@ import javax.persistence.Entity;
 
 @Entity
 public class Advisor extends Person {
-	private String task;
+	protected String task;
 
-	public Advisor() {}
+	public Advisor() {
+		super();
+	}
 
-	public Advisor(String firstname, String lastname, Date birthday, int height, int weight, String task) {
+	public Advisor(String firstname, String lastname, Date birthday,
+			int height, int weight, String task) {
 		super(firstname, lastname, birthday, height, weight);
 		setTask(task);
 	}
