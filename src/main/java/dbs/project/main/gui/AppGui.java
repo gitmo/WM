@@ -289,6 +289,7 @@ public class AppGui extends JFrame {
 							.getModel().getElementAt(i);
 					GroupStageGenerator.enterResults(selectedTournament
 							.getGroupStage());
+					refreshTabs(selectedTournament);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
