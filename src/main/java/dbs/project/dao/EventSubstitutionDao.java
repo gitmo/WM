@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.hibernate.criterion.Restrictions;
 
-import dbs.project.entity.EventSubstitution;
 import dbs.project.entity.Match;
 import dbs.project.entity.Player;
+import dbs.project.entity.event.player.SubstitutionEvent;
 import dbs.project.service.event.filter.FilterSubstitutions;
 import dbs.project.util.Collections;
 
@@ -18,7 +18,7 @@ public class EventSubstitutionDao extends DaoBase {
 	 * 
 	 * @param es
 	 */
-	public static void save(EventSubstitution es) {
+	public static void save(SubstitutionEvent es) {
 		session.beginTransaction();
 		session.save(es);
 		session.getTransaction().commit();
@@ -30,8 +30,8 @@ public class EventSubstitutionDao extends DaoBase {
 	 * @param List
 	 *            <EventSubstitution>
 	 */
-	public static void saveAll(List<EventSubstitution> les) {
-		for (EventSubstitution es : les) {
+	public static void saveAll(List<SubstitutionEvent> les) {
+		for (SubstitutionEvent es : les) {
 			save(es);
 		}
 	}
@@ -43,9 +43,9 @@ public class EventSubstitutionDao extends DaoBase {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static List<EventSubstitution> findByPlayer(Player player) {
-		return (List<EventSubstitution>) session.createCriteria(
-				EventSubstitution.class).add(
+	public static List<SubstitutionEvent> findByPlayer(Player player) {
+		return (List<SubstitutionEvent>) session.createCriteria(
+				SubstitutionEvent.class).add(
 				Restrictions.or(Restrictions.eq("newPlayer", player),
 						Restrictions.eq("involvedPlayer", player))).list();
 	}
@@ -56,8 +56,8 @@ public class EventSubstitutionDao extends DaoBase {
 	 * @param match
 	 * @return
 	 */
-	public static List<EventSubstitution> findByMatch(Match match) {
-		List<EventSubstitution> res = new ArrayList<EventSubstitution>();
+	public static List<SubstitutionEvent> findByMatch(Match match) {
+		List<SubstitutionEvent> res = new ArrayList<SubstitutionEvent>();
 		Collections.filterAndChangeType(match.getEvents(),
 				new FilterSubstitutions(), res);
 		return res;
@@ -70,9 +70,9 @@ public class EventSubstitutionDao extends DaoBase {
 	 * @param match
 	 * @return
 	 */
-	public static List<EventSubstitution> findByPlayerAndMatch(Player player,
+	public static List<SubstitutionEvent> findByPlayerAndMatch(Player player,
 			Match match) {
-		List<EventSubstitution> res = findByPlayer(player);
+		List<SubstitutionEvent> res = findByPlayer(player);
 		res.retainAll(findByMatch(match));
 		return res;
 

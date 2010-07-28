@@ -2,9 +2,9 @@ package dbs.project.service.event.filter;
 
 import java.util.List;
 
-import dbs.project.entity.EventGoal;
 import dbs.project.entity.MatchEvent;
 import dbs.project.entity.Team;
+import dbs.project.entity.event.player.GoalEvent;
 import dbs.project.util.Filter;
 
 public class FilterOwnGoals implements Filter<MatchEvent> {
@@ -13,9 +13,9 @@ public class FilterOwnGoals implements Filter<MatchEvent> {
 		if (!new FilterGoals().apply(goal))
 			return false;
 
-		List<Team> teams = (List<Team>) goal.getInvolvedPlayer().getTeams();
+		List<Team> teams = ((GoalEvent) goal).getInvolvedPlayer().getTeams();
 
-		return teams.contains(((EventGoal) goal).getScorringTeam()) ? true
+		return teams.contains(((GoalEvent) goal).getScorringTeam()) ? true
 				: false;
 	}
 

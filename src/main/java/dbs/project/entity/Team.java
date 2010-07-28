@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -22,7 +23,7 @@ public class Team {
 
 	protected String name;
 
-	@OneToMany
+	@Transient
 	protected Map<Integer, Player> trikotNumbers;
 
 	@OneToMany

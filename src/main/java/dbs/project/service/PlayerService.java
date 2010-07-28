@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dbs.project.dao.EventSubstitutionDao;
-import dbs.project.entity.EventSubstitution;
 import dbs.project.entity.Match;
 import dbs.project.entity.Player;
+import dbs.project.entity.event.player.SubstitutionEvent;
 import dbs.project.exception.NoMatchWhistleEvent;
 import dbs.project.exception.PlayerDoesNotPlay;
 import dbs.project.service.event.filter.FilterSubstitutions;
@@ -29,7 +29,7 @@ public class PlayerService {
 			NoMatchWhistleEvent {
 		Tuple<Integer, Integer> in = null;
 		Tuple<Integer, Integer> out = null;
-		List<EventSubstitution> subs = new ArrayList<EventSubstitution>();
+		List<SubstitutionEvent> subs = new ArrayList<SubstitutionEvent>();
 		Collections.filterAndChangeType(match.getEvents(),
 				new FilterSubstitutions(), subs);
 
@@ -38,7 +38,7 @@ public class PlayerService {
 		else if (match.getHostLineup().contains(player))
 			in = new Tuple<Integer, Integer>(0, 0);
 		else {
-			for (EventSubstitution es : subs) {
+			for (SubstitutionEvent es : subs) {
 				if (es.getNewPlayer() == player) {
 					in = es.getMinute();
 					break;
@@ -49,7 +49,7 @@ public class PlayerService {
 		if (in == null)
 			throw new PlayerDoesNotPlay();
 
-		for (EventSubstitution es : subs) {
+		for (SubstitutionEvent es : subs) {
 			if (es.getInvolvedPlayer() == player) {
 				out = es.getMinute();
 				return new Tuple<Tuple<Integer, Integer>, Tuple<Integer, Integer>>(

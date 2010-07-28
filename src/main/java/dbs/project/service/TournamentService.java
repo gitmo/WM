@@ -9,13 +9,13 @@ import java.util.TreeSet;
 import javax.swing.ListModel;
 
 import dbs.project.dao.TournamentDao;
-import dbs.project.entity.EventCard;
-import dbs.project.entity.EventGoal;
 import dbs.project.entity.KnockoutMatch;
 import dbs.project.entity.Match;
 import dbs.project.entity.Player;
 import dbs.project.entity.Team;
 import dbs.project.entity.Tournament;
+import dbs.project.entity.event.player.CardEvent;
+import dbs.project.entity.event.player.GoalEvent;
 import dbs.project.exception.TiedMatch;
 import dbs.project.exception.TournamentNotOver;
 import dbs.project.service.event.filter.FilterCards;
@@ -82,10 +82,10 @@ public class TournamentService {
 
 		ArrayList<Topscorer> topscorer = new ArrayList<Topscorer>();
 		for (Match match : allMatches) {
-			List<EventGoal> allGoals = new LinkedList<EventGoal>();
+			List<GoalEvent> allGoals = new LinkedList<GoalEvent>();
 			dbs.project.util.Collections.filterAndChangeType(match.getEvents(),
 					new FilterGoals(), allGoals);
-			for (EventGoal eventGoal : allGoals) {
+			for (GoalEvent eventGoal : allGoals) {
 				int i = topscorer.indexOf(eventGoal.getInvolvedPlayer());
 				topscorer.get(i).goals++;
 			}
@@ -128,10 +128,10 @@ public class TournamentService {
 
 		ArrayList<PlayerWithCards> playersWithCards = new ArrayList<PlayerWithCards>();
 		for (Match match : allMatches) {
-			List<EventCard> allCards = new LinkedList<EventCard>();
+			List<CardEvent> allCards = new LinkedList<CardEvent>();
 			dbs.project.util.Collections.filterAndChangeType(match.getEvents(),
 					new FilterCards(), allCards);
-			for (EventCard eventCard : allCards) {
+			for (CardEvent eventCard : allCards) {
 				int i = playersWithCards.indexOf(eventCard.getInvolvedPlayer());
 				playersWithCards.get(i).cards++;
 			}

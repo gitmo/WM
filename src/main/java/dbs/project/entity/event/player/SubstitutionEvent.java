@@ -1,4 +1,4 @@
-package dbs.project.entity;
+package dbs.project.entity.event.player;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -6,24 +6,27 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import dbs.project.entity.Player;
+import dbs.project.entity.event.PlayerEvent;
+
 @Entity
-public class EventSubstitution extends MatchEvent {
+public class SubstitutionEvent extends PlayerEvent {
 	@ManyToOne
 	@Cascade(CascadeType.ALL)
 	protected Player newPlayer;
 
-	public EventSubstitution() {
+	public SubstitutionEvent() {
 		super();
 	}
 
-	public EventSubstitution(Player out, Player in, int minute) {
-		super(out, minute);
+	public SubstitutionEvent(int minute,Player out, Player in) {
+		super(minute,out);
 		setNewPlayer(in);
 	}
 
-	public EventSubstitution(Player out, Player in, int minute,
-			int additionalTime) {
-		super(out, minute, additionalTime);
+	public SubstitutionEvent(int minute,
+			int additionalTime,Player out, Player in) {
+		super(minute, additionalTime,out);
 		setNewPlayer(in);
 	}
 

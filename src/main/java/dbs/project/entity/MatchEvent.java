@@ -5,15 +5,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.ManyToOne;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 import dbs.project.util.Tuple;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public abstract class MatchEvent {
 	@Id
 	@GeneratedValue
@@ -22,20 +18,14 @@ public abstract class MatchEvent {
 	protected int minute;
 	protected int additionalMinute = 0;
 
-	@ManyToOne
-	@Cascade(CascadeType.ALL)
-	protected Player involvedPlayer;
-
 	public MatchEvent() {
 	}
 
-	public MatchEvent(Player involvedPlayer, int minute) {
-		setInvolvedPlayer(involvedPlayer);
+	public MatchEvent(int minute) {
 		setMinute(minute);
 	}
 
-	public MatchEvent(Player involvedPlayer, int minute, int additionalTime) {
-		setInvolvedPlayer(involvedPlayer);
+	public MatchEvent(int minute, int additionalTime) {
 		setMinute(minute, additionalTime);
 	}
 
@@ -50,13 +40,5 @@ public abstract class MatchEvent {
 	public void setMinute(int minute, int additionalTime) {
 		this.minute = minute;
 		this.additionalMinute = additionalTime;
-	}
-
-	public Player getInvolvedPlayer() {
-		return involvedPlayer;
-	}
-
-	public void setInvolvedPlayer(Player involvedPlayer) {
-		this.involvedPlayer = involvedPlayer;
 	}
 }

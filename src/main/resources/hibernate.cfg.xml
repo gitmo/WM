@@ -15,9 +15,6 @@
         
         <mapping class="dbs.project.entity.Advisor" />
         <mapping class="dbs.project.entity.Country" />
-        <mapping class="dbs.project.entity.EventCard" />
-        <mapping class="dbs.project.entity.EventGoal" />
-        <mapping class="dbs.project.entity.EventSubstitution" />
         <mapping class="dbs.project.entity.TournamentGroup" />
         <mapping class="dbs.project.entity.GroupStage" />
         <mapping class="dbs.project.entity.GroupMatch" />
@@ -29,5 +26,12 @@
         <mapping class="dbs.project.entity.Stadium" />
         <mapping class="dbs.project.entity.Team" />
         <mapping class="dbs.project.entity.Tournament" />
+        
+        
+        <mapping class="dbs.project.entity.event.MatchEndEvent" />
+        <mapping class="dbs.project.entity.event.PlayerEvent" />
+        <mapping class="dbs.project.entity.event.player.CardEvent" />
+        <mapping class="dbs.project.entity.event.player.GoalEvent" />
+        <mapping class="dbs.project.entity.event.player.SubstitutionEvent" />
     </session-factory>
 </hibernate-configuration>

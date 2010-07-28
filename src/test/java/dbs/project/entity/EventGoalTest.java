@@ -7,13 +7,15 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import dbs.project.entity.event.player.GoalEvent;
+
 public class EventGoalTest {
 
-	EventGoal eventGoal;
+	GoalEvent eventGoal;
 
 	@Before
 	public void setUp() throws Exception {
-		eventGoal = new EventGoal();
+		eventGoal = new GoalEvent();
 	}
 
 	@After
@@ -37,7 +39,7 @@ public class EventGoalTest {
 	public void testEventGoalPlayerTeamIntInt() {
 		Player player = new Player();
 		Team team = new Team();
-		eventGoal = new EventGoal(player, team, 120, 2);
+		eventGoal = new GoalEvent(120, 2, player, team);
 		assertNotNull(eventGoal);
 		assertEquals(player, eventGoal.getInvolvedPlayer());
 		assertEquals(team, eventGoal.getScorringTeam());

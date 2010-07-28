@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dbs.project.dao.MatchDao;
-import dbs.project.entity.EventGoal;
-import dbs.project.entity.EventMatchEnd;
-import dbs.project.entity.EventSubstitution;
 import dbs.project.entity.Match;
 import dbs.project.entity.MatchEvent;
 import dbs.project.entity.Player;
 import dbs.project.entity.Team;
+import dbs.project.entity.event.MatchEndEvent;
+import dbs.project.entity.event.player.GoalEvent;
+import dbs.project.entity.event.player.SubstitutionEvent;
 import dbs.project.exception.NewPlayerHasPlayedBefore;
 import dbs.project.exception.NoMatchWhistleEvent;
 import dbs.project.exception.NotInSameTeam;
@@ -56,7 +56,7 @@ public class MatchService {
 		if (sameTeam)
 			throw new NotInSameTeam();
 
-		EventSubstitution substitution = new EventSubstitution(out, in, minute);
+		SubstitutionEvent substitution = new SubstitutionEvent(minute, out, in);
 		match.addEvent(substitution);
 
 		MatchDao.save(match);
@@ -110,7 +110,7 @@ public class MatchService {
 	 * @param match
 	 * @throws PlayerDoesNotPlay
 	 */
-	public static void insertGoal(EventGoal goal, Player player, Match match)
+	public static void insertGoal(GoalEvent goal, Player player, Match match)
 			throws PlayerDoesNotPlay {
 		if (!PlayerService.playerHasPlayed(player, match))
 			throw new PlayerDoesNotPlay();
@@ -194,14 +194,14 @@ public class MatchService {
 
 	public static Tuple<Integer, Integer> getFinalWhistleTime(Match match)
 			throws NoMatchWhistleEvent {
-		ArrayList<EventMatchEnd> end = new ArrayList<EventMatchEnd>();
+		ArrayList<MatchEndEvent> end = new ArrayList<MatchEndEvent>();
 		Collections.filterAndChangeType(match.getEvents(),
 				new FilterMatchEnd(), end);
 
 		if (end.size() < 1)
 			throw new NoMatchWhistleEvent();
 
-		EventMatchEnd finalWhislte = end.get(end.size() - 1);
+		MatchEndEvent finalWhislte = end.get(end.size() - 1);
 		return finalWhislte.getMinute();
 	}
 }

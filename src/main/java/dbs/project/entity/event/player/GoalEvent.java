@@ -1,4 +1,4 @@
-package dbs.project.entity;
+package dbs.project.entity.event.player;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -6,23 +6,27 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import dbs.project.entity.Player;
+import dbs.project.entity.Team;
+import dbs.project.entity.event.PlayerEvent;
+
 @Entity
-public class EventGoal extends MatchEvent {
+public class GoalEvent extends PlayerEvent {
 	@ManyToOne
 	@Cascade(CascadeType.ALL)
 	protected Team scorringTeam;
 
-	public EventGoal() {
+	public GoalEvent() {
 		super();
 	}
 
-	public EventGoal(Player player, Team team, int minute) {
-		super(player, minute);
+	public GoalEvent(int minute,Player player, Team team) {
+		super(minute, player);
 		setScorringTeam(team);
 	}
 
-	public EventGoal(Player player, Team team, int minute, int additionalTime) {
-		super(player, minute, additionalTime);
+	public GoalEvent(int minute, int additionalTime,Player player, Team team) {
+		super(minute, additionalTime,player);
 		setScorringTeam(team);
 	}
 
