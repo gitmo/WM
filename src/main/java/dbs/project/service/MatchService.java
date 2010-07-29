@@ -210,6 +210,7 @@ public class MatchService {
 
 	public static MatchMinute getFinalWhistleTime(Match match)
 			throws NoMatchWhistleEvent {
+
 		ArrayList<MatchEndEvent> end = new ArrayList<MatchEndEvent>();
 		Collections.filterAndChangeType(match.getEvents(),
 				new FilterMatchEndEvent(), end);
