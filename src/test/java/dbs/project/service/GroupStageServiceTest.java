@@ -11,6 +11,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import dbs.project.dao.TournamentDao;
 import dbs.project.entity.GroupMatch;
 import dbs.project.entity.Tournament;
 import dbs.project.helper.TestHelper;
@@ -21,11 +22,13 @@ public class GroupStageServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		tournament = TestHelper.manualTournament();
+		tournament = TestHelper.tournament();
+		TournamentDao.save(tournament);
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		TournamentDao.delete(tournament);
 		tournament = null;
 	}
 
@@ -49,7 +52,7 @@ public class GroupStageServiceTest {
 		List<GroupMatch> groupMatches = GroupStageService
 				.getAllMatches(tournament.getGroupStage());
 
-		List<GroupMatch> manualGroupMatchs = TestHelper.manualGroupMatches();
+		List<GroupMatch> manualGroupMatchs = TestHelper.groups().get(0).getMatches();
 
 		groupMatches.containsAll(manualGroupMatchs);
 

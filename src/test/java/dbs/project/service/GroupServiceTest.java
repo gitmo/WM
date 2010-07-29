@@ -13,6 +13,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import dbs.project.dao.TournamentGroupDao;
 import dbs.project.entity.GroupMatch;
 import dbs.project.entity.Stadium;
 import dbs.project.entity.Team;
@@ -112,6 +113,8 @@ public class GroupServiceTest {
 
 		group.setTeams(teams);
 		group.setMatches(matchs);
+		
+		TournamentGroupDao.save(group);
 
 	}
 

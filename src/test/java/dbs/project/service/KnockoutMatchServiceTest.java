@@ -20,7 +20,7 @@ public class KnockoutMatchServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		finalMatch = TestHelper.manualKnockoutMatches();
+		finalMatch = TestHelper.knockoutMatch();
 	}
 
 	@After

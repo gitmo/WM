@@ -10,78 +10,44 @@ import org.junit.Before;
 import org.junit.Test;
 
 import dbs.project.collections.filter.FilterSubstitutionEvent;
-import dbs.project.entity.GroupMatch;
-import dbs.project.entity.Match;
-import dbs.project.entity.Player;
-import dbs.project.entity.Team;
-import dbs.project.entity.event.player.LineUpEvent;
+import dbs.project.dao.MatchDao;
+import dbs.project.entity.KnockoutMatch;
 import dbs.project.entity.event.player.SubstitutionEvent;
+import dbs.project.helper.TestHelper;
 import dbs.project.util.Collections;
 
 public class MatchServiceTest {
 
-	Match match;
-	Player team1Player1;
-	Player team1Player2;
-	Player team1Player3;
-	Player team2Player1;
-	Player team2Player2;
-	Player team2Player3;
-	
-	Team team1;
-	Team team2;
+	KnockoutMatch match;
 	
 	@Before
 	public void setUp() throws Exception {
-		team1Player1 = new Player("team1", "player1", "t1p1", null, null, 11, 101);
-		team1Player2 = new Player("team1", "player2", "t1p2", null, null, 12, 102);
-		team1Player3 = new Player("team1", "player3", "t1p3", null, null, 13, 102);
-		List<Player> team1players = new ArrayList<Player>();
-		team1players.add(team1Player1);
-		team1players.add(team1Player2);
-		team1players.add(team1Player3);
-		
-		team2Player1 = new Player("team2", "player1", "t2p1", null, null, 21, 201);
-		team2Player2 = new Player("team2", "player2", "t2p2", null, null, 22, 202);
-		team2Player3 = new Player("team2", "player3", "t2p3", null, null, 23, 203);
-		List<Player> team2players = new ArrayList<Player>();
-		team2players.add(team2Player1);
-		team2players.add(team2Player2);
-		team2players.add(team2Player3);
-		
-		
-		team1 = new Team("team1", team1players, null, null, null);
-		team2 = new Team("team2", team2players, null, null, null);
-		
-		match = new GroupMatch();
-		match.setHostTeam(team1);
-		match.setGuestTeam(team2);
+		match = TestHelper.match();
+		MatchDao.save(match);
 	}
 	
 	@After
 	public void tearDown() throws Exception {
+		MatchDao.delete(match);
 	}
 
 	@Test
 	public void testSubstitutePlayerFromSameTeamPlaying() {
-		LineUpEvent event = new LineUpEvent(match,team1Player1,team1);
-		
-		match.addEvent(event);
-		
 		try {
-			MatchService.substitutePlayers(team1Player1, team1Player2, 23, match);
+			MatchService.substitutePlayers(match.getGuestTeam().getPlayers().get(0), match.getGuestTeam().getPlayers().get(11), 23, match);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			fail(e.getClass().toString());
 		}
 		
 		List<SubstitutionEvent> substitutions = new ArrayList<SubstitutionEvent>();
 		Collections.filterAndChangeType(match.getEvents(), new FilterSubstitutionEvent(), substitutions);
 
 		assertEquals(1, substitutions.size());
-		assertEquals(team1Player1,substitutions.get(0).getInvolvedPlayer());
-		assertEquals(team1Player2,substitutions.get(0).getNewPlayer());
-		assertEquals(team1Player2,substitutions.get(0).getNewPlayer());
-		assertEquals(23, substitutions.get(0).getMinute());
+		assertEquals(match.getGuestTeam().getPlayers().get(0),substitutions.get(0).getInvolvedPlayer());
+		assertEquals(match.getGuestTeam().getPlayers().get(11),substitutions.get(0).getNewPlayer());
+		assertEquals((Integer)23, substitutions.get(0).getMinute().getFirst());
+		assertEquals((Integer)0, substitutions.get(0).getMinute().getSecond());
+		
 		
 	}
 	

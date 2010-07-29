@@ -35,7 +35,7 @@ public class KnockoutMatch extends Match {
 		return childs;
 	}
 
-	public void setChilds(List<KnockoutMatch> childs) {
+	public void setChildren(List<KnockoutMatch> childs) {
 		this.childs = childs;
 	}
 

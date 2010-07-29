@@ -34,7 +34,7 @@ public class KnockoutGenerator {
 		List<KnockoutMatch> childs = new LinkedList<KnockoutMatch>();
 		childs.add(match1);
 		childs.add(match2);
-		parent.setChilds(childs);
+		parent.setChildren(childs);
 
 		int newHeight = ++height;
 		addRecursivlyKnockoutMatch(match1, newHeight);
