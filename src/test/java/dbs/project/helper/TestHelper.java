@@ -43,7 +43,7 @@ public class TestHelper {
 		List<GroupMatch> matches = new ArrayList<GroupMatch>();
 		for(int i=0;i<4;i++){
 			Team host = teams.get(i);
-			for(int j=i+1; i<4; i++){
+			for(int j=i+1; j<4; j++){
 				if(i==j)
 					continue;
 				Team guest = teams.get(j);
@@ -108,6 +108,7 @@ public class TestHelper {
 	public static Tournament tournament(){
 		Tournament tournament = new Tournament();
 		tournament.setGroupStage(groupStage());
+		tournament.setFinalMatch(knockoutMatch());
 		tournament.setYear(0);
 		tournament.setName("testTournament");
 		tournament.setStadiums(stadiums());
@@ -147,24 +148,24 @@ public class TestHelper {
 	}
 
 	public static KnockoutMatch knockoutMatch(){
-		KnockoutMatch finalMatch = new KnockoutMatch();
+		KnockoutMatch finalMatch = new KnockoutMatch("Finale");
 		GroupStage groupStage = playedGroupStage();
 		
 		//initialize halfFinals
 		List<KnockoutMatch> halfFinals = new ArrayList<KnockoutMatch>();
-		halfFinals.add(new KnockoutMatch());
-		halfFinals.add(new KnockoutMatch());
+		halfFinals.add(new KnockoutMatch("Halbfinale1"));
+		halfFinals.add(new KnockoutMatch("Halbfinale2"));
 		finalMatch.setChildren(halfFinals);
 		
 		//initialize quarterFinals
 		List<KnockoutMatch> quarterFinals1 = new ArrayList<KnockoutMatch>();
-		quarterFinals1.add(new KnockoutMatch());
-		quarterFinals1.add(new KnockoutMatch());
+		quarterFinals1.add(new KnockoutMatch("Viertelfinale1"));
+		quarterFinals1.add(new KnockoutMatch("Viertelfinale2"));
 		halfFinals.get(0).setChildren(quarterFinals1);
 		
 		List<KnockoutMatch> quarterFinals2 = new ArrayList<KnockoutMatch>();
-		quarterFinals2.add(new KnockoutMatch());
-		quarterFinals2.add(new KnockoutMatch());
+		quarterFinals2.add(new KnockoutMatch("Viertelfinale3"));
+		quarterFinals2.add(new KnockoutMatch("Viertelfinale4"));
 		halfFinals.get(1).setChildren(quarterFinals2);
 		
 		//initialize bestOfSixteen
@@ -191,27 +192,35 @@ public class TestHelper {
 		//generate best of 16
 		bestOfSixteen1.get(0).setHostTeam(groupStage.getGroups().get(0).getTeams().get(0));
 		bestOfSixteen1.get(0).setGuestTeam(groupStage.getGroups().get(1).getTeams().get(1));
+		bestOfSixteen1.get(0).setChildren(new ArrayList<KnockoutMatch>());
 		
 		bestOfSixteen1.get(1).setHostTeam(groupStage.getGroups().get(1).getTeams().get(0));
 		bestOfSixteen1.get(1).setGuestTeam(groupStage.getGroups().get(0).getTeams().get(1));
+		bestOfSixteen1.get(1).setChildren(new ArrayList<KnockoutMatch>());
 		
 		bestOfSixteen2.get(0).setHostTeam(groupStage.getGroups().get(2).getTeams().get(0));
 		bestOfSixteen2.get(0).setGuestTeam(groupStage.getGroups().get(3).getTeams().get(1));
+		bestOfSixteen2.get(0).setChildren(new ArrayList<KnockoutMatch>());
 		
 		bestOfSixteen2.get(1).setHostTeam(groupStage.getGroups().get(3).getTeams().get(0));
 		bestOfSixteen2.get(1).setGuestTeam(groupStage.getGroups().get(2).getTeams().get(1));
+		bestOfSixteen2.get(1).setChildren(new ArrayList<KnockoutMatch>());
 		
 		bestOfSixteen3.get(0).setHostTeam(groupStage.getGroups().get(4).getTeams().get(0));
 		bestOfSixteen3.get(0).setGuestTeam(groupStage.getGroups().get(5).getTeams().get(1));
+		bestOfSixteen3.get(0).setChildren(new ArrayList<KnockoutMatch>());
 		
 		bestOfSixteen3.get(1).setHostTeam(groupStage.getGroups().get(5).getTeams().get(0));
 		bestOfSixteen3.get(1).setGuestTeam(groupStage.getGroups().get(4).getTeams().get(1));
+		bestOfSixteen3.get(1).setChildren(new ArrayList<KnockoutMatch>());
 		
 		bestOfSixteen4.get(0).setHostTeam(groupStage.getGroups().get(6).getTeams().get(0));
 		bestOfSixteen4.get(0).setGuestTeam(groupStage.getGroups().get(7).getTeams().get(1));
+		bestOfSixteen4.get(0).setChildren(new ArrayList<KnockoutMatch>());
 		
 		bestOfSixteen4.get(1).setHostTeam(groupStage.getGroups().get(7).getTeams().get(0));
 		bestOfSixteen4.get(1).setGuestTeam(groupStage.getGroups().get(6).getTeams().get(1));
+		bestOfSixteen4.get(1).setChildren(new ArrayList<KnockoutMatch>());
 		
 		return finalMatch;
 	}
@@ -231,35 +240,38 @@ public class TestHelper {
 		
 		//generate quarterFinals
 		quarterFinals1.get(0).setHostTeam(bestOfSixteen1.get(0).getHostTeam());
-		quarterFinals1.get(0).setHostTeam(bestOfSixteen1.get(1).getHostTeam());
+		quarterFinals1.get(0).setGuestTeam(bestOfSixteen1.get(1).getHostTeam());
 		
 		quarterFinals1.get(1).setHostTeam(bestOfSixteen2.get(0).getHostTeam());
-		quarterFinals1.get(1).setHostTeam(bestOfSixteen2.get(1).getHostTeam());
+		quarterFinals1.get(1).setGuestTeam(bestOfSixteen2.get(1).getHostTeam());
 		
 		quarterFinals2.get(0).setHostTeam(bestOfSixteen3.get(0).getHostTeam());
-		quarterFinals2.get(0).setHostTeam(bestOfSixteen3.get(1).getHostTeam());
+		quarterFinals2.get(0).setGuestTeam(bestOfSixteen3.get(1).getHostTeam());
 		
 		quarterFinals2.get(1).setHostTeam(bestOfSixteen4.get(0).getHostTeam());
-		quarterFinals2.get(1).setHostTeam(bestOfSixteen4.get(1).getHostTeam());
+		quarterFinals2.get(1).setGuestTeam(bestOfSixteen4.get(1).getHostTeam());
 		
 		//generate halfFinals
 		halfFinals.get(0).setHostTeam(quarterFinals1.get(0).getHostTeam());
-		halfFinals.get(0).setHostTeam(quarterFinals1.get(1).getHostTeam());
+		halfFinals.get(0).setGuestTeam(quarterFinals1.get(1).getHostTeam());
 		
 		halfFinals.get(1).setHostTeam(quarterFinals2.get(0).getHostTeam());
-		halfFinals.get(1).setHostTeam(quarterFinals2.get(1).getHostTeam());
+		halfFinals.get(1).setGuestTeam(quarterFinals2.get(1).getHostTeam());
 		
 		//generate finalMatch
 		finalMatch.setHostTeam(halfFinals.get(0).getHostTeam());
 		finalMatch.setGuestTeam(halfFinals.get(1).getHostTeam());
 		
+		matchLineUp(finalMatch);
+		
+		
 		//generate matchEvents
 		List<KnockoutMatch> tmpKnockoutMatches = new ArrayList<KnockoutMatch>();
+		KnockoutMatch match;
 		tmpKnockoutMatches.add(finalMatch);
 		while(tmpKnockoutMatches.size()>0){
-			KnockoutMatch match = tmpKnockoutMatches.remove(0);
+			match = tmpKnockoutMatches.remove(0);
 			
-			matchLineUp(match);
 			
 			tmpKnockoutMatches.addAll(match.getChildren());
 			MatchEvent event;
@@ -288,10 +300,10 @@ public class TestHelper {
 		Tournament t = new Tournament();
 		t.setFinalMatch(playedKnockoutMatch());
 		t.setGroupStage(playedGroupStage());
-		t.setMatchForThirdPlace(matchForThirdPlace());
 		t.setName("test tournament");
 		t.setYear(0);
 		t.setStadiums(stadiums());
+//		t.setMatchForThirdPlace(matchForThirdPlace());
 		
 		return t;
 	}
@@ -309,7 +321,7 @@ public class TestHelper {
 	
 	private static KnockoutMatch matchForThirdPlace() {
 		KnockoutMatch third = new KnockoutMatch();
-		KnockoutMatch finalMatch = knockoutMatch();
+		KnockoutMatch finalMatch = playedKnockoutMatch();
 		
 		third.setHostTeam(finalMatch.getChildren().get(0).getGuestTeam());
 		third.setGuestTeam(finalMatch.getChildren().get(1).getGuestTeam());
