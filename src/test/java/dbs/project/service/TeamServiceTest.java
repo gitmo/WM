@@ -9,7 +9,6 @@ import org.junit.Test;
 import dbs.project.entity.Match;
 import dbs.project.entity.Player;
 import dbs.project.entity.Team;
-import dbs.project.entity.Tournament;
 
 public class TeamServiceTest {
 	Team team = null;

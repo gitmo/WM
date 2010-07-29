@@ -3,7 +3,7 @@ TODOs zur Deadline
     - [ ] runnable
     - [ ] sources
 - [ ] namen.txt
-- [ ] Collections.filter mit HSQL-Criteria Methoden ersetzen
+- [X] Collections.filter mit HSQL-Criteria Methoden ersetzen
 - [ ] Test-Cases
     - [ ] service klassen
     - [ ] utility klassen
