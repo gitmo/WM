@@ -32,7 +32,7 @@ public class PlayerServiceTest {
 		Player player = match.getHostTeam().getPlayers().get(0);
 		Tuple<MatchMinute, MatchMinute> inOut = null;
 		try {
-			inOut = PlayerService.playerOnField(player, match);
+			inOut = PlayerService.playerEnterLeaveMatch(player, match);
 		} catch (PlayerDoesNotPlay e) {
 			fail("player does not play");
 		} catch (NoMatchWhistleEvent e) {

@@ -20,6 +20,7 @@ import dbs.project.entity.event.player.LineUpEvent;
 import dbs.project.entity.event.player.SubstitutionEvent;
 import dbs.project.exception.NewPlayerHasPlayedBefore;
 import dbs.project.exception.NoMatchWhistleEvent;
+import dbs.project.exception.NoMinuteSet;
 import dbs.project.exception.NotInSameTeam;
 import dbs.project.exception.PlayerDoesNotPlay;
 import dbs.project.exception.PlayerDoesNotPlayForTeam;
@@ -127,24 +128,15 @@ public class MatchService {
 	 * @throws PlayerDoesNotPlay
 	 */
 	public static void insertGoal(GoalEvent goal, Player player, Match match)
-			throws PlayerDoesNotPlay {
+			throws PlayerDoesNotPlay, NoMinuteSet {
 		
-		try {
-			Tuple<MatchMinute,MatchMinute> time = PlayerService.playerOnField(player, match);
-			if(time.getSecond() < goal.getMinute())
-				throw new PlayerDoesNotPlay();
-			if(time.getFirst().getFirst() > goal.getMinute().getFirst())
-				throw new PlayerDoesNotPlay();
-			
-		
-		} catch (NoMatchWhistleEvent e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		if(goal.getMinute() == null)
+				throw new NoMinuteSet();
 		
 		goal.setInvolvedPlayer(player);
+		goal.setMatch(match);
 		match.addEvent(goal);
+		
 		MatchDao.save(match);
 	}
 

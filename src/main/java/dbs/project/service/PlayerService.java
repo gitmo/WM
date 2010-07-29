@@ -25,7 +25,7 @@ public class PlayerService {
 	 * @throws PlayerDoesNotPlay
 	 * @throws NoMatchWhistleEvent
 	 */
-	public static Tuple<MatchMinute, MatchMinute> playerOnField(Player player,
+	public static Tuple<MatchMinute, MatchMinute> playerEnterLeaveMatch(Player player,
 			Match match) throws PlayerDoesNotPlay, NoMatchWhistleEvent {
 		MatchMinute in = null;
 		MatchMinute out = null;

@@ -14,6 +14,7 @@ import dbs.project.entity.Tournament;
 import dbs.project.entity.TournamentGroup;
 import dbs.project.entity.event.player.GoalEvent;
 import dbs.project.exception.NewPlayerHasPlayedBefore;
+import dbs.project.exception.NoMinuteSet;
 import dbs.project.exception.NotInSameTeam;
 import dbs.project.exception.PlayerDoesNotPlay;
 import dbs.project.service.GroupStageService;
@@ -146,6 +147,7 @@ public class GroupStageGenerator {
 					try {
 						MatchService.insertGoal(goal, affectedPlayer, match);
 					} catch (PlayerDoesNotPlay e) {
+					} catch (NoMinuteSet e) {
 					}
 				} else if (hazard < 40) {
 					String color = randomizer.nextBoolean() ? "rot" : "gelb";
