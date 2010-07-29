@@ -1,16 +1,20 @@
 package dbs.project.entity.permission;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 public class Resource {
 	@Id
-	String name;
-	
-	String keyDataType;
+	@GeneratedValue
+	long id;
 
-	String keyValue;
+	String name;
+
+	Serializable key;
 
 	public String getName() {
 		return name;
@@ -20,19 +24,16 @@ public class Resource {
 		this.name = name;
 	}
 
-	public String getKeyDataType() {
-		return keyDataType;
+	public Serializable getKey() {
+		return key;
 	}
 
-	public void setKeyDataType(String keyDataType) {
-		this.keyDataType = keyDataType;
+	public void setKey(Serializable serObj) {
+		this.key = serObj;
 	}
 
-	public String getKeyValue() {
-		return keyValue;
-	}
-
-	public void setKeyValue(String keyValue) {
-		this.keyValue = keyValue;
+	@Override
+	public String toString() {
+		return "Resource: " + this.getName();
 	}
 }

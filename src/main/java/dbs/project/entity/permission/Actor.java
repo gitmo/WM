@@ -50,4 +50,12 @@ public class Actor {
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
+
+	public List<Permission> getPermissions() {
+		return permissions;
+	}
+
+	public void setPermissions(List<Permission> permissions) {
+		this.permissions = permissions;
+	}
 }

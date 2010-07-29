@@ -28,6 +28,11 @@ public class Role {
 	@Cascade(CascadeType.SAVE_UPDATE)
 	List<Permission> permissions;
 
+	public Role(String name, Tournament tournament) {
+		this.name = name;
+		this.tournament = tournament;
+	}
+
 	public String getName() {
 		return name;
 	}
