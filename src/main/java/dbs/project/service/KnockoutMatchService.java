@@ -33,17 +33,17 @@ public class KnockoutMatchService {
 			}
 
 			public Object getChild(Object parent, int index) {
-				return ((KnockoutMatch) parent).getChilds().get(index);
+				return ((KnockoutMatch) parent).getChildren().get(index);
 			}
 
 			public int getChildCount(Object parent) {
-				return ((KnockoutMatch) parent).getChilds().size();
+				return ((KnockoutMatch) parent).getChildren().size();
 			}
 
 			public int getIndexOfChild(Object parent, Object child) {
 				int i = 0;
 				for (KnockoutMatch tmpChild : ((KnockoutMatch) parent)
-						.getChilds())
+						.getChildren())
 					if (tmpChild == (KnockoutMatch) child)
 						return i;
 					else
@@ -84,10 +84,10 @@ public class KnockoutMatchService {
 		KnockoutMatch tmpNode;
 		while (stack.size() > 0) {
 			tmpNode = stack.pop();
-			if (tmpNode.getChilds().size() == 0)
+			if (tmpNode.getChildren().size() == 0)
 				matches.add(tmpNode);
 			else
-				stack.addAll(tmpNode.getChilds());
+				stack.addAll(tmpNode.getChildren());
 		}
 
 		return matches;
@@ -101,7 +101,7 @@ public class KnockoutMatchService {
 	private static void rekGenerateMatches(KnockoutMatch node,
 			GroupStage groupStage) {
 		// Achtelfinale
-		if (node.getChilds().size() < 1) {
+		if (node.getChildren().size() < 1) {
 			int i = Integer.parseInt(node.getName().substring(
 					"Achtelfinale ".length())) - 1;
 			Team hostTeam, guestTeam;
@@ -121,8 +121,8 @@ public class KnockoutMatchService {
 			return;
 		}
 
-		KnockoutMatch hostChild = node.getChilds().get(0);
-		KnockoutMatch guestChild = node.getChilds().get(1);
+		KnockoutMatch hostChild = node.getChildren().get(0);
+		KnockoutMatch guestChild = node.getChildren().get(1);
 
 		if (hostChild.isPlayed() && guestChild.isPlayed()) {
 			Team hostTeam = null, guestTeam = null;

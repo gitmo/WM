@@ -28,7 +28,7 @@ public class KnockoutMatch extends Match {
 		super(name);
 	}
 
-	public List<KnockoutMatch> getChilds() {
+	public List<KnockoutMatch> getChildren() {
 		if (childs == null)
 			return new LinkedList<KnockoutMatch>();
 

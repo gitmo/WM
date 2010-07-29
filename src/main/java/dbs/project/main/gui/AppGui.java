@@ -38,9 +38,11 @@ import dbs.project.service.TournamentService;
 import dbs.project.service.group.StandingRow;
 
 public class AppGui extends JFrame {
+
 	private static final long serialVersionUID = 1L;
 
 	private final String APP_NAME = "Weltmeisterschaft DB";
+	private static final String FUSSBALL_JPG = "../../../../images/fussball.jpg";
 
 	private JList tournamentsList;
 	private JPanel mainPanel, groupStageComponents, statistic;
@@ -96,8 +98,7 @@ public class AppGui extends JFrame {
 		knockoutTree = new JTree();
 		tabbComponents.add("Finalrunde", knockoutTree);
 		knockoutTree.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		ImageIcon icon = createImageIcon("../../../../images/fussball.jpg",
-				"Fussballspiel");
+		ImageIcon icon = createImageIcon(FUSSBALL_JPG, "Fussballspiel");
 		if (icon != null) {
 			DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
 			renderer.setLeafIcon(icon);
@@ -143,11 +144,11 @@ public class AppGui extends JFrame {
 	private void refreshStatistic(Tournament tournament) {
 		statistic.removeAll();
 
-		addLine(statistic, "Torschützenkönig", TournamentService
-				.getTopscorers(tournament));
+		addLine(statistic, "Torschützenkönig",
+				TournamentService.getTopscorers(tournament));
 
-		addLine(statistic, "Spieler mit den meisten Karten", TournamentService
-				.getPlayerWithMostCards(tournament));
+		addLine(statistic, "Spieler mit den meisten Karten",
+				TournamentService.getPlayerWithMostCards(tournament));
 
 		JLabel stadiumLabel = new JLabel("Stadien");
 		stadiumLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
@@ -263,6 +264,7 @@ public class AppGui extends JFrame {
 		};
 		tournamentsList.addListSelectionListener(listListener);
 
+		// Button: create new tournament
 		JButton refreshTournament = new JButton();
 		refreshTournament.setText("Turnier generieren");
 		refreshTournament.setName("tournamentCreateButton");
@@ -279,6 +281,7 @@ public class AppGui extends JFrame {
 		};
 		refreshTournament.addActionListener(refreshButtonPressed);
 
+		// Button: simulate group stage
 		JButton generateResults = new JButton();
 		generateResults.setText("Gruppenphase spielen");
 		ActionListener resultButtonPressed = new ActionListener() {
@@ -299,11 +302,33 @@ public class AppGui extends JFrame {
 		};
 		generateResults.addActionListener(resultButtonPressed);
 
+		// Button: refresh
+		JButton refreshData = new JButton();
+		refreshData.setText("Daten aktualisieren");
+		ActionListener refreshDataButtonPressed = new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				try {
+					int i = tournamentsList.getSelectedIndex();
+					if (i != -1) { // there's a tournament selected
+						Tournament selectedTournament = (Tournament) tournamentsList
+								.getModel().getElementAt(i);
+						refreshTabs(selectedTournament);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				refreshList();
+			}
+		};
+		refreshData.addActionListener(refreshDataButtonPressed);
+
 		// Liste hinzufügen
 		components.add(tournamentsScrollPane);
 		// Button hinzufügen
 		components.add(refreshTournament);
 		components.add(generateResults);
+		components.add(refreshData);
 
 		mainPanel.add(components);
 	}
