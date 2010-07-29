@@ -2,11 +2,18 @@ package dbs.project.service.event;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import dbs.project.entity.Match;
+import dbs.project.entity.Player;
+import dbs.project.util.Tuple;
+
 public class SubstitutionEventServiceTest {
+	Match match;
 
 	@Before
 	public void setUp() throws Exception {
@@ -18,7 +25,8 @@ public class SubstitutionEventServiceTest {
 
 	@Test
 	public void testGetSubstituedPlayersByTeam() {
-		fail("Not yet implemented");
+		List<Tuple<Player, Player>> players = SubstitutionEventService.getSubstituedPlayersByTeam(match.getHostTeam(), match);
+		assertEquals(3, players.size());
 	}
 
 }

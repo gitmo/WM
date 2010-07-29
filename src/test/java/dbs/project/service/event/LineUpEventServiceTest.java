@@ -2,11 +2,17 @@ package dbs.project.service.event;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import dbs.project.entity.Player;
+import dbs.project.entity.Team;
+
 public class LineUpEventServiceTest {
+	Team team;
 
 	@Before
 	public void setUp() throws Exception {
@@ -18,7 +24,11 @@ public class LineUpEventServiceTest {
 
 	@Test
 	public void testGetPlayersByTeam() {
-		fail("Not yet implemented");
+		List<Player> players = LineUpEventService.getPlayersByTeam(team);
+		assertEquals(23, players.size());
+		int i=1;
+		for(Player player : players)
+			assertEquals("Player "+(i++), player.getName());
 	}
 
 }
