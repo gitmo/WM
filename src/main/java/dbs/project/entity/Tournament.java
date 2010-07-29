@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -18,23 +19,23 @@ public class Tournament {
 
 	protected String name;
 
-	@OneToMany
+	@OneToMany(fetch=FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected List<Country> hostCountries;
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected KnockoutMatch finalMatch;
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected KnockoutMatch matchForThirdPlace;
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected GroupStage groupStage;
 
-	@OneToMany
+	@OneToMany(fetch=FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected List<Stadium> stadiums;
 

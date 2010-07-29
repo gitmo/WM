@@ -21,11 +21,11 @@ public class TournamentGroup {
 
 	protected String name;
 
-	@OneToMany
+	@OneToMany(fetch=FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected List<Team> teams;
 
-	@OneToMany
+	@OneToMany(fetch=FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected List<GroupMatch> matches;
 

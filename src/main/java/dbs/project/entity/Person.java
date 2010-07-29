@@ -5,14 +5,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.OneToMany;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
+import javax.persistence.ManyToMany;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -31,8 +29,7 @@ public abstract class Person {
 
 	protected Date birthday;
 
-	@OneToMany
-	@Cascade(CascadeType.ALL)
+	@ManyToMany(fetch=FetchType.LAZY)
 	protected List<Team> teams;
 
 	public Person() {

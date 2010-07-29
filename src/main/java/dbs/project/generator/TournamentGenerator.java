@@ -127,6 +127,7 @@ public class TournamentGenerator {
 				if (players.size() > 0) {
 					int tmpIndex = random.nextInt(players.size());
 					Player tmpPlayer = players.remove(tmpIndex);
+					tmpPlayer.addTeam(team);
 					team.addPlayer(tmpPlayer);
 					System.out.println("Adding " + tmpPlayer.getLastname()
 							+ " to Team " + team.getName());

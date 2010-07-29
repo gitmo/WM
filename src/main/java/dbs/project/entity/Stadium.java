@@ -1,6 +1,7 @@
 package dbs.project.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -18,7 +19,7 @@ public class Stadium {
 
 	protected String city;
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected Country country;
 

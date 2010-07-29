@@ -1,7 +1,8 @@
-package dbs.project.dao;
+package dbs.project.dao.event;
 
 import java.util.List;
 
+import dbs.project.dao.DaoBase;
 import dbs.project.entity.MatchEvent;
 
 public class MatchEventDao extends DaoBase {

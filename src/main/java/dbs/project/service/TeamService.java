@@ -22,8 +22,6 @@ public class TeamService {
 				playingPlayers.add(substitution.getSecond());
 			}
 		}
-		System.out
-				.println("getPlayingPlayersForTeam: " + playingPlayers.size());
 		return playingPlayers;
 	}
 

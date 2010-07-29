@@ -2,6 +2,7 @@ package dbs.project.entity.event.player;
 
 import javax.persistence.Entity;
 
+import dbs.project.entity.Match;
 import dbs.project.entity.Player;
 import dbs.project.entity.event.PlayerEvent;
 
@@ -13,14 +14,15 @@ public class CardEvent extends PlayerEvent {
 		super();
 	}
 
-	public CardEvent(int minute, Player involvedPlayer, String color) {
-		super(minute, involvedPlayer);
+	public CardEvent(Match match, int minute, Player involvedPlayer,
+			String color) {
+		super(match, minute, involvedPlayer);
 		setColor(color);
 	}
 
-	public CardEvent(int minute, int additionalTime, Player involvedPlayer,
-			String color) {
-		super(minute, additionalTime, involvedPlayer);
+	public CardEvent(Match match, int minute, int additionalTime,
+			Player involvedPlayer, String color) {
+		super(match, minute, additionalTime, involvedPlayer);
 		setColor(color);
 	}
 

@@ -86,6 +86,7 @@ public class GroupStageGenerator {
 			match.setStadium(stadiums.remove(0));
 			stadiums.add(match.getStadium());
 			match.setGroup(group);
+			match.setTournament(group.getTournament());
 
 			if (homeMatch) {
 				match.setHostTeam(currentTeam);
@@ -139,9 +140,9 @@ public class GroupStageGenerator {
 				minute = randomizer.nextInt(90);
 				if (hazard < 20) {
 					GoalEvent goal = new GoalEvent();
+					goal.setMatch(match);
 					goal.setMinute(minute);
 					goal.setScorringTeam(affectedTeam);
-
 					try {
 						MatchService.insertGoal(goal, affectedPlayer, match);
 					} catch (PlayerDoesNotPlay e) {

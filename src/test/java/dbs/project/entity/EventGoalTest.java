@@ -39,7 +39,7 @@ public class EventGoalTest {
 	public void testEventGoalPlayerTeamIntInt() {
 		Player player = new Player();
 		Team team = new Team();
-		eventGoal = new GoalEvent(120, 2, player, team);
+		eventGoal = new GoalEvent(new GroupMatch(), 120, 2, player, team);
 		assertNotNull(eventGoal);
 		assertEquals(player, eventGoal.getInvolvedPlayer());
 		assertEquals(team, eventGoal.getScorringTeam());

@@ -8,6 +8,7 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import dbs.project.entity.Match;
 import dbs.project.entity.MatchEvent;
 import dbs.project.entity.Player;
 import dbs.project.util.MatchMinute;
@@ -22,13 +23,14 @@ public abstract class PlayerEvent extends MatchEvent {
 	public PlayerEvent() {
 	}
 
-	public PlayerEvent(int minute, Player involvedPlayer) {
-		super(minute);
+	public PlayerEvent(Match match, int minute, Player involvedPlayer) {
+		super(match, minute);
 		setInvolvedPlayer(involvedPlayer);
 	}
 
-	public PlayerEvent(int minute, int additionalTime, Player involvedPlayer) {
-		super(minute, additionalTime);
+	public PlayerEvent(Match match, int minute, int additionalTime,
+			Player involvedPlayer) {
+		super(match, minute, additionalTime);
 		setInvolvedPlayer(involvedPlayer);
 	}
 
