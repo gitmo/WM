@@ -8,7 +8,6 @@ import java.util.Stack;
 import javax.swing.ListModel;
 
 import dbs.project.collections.filter.FilterCardEvent;
-import dbs.project.collections.filter.FilterGoalEvent;
 import dbs.project.dao.TournamentDao;
 import dbs.project.entity.KnockoutMatch;
 import dbs.project.entity.Match;
@@ -19,6 +18,7 @@ import dbs.project.entity.event.player.CardEvent;
 import dbs.project.entity.event.player.GoalEvent;
 import dbs.project.exception.TiedMatch;
 import dbs.project.exception.TournamentNotOver;
+import dbs.project.service.event.GoalEventService;
 import dbs.project.util.Collections;
 
 /**
@@ -92,21 +92,14 @@ public class TournamentService {
 		 */
 		class Topscorer implements Comparable<Topscorer> {
 			Player player;
-			Integer goals = 0;
+			Integer goals = 1;
 
 			public Topscorer(Player player) {
 				this.player = player;
 			}
 
 			public int compareTo(Topscorer o) {
-				// TODO: Compare seems kinda reversed (see compareTo javadoc)?
 				return o.goals.compareTo(this.goals);
-				// if (this.goals > o.goals)
-				// return -1;
-				// else if (this.goals < o.goals)
-				// return 1;
-				// else
-				// return 0;
 			}
 
 			@Override
@@ -119,27 +112,24 @@ public class TournamentService {
 		}
 
 		// Fetch a list of all matches played so far.
-		List<Match> allMatches = TournamentService.getAllMatches(tournament);
-		if (allMatches.size() == 0)
-			return "Es wurden noch keine Spiele gespielt";
+		// List<Match> allMatches = TournamentService.getAllMatches(tournament);
+		// if (allMatches.size() == 0)
+		// return "Es wurden noch keine Spiele gespielt";
 
 		// Create a list of players with their goals attached (Topscorer obj.)
 		ArrayList<Topscorer> topscorers = new ArrayList<Topscorer>();
-		for (Match match : allMatches) {
-			List<GoalEvent> allGoals = new LinkedList<GoalEvent>();
-			Collections.filterAndChangeType(match.getEvents(),
-					new FilterGoalEvent(), allGoals);
-			int i = -1;
-			for (GoalEvent eventGoal : allGoals) {
-				Topscorer player = new Topscorer(eventGoal.getInvolvedPlayer());
-				i = topscorers.indexOf(player);
-				// TODO: of by one? See getPlayerWithMostCards.
-				if (i < 0) // First goal so far.
-					topscorers.add(player);
-				else
-					// Known scorer, add to his record.
-					topscorers.get(i).goals++;
-			}
+		List<GoalEvent> allGoals = GoalEventService
+				.getGoalsByTournament(tournament);
+		int i = -1;
+		for (GoalEvent eventGoal : allGoals) {
+			Topscorer player = new Topscorer(eventGoal.getInvolvedPlayer());
+			i = topscorers.indexOf(player);
+			// TODO: of by one? See getPlayerWithMostCards.
+			if (i < 0) // First goal so far.
+				topscorers.add(player);
+			else
+				// Known scorer, add to his record.
+				topscorers.get(i).goals++;
 		}
 
 		// Special case: no goals yet.
@@ -187,7 +177,7 @@ public class TournamentService {
 		 */
 		class PlayerWithCards implements Comparable<PlayerWithCards> {
 			Player player;
-			Integer cards = 0;
+			Integer cards = 1;
 
 			public PlayerWithCards(Player player) {
 				this.player = player;
@@ -228,8 +218,8 @@ public class TournamentService {
 					new FilterCardEvent(), allCards);
 			int i = -1;
 			for (CardEvent eventCard : allCards) {
-				PlayerWithCards player = new PlayerWithCards(
-						eventCard.getInvolvedPlayer());
+				PlayerWithCards player = new PlayerWithCards(eventCard
+						.getInvolvedPlayer());
 				i = playersWithCards.indexOf(player);
 				// TODO: Are we of by one? I.e. shouldn't a first offender get a
 				// card count of one?

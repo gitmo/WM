@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -28,7 +29,7 @@ public abstract class Person {
 
 	protected Date birthday;
 
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.LAZY)
 	protected List<Team> teams;
 
 	public Person() {

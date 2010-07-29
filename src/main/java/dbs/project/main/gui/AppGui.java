@@ -144,11 +144,11 @@ public class AppGui extends JFrame {
 	private void refreshStatistic(Tournament tournament) {
 		statistic.removeAll();
 
-		addLine(statistic, "Torschützenkönig",
-				TournamentService.getTopscorers(tournament));
+		addLine(statistic, "Torschützenkönig", TournamentService
+				.getTopscorers(tournament));
 
-		addLine(statistic, "Spieler mit den meisten Karten",
-				TournamentService.getPlayerWithMostCards(tournament));
+		addLine(statistic, "Spieler mit den meisten Karten", TournamentService
+				.getPlayerWithMostCards(tournament));
 
 		JLabel stadiumLabel = new JLabel("Stadien");
 		stadiumLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));

@@ -1,6 +1,7 @@
 package dbs.project.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -9,6 +10,8 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import dbs.project.util.MatchMinute;
 
@@ -19,7 +22,7 @@ public abstract class MatchEvent {
 	@GeneratedValue
 	protected Long id;
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected Match match;
 

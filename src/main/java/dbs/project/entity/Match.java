@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -31,7 +32,7 @@ public abstract class Match {
 	@Cascade(CascadeType.ALL)
 	protected Team guestTeam;
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected Stadium stadium;
 
@@ -39,7 +40,7 @@ public abstract class Match {
 	@Cascade(CascadeType.ALL)
 	protected List<MatchEvent> events;
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected Tournament tournament;
 

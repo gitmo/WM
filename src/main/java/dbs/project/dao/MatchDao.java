@@ -6,6 +6,7 @@ import org.hibernate.criterion.Restrictions;
 
 import dbs.project.entity.Match;
 import dbs.project.entity.Team;
+import dbs.project.entity.Tournament;
 
 public class MatchDao extends DaoBase {
 
@@ -78,6 +79,12 @@ public class MatchDao extends DaoBase {
 	@SuppressWarnings("unchecked")
 	public static List<Match> fetchAll() {
 		return (List<Match>) session.createQuery("From Match").list();
+	}
+
+	@SuppressWarnings("unchecked")
+	public static List<Match> findAllByTournament(Tournament tournament) {
+		return (List<Match>) session.createCriteria(Match.class).add(
+				Restrictions.eq("tournament", tournament)).list();
 	}
 
 }

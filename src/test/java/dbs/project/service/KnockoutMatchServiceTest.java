@@ -35,45 +35,45 @@ public class KnockoutMatchServiceTest {
 		assertEquals(finalMatch, tModel.getRoot());
 
 		// check halfFinals
-		assertEquals(finalMatch.getChilds().get(0), tModel.getChild(tModel
+		assertEquals(finalMatch.getChildren().get(0), tModel.getChild(tModel
 				.getRoot(), 0));
-		assertEquals(finalMatch.getChilds().get(1), tModel.getChild(tModel
+		assertEquals(finalMatch.getChildren().get(1), tModel.getChild(tModel
 				.getRoot(), 1));
 
 		// checkQuarterFinals
-		assertEquals(finalMatch.getChilds().get(0).getChilds().get(0), tModel
-				.getChild(tModel.getChild(tModel.getRoot(), 0), 0));
-		assertEquals(finalMatch.getChilds().get(0).getChilds().get(1), tModel
-				.getChild(tModel.getChild(tModel.getRoot(), 0), 1));
-		assertEquals(finalMatch.getChilds().get(1).getChilds().get(0), tModel
-				.getChild(tModel.getChild(tModel.getRoot(), 1), 0));
-		assertEquals(finalMatch.getChilds().get(1).getChilds().get(1), tModel
-				.getChild(tModel.getChild(tModel.getRoot(), 1), 1));
+		assertEquals(finalMatch.getChildren().get(0).getChildren().get(0),
+				tModel.getChild(tModel.getChild(tModel.getRoot(), 0), 0));
+		assertEquals(finalMatch.getChildren().get(0).getChildren().get(1),
+				tModel.getChild(tModel.getChild(tModel.getRoot(), 0), 1));
+		assertEquals(finalMatch.getChildren().get(1).getChildren().get(0),
+				tModel.getChild(tModel.getChild(tModel.getRoot(), 1), 0));
+		assertEquals(finalMatch.getChildren().get(1).getChildren().get(1),
+				tModel.getChild(tModel.getChild(tModel.getRoot(), 1), 1));
 
 		// check bestOfSixteen
-		assertEquals(finalMatch.getChilds().get(0).getChilds().get(0)
-				.getChilds().get(0), tModel.getChild(tModel.getChild(tModel
+		assertEquals(finalMatch.getChildren().get(0).getChildren().get(0)
+				.getChildren().get(0), tModel.getChild(tModel.getChild(tModel
 				.getChild(tModel.getRoot(), 0), 0), 0));
-		assertEquals(finalMatch.getChilds().get(0).getChilds().get(1)
-				.getChilds().get(0), tModel.getChild(tModel.getChild(tModel
+		assertEquals(finalMatch.getChildren().get(0).getChildren().get(1)
+				.getChildren().get(0), tModel.getChild(tModel.getChild(tModel
 				.getChild(tModel.getRoot(), 0), 1), 0));
-		assertEquals(finalMatch.getChilds().get(1).getChilds().get(0)
-				.getChilds().get(0), tModel.getChild(tModel.getChild(tModel
+		assertEquals(finalMatch.getChildren().get(1).getChildren().get(0)
+				.getChildren().get(0), tModel.getChild(tModel.getChild(tModel
 				.getChild(tModel.getRoot(), 1), 0), 0));
-		assertEquals(finalMatch.getChilds().get(1).getChilds().get(1)
-				.getChilds().get(0), tModel.getChild(tModel.getChild(tModel
+		assertEquals(finalMatch.getChildren().get(1).getChildren().get(1)
+				.getChildren().get(0), tModel.getChild(tModel.getChild(tModel
 				.getChild(tModel.getRoot(), 1), 1), 0));
-		assertEquals(finalMatch.getChilds().get(0).getChilds().get(0)
-				.getChilds().get(1), tModel.getChild(tModel.getChild(tModel
+		assertEquals(finalMatch.getChildren().get(0).getChildren().get(0)
+				.getChildren().get(1), tModel.getChild(tModel.getChild(tModel
 				.getChild(tModel.getRoot(), 0), 0), 1));
-		assertEquals(finalMatch.getChilds().get(0).getChilds().get(1)
-				.getChilds().get(1), tModel.getChild(tModel.getChild(tModel
+		assertEquals(finalMatch.getChildren().get(0).getChildren().get(1)
+				.getChildren().get(1), tModel.getChild(tModel.getChild(tModel
 				.getChild(tModel.getRoot(), 0), 1), 1));
-		assertEquals(finalMatch.getChilds().get(1).getChilds().get(0)
-				.getChilds().get(1), tModel.getChild(tModel.getChild(tModel
+		assertEquals(finalMatch.getChildren().get(1).getChildren().get(0)
+				.getChildren().get(1), tModel.getChild(tModel.getChild(tModel
 				.getChild(tModel.getRoot(), 1), 0), 1));
-		assertEquals(finalMatch.getChilds().get(1).getChilds().get(1)
-				.getChilds().get(1), tModel.getChild(tModel.getChild(tModel
+		assertEquals(finalMatch.getChildren().get(1).getChildren().get(1)
+				.getChildren().get(1), tModel.getChild(tModel.getChild(tModel
 				.getChild(tModel.getRoot(), 1), 1), 1));
 
 		// check number of children of finalMatch
@@ -125,21 +125,21 @@ public class KnockoutMatchServiceTest {
 		manMatches.add(finalMatch);
 
 		// add halfFinals
-		manMatches.addAll(finalMatch.getChilds());
+		manMatches.addAll(finalMatch.getChildren());
 
 		// add quarterFinals
-		manMatches.addAll(finalMatch.getChilds().get(0).getChilds());
-		manMatches.addAll(finalMatch.getChilds().get(1).getChilds());
+		manMatches.addAll(finalMatch.getChildren().get(0).getChildren());
+		manMatches.addAll(finalMatch.getChildren().get(1).getChildren());
 
 		// add bestOfSixteen
-		manMatches.addAll(finalMatch.getChilds().get(0).getChilds().get(0)
-				.getChilds());
-		manMatches.addAll(finalMatch.getChilds().get(0).getChilds().get(1)
-				.getChilds());
-		manMatches.addAll(finalMatch.getChilds().get(1).getChilds().get(0)
-				.getChilds());
-		manMatches.addAll(finalMatch.getChilds().get(1).getChilds().get(1)
-				.getChilds());
+		manMatches.addAll(finalMatch.getChildren().get(0).getChildren().get(0)
+				.getChildren());
+		manMatches.addAll(finalMatch.getChildren().get(0).getChildren().get(1)
+				.getChildren());
+		manMatches.addAll(finalMatch.getChildren().get(1).getChildren().get(0)
+				.getChildren());
+		manMatches.addAll(finalMatch.getChildren().get(1).getChildren().get(1)
+				.getChildren());
 
 		assert (matches.containsAll(manMatches));
 

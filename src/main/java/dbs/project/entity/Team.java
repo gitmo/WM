@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -27,15 +28,15 @@ public class Team {
 	@Transient
 	protected Map<Integer, Player> trikotNumbers;
 
-	@OneToMany
+	@OneToMany(fetch=FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected List<Advisor> advisors;
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected Country country;
 
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected List<Player> players;
 

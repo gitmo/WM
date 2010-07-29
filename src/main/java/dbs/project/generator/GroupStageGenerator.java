@@ -86,6 +86,7 @@ public class GroupStageGenerator {
 			match.setStadium(stadiums.remove(0));
 			stadiums.add(match.getStadium());
 			match.setGroup(group);
+			match.setTournament(group.getTournament());
 
 			if (homeMatch) {
 				match.setHostTeam(currentTeam);
