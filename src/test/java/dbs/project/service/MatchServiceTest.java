@@ -2,18 +2,13 @@ package dbs.project.service;
 
 import static org.junit.Assert.*;
 
-import dbs.project.util.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import javax.sound.sampled.LineEvent;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import dbs.project.collections.filter.FilterLineUpEvent;
 import dbs.project.collections.filter.FilterSubstitutionEvent;
 import dbs.project.entity.GroupMatch;
 import dbs.project.entity.Match;
@@ -21,9 +16,6 @@ import dbs.project.entity.Player;
 import dbs.project.entity.Team;
 import dbs.project.entity.event.player.LineUpEvent;
 import dbs.project.entity.event.player.SubstitutionEvent;
-import dbs.project.exception.NewPlayerHasPlayedBefore;
-import dbs.project.exception.NotInSameTeam;
-import dbs.project.exception.PlayerDoesNotPlay;
 import dbs.project.util.Collections;
 
 public class MatchServiceTest {
