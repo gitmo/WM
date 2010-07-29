@@ -7,11 +7,17 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Permission {
+
+	public enum AccessType {
+		// CRUD
+		CREATE, READ, UPDATE, DELETE;
+	}
+
 	@Id
 	@GeneratedValue
 	long id;
 
-	PermissionAccessType typeOfAccess;
+	AccessType typeOfAccess;
 
 	@ManyToOne
 	Resource resource;
@@ -32,11 +38,11 @@ public class Permission {
 		this.id = id;
 	}
 
-	public PermissionAccessType getTypeOfAccess() {
+	public AccessType getTypeOfAccess() {
 		return typeOfAccess;
 	}
 
-	public void setTypeOfAccess(PermissionAccessType typeOfAccess) {
+	public void setTypeOfAccess(Permission.AccessType typeOfAccess) {
 		this.typeOfAccess = typeOfAccess;
 	}
 

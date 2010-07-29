@@ -1,5 +1,7 @@
 package dbs.project.service;
 
+import static org.junit.Assert.*;
+
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,13 +12,13 @@ import org.junit.Test;
 import dbs.project.entity.Tournament;
 import dbs.project.entity.permission.Actor;
 import dbs.project.entity.permission.Permission;
-import dbs.project.entity.permission.PermissionAccessType;
 import dbs.project.entity.permission.Resource;
 import dbs.project.util.HibernateUtil;
 
 public class PermissionService {
 
 	@Test
+	// TODO: Make separte JUnit-Test
 	public static void main(String[] args) {
 		
 		final String CLASS_NAMES = "dbs.project.entity.Tournament";
@@ -29,7 +31,7 @@ public class PermissionService {
 		Resource r = new Resource();
 		r.setName(CLASS_NAMES);
 		r.setKey(1990);
-		p.setTypeOfAccess(PermissionAccessType.READ);
+		p.setTypeOfAccess(Permission.AccessType.READ);
 		p.setResource(r);
 
 		LinkedList<Permission> permissions = new LinkedList<Permission>();
@@ -55,11 +57,11 @@ public class PermissionService {
 		Permission reqPerm = new Permission();
 		reqPerm.setResource(r);
 
-		reqPerm.setTypeOfAccess(PermissionAccessType.READ);
-		System.out.println(isAllowed(a, t, reqPerm));
+		reqPerm.setTypeOfAccess(Permission.AccessType.READ);
+		assertTrue(isAllowed(a, t, reqPerm));
 
-		reqPerm.setTypeOfAccess(PermissionAccessType.UPDATE);
-		System.out.println(isAllowed(a, t, reqPerm));
+		reqPerm.setTypeOfAccess(Permission.AccessType.UPDATE);
+		assertFalse(isAllowed(a, t, reqPerm));
 	}
 
 	public static <T, S extends Serializable> boolean isAllowed(Actor actor,
