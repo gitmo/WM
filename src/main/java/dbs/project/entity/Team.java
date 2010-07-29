@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
@@ -34,7 +35,7 @@ public class Team {
 	@Cascade(CascadeType.ALL)
 	protected Country country;
 
-	@OneToMany
+	@ManyToMany
 	@Cascade(CascadeType.ALL)
 	protected List<Player> players;
 

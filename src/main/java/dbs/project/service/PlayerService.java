@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dbs.project.collections.filter.FilterSubstitutionEvent;
-import dbs.project.dao.EventSubstitutionDao;
+import dbs.project.dao.event.SubstitutionEventDao;
 import dbs.project.entity.Match;
 import dbs.project.entity.Player;
 import dbs.project.entity.event.player.SubstitutionEvent;
@@ -71,7 +71,7 @@ public class PlayerService {
 	 */
 	public static boolean playerHasPlayed(Player player, Match match) {
 
-		if (EventSubstitutionDao.findByPlayerAndMatch(player, match).size() > 0)
+		if (SubstitutionEventDao.findByPlayerAndMatch(player, match).size() > 0)
 			return true;
 		if (MatchService.getGuestLineup(match).contains(player)
 				|| MatchService.getHostLineup(match).contains(player))

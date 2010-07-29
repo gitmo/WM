@@ -1,4 +1,4 @@
-package dbs.project.dao;
+package dbs.project.dao.event;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,12 +6,13 @@ import java.util.List;
 import org.hibernate.criterion.Restrictions;
 
 import dbs.project.collections.filter.FilterSubstitutionEvent;
+import dbs.project.dao.DaoBase;
 import dbs.project.entity.Match;
 import dbs.project.entity.Player;
 import dbs.project.entity.event.player.SubstitutionEvent;
 import dbs.project.util.Collections;
 
-public class EventSubstitutionDao extends DaoBase {
+public class SubstitutionEventDao extends DaoBase {
 
 	/**
 	 * Save EventSubstitution
@@ -76,6 +77,13 @@ public class EventSubstitutionDao extends DaoBase {
 		res.retainAll(findByMatch(match));
 		return res;
 
+	}
+
+	@SuppressWarnings("unchecked")
+	public static List<SubstitutionEvent> findAllByMatch(Match match) {
+		return (List<SubstitutionEvent>) session.createCriteria(
+				SubstitutionEvent.class).add(Restrictions.eq("match", match))
+				.list();
 	}
 
 }

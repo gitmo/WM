@@ -4,13 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import dbs.project.collections.filter.FilterEventsByOwnGoal;
-import dbs.project.collections.filter.FilterEventsByTeam;
-import dbs.project.collections.filter.FilterGoalEvent;
 import dbs.project.collections.filter.FilterLineUpEvent;
 import dbs.project.collections.filter.FilterMatchEndEvent;
-import dbs.project.collections.filter.FilterPlayersByTeam;
-import dbs.project.collections.filter.FilterSubstitutionEvent;
 import dbs.project.dao.MatchDao;
 import dbs.project.entity.GroupMatch;
 import dbs.project.entity.Match;
@@ -31,6 +26,9 @@ import dbs.project.exception.PlayerDoesNotPlayForTeam;
 import dbs.project.exception.PlayersTeamNotInMatch;
 import dbs.project.exception.TeamLineUpComplete;
 import dbs.project.exception.TiedMatch;
+import dbs.project.service.event.GoalEventService;
+import dbs.project.service.event.LineUpEventService;
+import dbs.project.service.event.SubstitutionEventService;
 import dbs.project.util.Collections;
 import dbs.project.util.MatchMinute;
 import dbs.project.util.Tuple;
@@ -67,7 +65,8 @@ public class MatchService {
 		if (sameTeam)
 			throw new NotInSameTeam();
 
-		SubstitutionEvent substitution = new SubstitutionEvent(minute, out, in);
+		SubstitutionEvent substitution = new SubstitutionEvent(match, minute,
+				out, in);
 		match.addEvent(substitution);
 
 		MatchDao.save(match);
@@ -91,11 +90,10 @@ public class MatchService {
 		else
 			throw new PlayerDoesNotPlayForTeam();
 
-		System.out.println(getLineupSize(team, match));
 		if (getLineupSize(team, match) > 11)
 			throw new TeamLineUpComplete();
 
-		MatchEvent event = new LineUpEvent(player, team);
+		MatchEvent event = new LineUpEvent(match, player, team);
 		match.addEvent(event);
 		MatchDao.save(match);
 	}
@@ -166,18 +164,22 @@ public class MatchService {
 	 * @return
 	 */
 	public static Tuple<Integer, Integer> getGoalsByTeam(Team team, Match match) {
-		Tuple<Integer, Integer> goals = new Tuple<Integer, Integer>();
-		int goalsScored, goalsAgainst;
-		List<MatchEvent> goalEvents = Collections.filter(match.getEvents(),
-				new FilterGoalEvent());
+		// Tuple<Integer, Integer> goals = new Tuple<Integer, Integer>();
+		// int goalsScored, goalsAgainst;
 
-		List<MatchEvent> realGoals = Collections.filter(goalEvents,
-				new FilterEventsByOwnGoal(team));
-		goalsScored = realGoals.size();
-		goalsAgainst = goalEvents.size() - goalsScored;
+		// List<MatchEvent> goalEvents = Collections.filter(match.getEvents(),
+		// new FilterGoalEvent());
+		//
+		// List<MatchEvent> realGoals = Collections.filter(goalEvents,
+		// new FilterEventsByOwnGoal(team));
+		// goalsScored = realGoals.size();
+		// goalsAgainst = goalEvents.size() - goalsScored;
 
-		goals.setFirst(goalsScored);
-		goals.setSecond(goalsAgainst);
+		Tuple<Integer, Integer> goals = GoalEventService
+				.getGoalsForMatchByTeam(team, match);
+
+		goals.setFirst(goals.getFirst());
+		goals.setSecond(goals.getSecond());
 
 		return goals;
 	}
@@ -240,11 +242,13 @@ public class MatchService {
 	}
 
 	public static List<Player> getLineupForTeam(Team team, Match match) {
-		List<Player> players = getLineup(match);
-		players = Collections.filter(players, new FilterPlayersByTeam(team));
-		System.out.println("getLineupForTeam " + team.getName() + ": "
-				+ players.size());
-		return players;
+		// List<Player> players = getLineup(match);
+		// players = Collections.filter(players, new FilterPlayersByTeam(team));
+		// System.out.println("getLineupForTeam " + team.getName() + ": "
+		// + players.size());
+		// return players;
+
+		return LineUpEventService.getPlayersByTeam(team);
 	}
 
 	public static void setLineup(List<Player> players, Match match)
@@ -257,7 +261,7 @@ public class MatchService {
 	public static void addCard(int minute, Player affectedPlayer, String color,
 			Match match) {
 
-		CardEvent card = new CardEvent(minute, affectedPlayer, color);
+		CardEvent card = new CardEvent(match, minute, affectedPlayer, color);
 
 		match.addEvent(card);
 		MatchDao.save(match);
@@ -265,25 +269,27 @@ public class MatchService {
 
 	public static List<Tuple<Player, Player>> getSubstitutedPlayersByTeam(
 			Team team, Match match) {
-		List<MatchEvent> teamEvents = new LinkedList<MatchEvent>();
-		teamEvents = Collections.filter(match.getEvents(),
-				new FilterEventsByTeam(team));
-
-		List<SubstitutionEvent> substitutionEvents = new LinkedList<SubstitutionEvent>();
-		Collections.filterAndChangeType(teamEvents,
-				new FilterSubstitutionEvent(), substitutionEvents);
-
-		List<Tuple<Player, Player>> players = new LinkedList<Tuple<Player, Player>>();
-		for (SubstitutionEvent event : substitutionEvents)
-			players.add(new Tuple<Player, Player>(event.getInvolvedPlayer(),
-					event.getNewPlayer()));
-
-		System.out.println("getSubstitutedPlayersByTeam: " + players.size());
-		return players;
+		// List<MatchEvent> teamEvents = new LinkedList<MatchEvent>();
+		// teamEvents = Collections.filter(match.getEvents(),
+		// new FilterEventsByTeam(team));
+		//
+		// List<SubstitutionEvent> substitutionEvents = new
+		// LinkedList<SubstitutionEvent>();
+		// Collections.filterAndChangeType(teamEvents,
+		// new FilterSubstitutionEvent(), substitutionEvents);
+		//
+		// List<Tuple<Player, Player>> players = new LinkedList<Tuple<Player,
+		// Player>>();
+		// for (SubstitutionEvent event : substitutionEvents)
+		// players.add(new Tuple<Player, Player>(event.getInvolvedPlayer(),
+		// event.getNewPlayer()));
+		//
+		// System.out.println("getSubstitutedPlayersByTeam: " + players.size());
+		return SubstitutionEventService.getSubstituedPlayersByTeam(team, match);
 	}
 
 	public static void setFinalWhistle(int i, Match match) {
-		MatchEndEvent end = new MatchEndEvent(90);
+		MatchEndEvent end = new MatchEndEvent(match, 90);
 		match.addEvent(end);
 		match.setPlayed(true);
 		if (match instanceof GroupMatch) {

@@ -139,9 +139,9 @@ public class GroupStageGenerator {
 				minute = randomizer.nextInt(90);
 				if (hazard < 20) {
 					GoalEvent goal = new GoalEvent();
+					goal.setMatch(match);
 					goal.setMinute(minute);
 					goal.setScorringTeam(affectedTeam);
-
 					try {
 						MatchService.insertGoal(goal, affectedPlayer, match);
 					} catch (PlayerDoesNotPlay e) {

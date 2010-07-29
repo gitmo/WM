@@ -31,7 +31,7 @@ public class EventCardTest {
 	@Test
 	public void testEventCardPlayerIntString() {
 		Player player = new Player();
-		eventCard = new CardEvent(30, player, "red");
+		eventCard = new CardEvent(new GroupMatch(), 30, player, "red");
 		assertNotNull(eventCard);
 		assertEquals(player, eventCard.getInvolvedPlayer());
 		assertEquals((Integer) 30, eventCard.getMinute().getFirst());
@@ -42,7 +42,7 @@ public class EventCardTest {
 	@Test
 	public void testEventCardPlayerIntIntString() {
 		Player player = new Player();
-		eventCard = new CardEvent(45, 3, player, "yellow");
+		eventCard = new CardEvent(new GroupMatch(), 45, 3, player, "yellow");
 		assertNotNull(eventCard);
 		assertEquals(player, eventCard.getInvolvedPlayer());
 		assertEquals((Integer) 45, eventCard.getMinute().getFirst());

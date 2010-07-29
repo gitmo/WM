@@ -5,6 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import dbs.project.util.MatchMinute;
 
@@ -15,18 +19,32 @@ public abstract class MatchEvent {
 	@GeneratedValue
 	protected Long id;
 
+	@ManyToOne
+	@Cascade(CascadeType.ALL)
+	protected Match match;
+
 	protected int minute;
 	protected int additionalMinute = 0;
 
 	public MatchEvent() {
 	}
 
-	public MatchEvent(int minute) {
+	public MatchEvent(Match match, int minute) {
 		setMinute(minute);
+		setMatch(match);
 	}
 
-	public MatchEvent(int minute, int additionalTime) {
+	public MatchEvent(Match match, int minute, int additionalTime) {
 		setMinute(minute, additionalTime);
+		setMatch(match);
+	}
+
+	public Match getMatch() {
+		return match;
+	}
+
+	public void setMatch(Match match) {
+		this.match = match;
 	}
 
 	public MatchMinute getMinute() {

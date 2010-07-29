@@ -103,7 +103,7 @@ public class KnockoutMatchService {
 		// Achtelfinale
 		if (node.getChilds().size() < 1) {
 			int i = Integer.parseInt(node.getName().substring(
-					"Achtelfinale ".length()))-1;
+					"Achtelfinale ".length())) - 1;
 			Team hostTeam, guestTeam;
 			if (i % 2 == 0) {
 				hostTeam = GroupService.getFirst(groupStage.getGroups().get(i));
