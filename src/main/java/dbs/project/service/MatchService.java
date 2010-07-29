@@ -128,9 +128,21 @@ public class MatchService {
 	 */
 	public static void insertGoal(GoalEvent goal, Player player, Match match)
 			throws PlayerDoesNotPlay {
-		if (!PlayerService.playerHasPlayed(player, match))
-			throw new PlayerDoesNotPlay();
-
+		
+		try {
+			Tuple<MatchMinute,MatchMinute> time = PlayerService.playerOnField(player, match);
+			if(time.getSecond() < goal.getMinute())
+				throw new PlayerDoesNotPlay();
+			if(time.getFirst().getFirst() > goal.getMinute().getFirst())
+				throw new PlayerDoesNotPlay();
+			
+		
+		} catch (NoMatchWhistleEvent e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		goal.setInvolvedPlayer(player);
 		match.addEvent(goal);
 		MatchDao.save(match);

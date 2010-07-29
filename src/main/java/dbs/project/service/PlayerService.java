@@ -73,10 +73,16 @@ public class PlayerService {
 
 		if (SubstitutionEventDao.findByPlayerAndMatch(player, match).size() > 0)
 			return true;
+			return playerInLineUpOfMatch(player, match);
+	}
+
+	
+	public static boolean playerInLineUpOfMatch(Player player, Match match){
 		if (MatchService.getGuestLineup(match).contains(player)
 				|| MatchService.getHostLineup(match).contains(player))
 			return true;
 		return false;
-	}
 
+	}
+	
 }

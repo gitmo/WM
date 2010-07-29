@@ -44,14 +44,12 @@ public class TestHelper {
 		for(int i=0;i<4;i++){
 			Team host = teams.get(i);
 			for(int j=i+1; j<4; j++){
-				if(i==j)
-					continue;
 				Team guest = teams.get(j);
 				GroupMatch tmp = new GroupMatch();
 				tmp.setHostTeam(host);
 				tmp.setGuestTeam(guest);
 				tmp.setGroup(group);
-				//generate LineUp
+
 				matchLineUp(tmp);
 				
 				matches.add(tmp);
@@ -124,24 +122,7 @@ public class TestHelper {
 				
 				match.setPlayed(true);
 				
-				//generate LineUp
-				matchLineUp(match);
-				
-				//generate Goal Event
-				//player1 of hostTeam
-				MatchEvent event = new GoalEvent(match,90,match.getHostTeam().getPlayers().get(0),match.getHostTeam());
-				match.addEvent(event);
-				
-				//generate Substitution Event
-				//player2 of guestTeam against player12 of guestTeam
-				event = new SubstitutionEvent(match,45,match.getGuestTeam().getPlayers().get(1),match.getGuestTeam().getPlayers().get(11));
-				match.addEvent(event);
-				
-				//generate Card Event
-				//player1 of guestTeam
-				event = new CardEvent(match, 1, match.getGuestTeam().getPlayers().get(0), "yellow");
-				match.addEvent(event);
-				
+				playMatch(match);
 			}
 				
 		return groupStage;
@@ -262,34 +243,17 @@ public class TestHelper {
 		finalMatch.setHostTeam(halfFinals.get(0).getHostTeam());
 		finalMatch.setGuestTeam(halfFinals.get(1).getHostTeam());
 		
-		matchLineUp(finalMatch);
-		
-		
 		//generate matchEvents
 		List<KnockoutMatch> tmpKnockoutMatches = new ArrayList<KnockoutMatch>();
 		KnockoutMatch match;
 		tmpKnockoutMatches.add(finalMatch);
 		while(tmpKnockoutMatches.size()>0){
+			System.out.println("playing games!");
 			match = tmpKnockoutMatches.remove(0);
 			
-			
 			tmpKnockoutMatches.addAll(match.getChildren());
-			MatchEvent event;
-			
-			//generate Goal Event
-			event = new GoalEvent(match, 90, match.getHostTeam().getPlayers().get(0), match.getHostTeam());
-			match.addEvent(event);
-			
-			//generate Substitution Event
-			event = new SubstitutionEvent(match, 45, match.getHostTeam().getPlayers().get(1), match.getHostTeam().getPlayers().get(2));
-			match.addEvent(event);			
-			
-			//generate Card Event
-			event = new CardEvent(match, 1, match.getHostTeam().getPlayers().get(3), "yellow");
-			match.addEvent(event);
-		
-			//set match to played
-			match.setPlayed(true);
+			matchLineUp(match);
+			playMatch(match);
 			
 		}
 		
@@ -303,7 +267,7 @@ public class TestHelper {
 		t.setName("test tournament");
 		t.setYear(0);
 		t.setStadiums(stadiums());
-//		t.setMatchForThirdPlace(matchForThirdPlace());
+		t.setMatchForThirdPlace(matchForThirdPlace());
 		
 		return t;
 	}
@@ -313,8 +277,6 @@ public class TestHelper {
 		match.setHostTeam(teams().get(0));
 		match.setGuestTeam(teams().get(1));
 		match.setStadium(stadiums().get(0));
-		
-		matchLineUp(match);
 		
 		return match;
 	}
@@ -326,24 +288,14 @@ public class TestHelper {
 		third.setHostTeam(finalMatch.getChildren().get(0).getGuestTeam());
 		third.setGuestTeam(finalMatch.getChildren().get(1).getGuestTeam());
 		
-		MatchEvent event = new GoalEvent(third,90,third.getHostTeam().getPlayers().get(0), third.getHostTeam());
-		third.addEvent(event);
-		
-		event = new SubstitutionEvent(third,45,third.getHostTeam().getPlayers().get(1), third.getHostTeam().getPlayers().get(2));
-		third.addEvent(event);
-		
-		event = new CardEvent(third, 1, third.getHostTeam().getPlayers().get(3),"red");
-		third.addEvent(event);
-		
 		matchLineUp(third);
-		
-		third.setPlayed(true);
+		playMatch(third);
 		
 		return third;
 		
 	}
 
-	private static void matchLineUp(Match match){
+	public static void matchLineUp(Match match){
 		for(int i=0;i<11;i++){
 			MatchEvent event = new LineUpEvent(match,match.getHostTeam().getPlayers().get(i),match.getHostTeam());
 			match.addEvent(event);
@@ -352,6 +304,23 @@ public class TestHelper {
 		}
 	}
 
+	private static void playMatch(Match match){
+
+		//generate Goal Event
+		MatchEvent event = new GoalEvent(match,89,match.getHostTeam().getPlayers().get(0),match.getHostTeam());
+		match.addEvent(event);
+		
+		//generate Substitution Event
+		event = new SubstitutionEvent(match,45,match.getHostTeam().getPlayers().get(1),match.getHostTeam().getPlayers().get(11));
+		match.addEvent(event);
+		
+		//generate Card Event
+		event = new CardEvent(match, 1, match.getHostTeam().getPlayers().get(2), "yellow");
+		match.addEvent(event);
+		
+		match.setPlayed(true);
+	}
+	
 	@Test
 	public void testHelper() {
 		Tournament tournament = null;
