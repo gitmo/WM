@@ -33,5 +33,8 @@
         Options:
             Database dialect: PostgreSQL
 
+## Compile executable jar with dependencies
+        mvn assembly:assembly
+
 ## Look at the Wiki
 [The Wiki](http://wiki.github.com/cholin/WM/) has some additional information.
