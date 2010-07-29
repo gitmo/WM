@@ -2,14 +2,14 @@ package dbs.project.entity.permission;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Permission {
 	@Id
 	String typeOfAccess;
 	
-	@OneToMany
+	@ManyToOne
 	Resource resource;
 
 	public String getTypeOfAccess() {

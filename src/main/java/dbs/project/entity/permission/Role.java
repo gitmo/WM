@@ -2,10 +2,10 @@ package dbs.project.entity.permission;
 
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -18,15 +18,13 @@ public class Role {
 	String name;
 
 	@ManyToOne
-	@Column(nullable = true)
 	Tournament tournament;
 
 	@ManyToOne
 	@Cascade(CascadeType.SAVE_UPDATE)
-	@Column(nullable = true)
 	Role inheritedRole;
 
-	@ManyToOne
+	@OneToMany
 	@Cascade(CascadeType.SAVE_UPDATE)
 	List<Permission> permissions;
 
