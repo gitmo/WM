@@ -2,11 +2,21 @@ package dbs.project.service.group;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
+import javax.swing.table.TableModel;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import dbs.project.entity.GroupMatch;
+import dbs.project.entity.Match;
+import dbs.project.entity.Team;
+
 public class StandingRowTest {
+	List<Team> teams;
+	List<GroupMatch> matches;
 
 	@Before
 	public void setUp() throws Exception {
@@ -17,83 +27,15 @@ public class StandingRowTest {
 	}
 
 	@Test
-	public void testStandingRow() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetPoints() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testAddPoints() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetGoalsScored() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetGoalDifference() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testAddGoalsScored() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetGoalsAgainst() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testAddGoalsAgainst() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetTeam() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetTeamName() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetPlayedGames() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testIncPlayedGames() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testCompareTo() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testToString() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testGetRows() {
-		fail("Not yet implemented");
+		List<StandingRow> standings = StandingRow.getRows(teams, matches);
+		assertEquals(4, standings.size());
 	}
 
 	@Test
 	public void testGetModel() {
-		fail("Not yet implemented");
+		TableModel model = StandingRow.getModel(matches.get(0).getTournament().getGroupStage().getGroups().get(0));
+		assertEquals(4, model.getRowCount());
 	}
 
 }
