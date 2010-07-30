@@ -2,10 +2,7 @@ package dbs.project.dao;
 
 import java.util.List;
 
-import org.hibernate.criterion.Restrictions;
-
 import dbs.project.entity.Player;
-import dbs.project.entity.Team;
 
 public class PlayerDao extends DaoBase {
 

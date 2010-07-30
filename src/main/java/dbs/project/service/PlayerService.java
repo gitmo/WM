@@ -1,16 +1,13 @@
 package dbs.project.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import dbs.project.collections.filter.FilterSubstitutionEvent;
 import dbs.project.dao.event.SubstitutionEventDao;
 import dbs.project.entity.Match;
 import dbs.project.entity.Player;
 import dbs.project.entity.event.player.SubstitutionEvent;
 import dbs.project.exception.NoMatchWhistleEvent;
 import dbs.project.exception.PlayerDoesNotPlay;
-import dbs.project.util.Collections;
 import dbs.project.util.MatchMinute;
 import dbs.project.util.Tuple;
 
@@ -30,9 +27,9 @@ public class PlayerService {
 			NoMatchWhistleEvent {
 		MatchMinute in = null;
 		MatchMinute out = null;
-		List<SubstitutionEvent> substitutions = MatchService.getSubstitutionEventsForMatch(match);
+		List<SubstitutionEvent> substitutions = MatchService
+				.getSubstitutionEventsForMatch(match);
 
-		
 		if (MatchService.getGuestLineup(match).contains(player))
 			in = new MatchMinute(0, 0);
 		else if (MatchService.getHostLineup(match).contains(player))
