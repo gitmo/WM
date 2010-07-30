@@ -22,7 +22,6 @@ public class PermissionService {
 	public static <T, S extends Serializable> boolean isAllowed(Actor actor,
 			T reqEntity, Permission reqPerm) {
 
-		System.out.printf("Comparing %s with %s\n", reqPerm, reqEntity);
 		List<Permission> perms = actor.getPermissions();
 
 		for (Permission perm : perms) {
