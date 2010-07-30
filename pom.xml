@@ -63,6 +63,7 @@
       <export>false</export><!-- export to the database (otherwise to file) -->
       <update>false</update>
       <drop>true</drop>
+      <format>true</format>
       <create>true</create>
       <!-- this is created in target/hibernate3/sql -->
       <outputfilename>create.sql</outputfilename>
