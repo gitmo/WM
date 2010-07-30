@@ -14,15 +14,21 @@ public class SubstitutionEventService {
 
 	public static List<Tuple<Player, Player>> getSubstituedPlayersByTeam(
 			Team team, Match match) {
+		List<Tuple<Player, Player>> substitutions = getSubstitutedPlayersForMatch(match);
+		for (Tuple<Player, Player> substitution : substitutions)
+			if (!substitution.getFirst().getTeams().contains(team))
+				substitutions.remove(substitution);
+
+		return substitutions;
+	}
+
+	public static List<Tuple<Player, Player>> getSubstitutedPlayersForMatch(Match match) {
 
 		List<SubstitutionEvent> events = SubstitutionEventDao
 				.findAllByMatch(match);
 		List<Tuple<Player, Player>> substitutions = new LinkedList<Tuple<Player, Player>>();
 
 		for (SubstitutionEvent event : events) {
-			if (!event.getInvolvedPlayer().getTeams().contains(team))
-				continue;
-
 			Tuple<Player, Player> substitution = new Tuple<Player, Player>();
 			substitution.setFirst(event.getInvolvedPlayer());
 			substitution.setSecond(event.getNewPlayer());
