@@ -24,6 +24,8 @@ public class PlayerServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		match = TestHelper.match();
+		TestHelper.matchLineUp(match);
+		TestHelper.playMatch(match);
 		MatchDao.save(match);
 	}
 

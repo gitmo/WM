@@ -17,6 +17,7 @@ import dbs.project.entity.Stadium;
 import dbs.project.entity.Team;
 import dbs.project.entity.Tournament;
 import dbs.project.entity.TournamentGroup;
+import dbs.project.entity.event.MatchEndEvent;
 import dbs.project.entity.event.player.CardEvent;
 import dbs.project.entity.event.player.GoalEvent;
 import dbs.project.entity.event.player.LineUpEvent;
@@ -422,6 +423,10 @@ public class TestHelper {
 		
 		//generate Card Event
 		event = new CardEvent(match, 1, match.getHostTeam().getPlayers().get(2), "yellow");
+		match.addEvent(event);
+		
+		//add MatchEndEvent
+		event = new MatchEndEvent(match,90);
 		match.addEvent(event);
 		
 		match.setPlayed(true);
