@@ -41,8 +41,6 @@ public class TournamentService {
 		if (!finalMatch.isPlayed() || !forThirdPlace.isPlayed())
 			throw new TournamentNotOver();
 
-		// Result list: try to determine a winner for each place.
-		// TODO: Handle ties.
 		List<Team> champions = new LinkedList<Team>();
 		try {
 			champions.add(MatchService.getWinner(finalMatch));
