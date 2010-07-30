@@ -15,8 +15,8 @@
   <property name="hibernate.use_sql_comments">true</property>
   <property name="hibernate.id.new_generator_mappings">true</property>
   <!-- POTENTIALLY DANGEROUS IF WE WANT TO KEEP CURRENT DATA -->
-  <!-- <property name="hibernate.hbm2ddl.auto">create-drop</property> -->
-  <property name="hibernate.hbm2ddl.auto">update</property>
+  <property name="hibernate.hbm2ddl.auto">create-drop</property>
+  <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
 
   <mapping class="dbs.project.entity.Advisor" />
   <mapping class="dbs.project.entity.Country" />
