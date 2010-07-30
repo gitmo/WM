@@ -9,3 +9,7 @@
 
 #Ignore target files
 target/
+
+doc/namen.txt
+
+doc/tex/*.command
