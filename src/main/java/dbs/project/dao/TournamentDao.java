@@ -62,12 +62,10 @@ public class TournamentDao extends DaoBase {
 	public static void generateTournament(int year, String name) {
 		try {
 			Connection conn = session.connection();
-//			PreparedStatement stmt = conn.prepareStatement("SELECT createChampionship(?,?);");
-//			stmt.setInt(1, year);
-//			stmt.setString(2, name);
-//			stmt.execute();
-			Statement stmt = conn.createStatement();
-			stmt.executeQuery("SELECT createChampionship(252, 'Weltmeisterschaft');");
+			PreparedStatement stmt = conn.prepareStatement("SELECT createChampionship(?,?);");
+			stmt.setInt(1, year);
+			stmt.setString(2, name);
+			stmt.execute();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {

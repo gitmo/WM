@@ -282,7 +282,7 @@ public class AppGui extends JFrame {
 
 		// Button: create new tournament
 		JButton createTournamentJava = new JButton();
-		createTournamentJava.setText("Turnier generieren");
+		createTournamentJava.setText("Turnier generieren (java generator)");
 		ActionListener javaButtonPressed = new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				try {
@@ -298,11 +298,11 @@ public class AppGui extends JFrame {
 
 		// Button: create new tournament
 		JButton createTournamentStoredProcedure = new JButton();
-		createTournamentStoredProcedure.setText("Turnier erstellen (stored procedure)");
+		createTournamentStoredProcedure.setText("Turnier erstellen\n(stored procedure)");
 		ActionListener procedureButtonPressed = new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				try {
-					TournamentDao.generateTournament(1990, "Weltmeisterschaft");
+					TournamentDao.generateTournament(TournamentGenerator.randomYear(), "Weltmeisterschaft");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -314,7 +314,7 @@ public class AppGui extends JFrame {
 		
 		// Button: simulate group stage
 		JButton generateResults = new JButton();
-		generateResults.setText("Gruppenphase spielen");
+		generateResults.setText("Gruppenphase simulieren (zeitintensiv)");
 		ActionListener resultButtonPressed = new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				try {
