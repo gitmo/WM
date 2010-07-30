@@ -85,7 +85,84 @@
 %\setcounter{section}{5}
 
 %\clearpage
-%\section{}
+\section{Packet: dbs.project.entity}
+
+\subsection{Advisor}
+Ein Advisor repräsentiert eine Person, die für ein Team arbeitet, z.B. Trainer, TeamArzt, ...
+
+\subsection{Country}
+Country repräsentiert ein Land.
+
+\subsection{GroupMatch}
+Ein GroupMatch ist ein Spiel, dass in der Gruppenphase ausgetragen wird.
+
+\subsection{GroupStage}
+Die GroupStage ist die Gruppenphase des Turniers.
+
+\subsection{KnockOutMatch}
+Ein KnockOutMatch ist ein Spiel, dass in der KO-Runde ausgetragen wird.
+
+\subsection{Match}
+Ein Match ist ein Spiel, also die Oberklasse von KnockOutMatch und GroupMatch. Sie ist {\it abstact} kann also nicht implementiert werden.
+
+\subsection{MatchEvent}
+Ein MatchEvent ist ein Event, dass während eines Spiels auftreten kann. Es ist {\it abstact} kann also nicht direkt implementiert werden.
+Es gibt mehrere Unterklassen, die später erklärt werden.
+
+\subsection{Person}
+Eine Person ist eine Person, die in dem Turnier auftritt. Sie ist {\it abstract} und die Überklasse von Player und Advisor.
+
+\subsection{Player}
+Ein Player repräsentiert einen Spieler im Turnier.
+
+\subsection{Stadium}
+Ein Stadium repräsentiert ein Stadion.
+
+\subsection{Team}
+Ein Team ist eine Gruppe aus Advisorn und Spielern, usw. Sie repräsentieren die Mannschafte, die gegeneinander spielen.
+
+\subsection{Tournament}
+Ein Tournament ist ein Turnier - da mehrere Turniere in unsere Datenbank passen sollen ist sie nötig.
+
+\subsection{TournamentGroup}
+Eine TournamentGroup repräsentiert eine Gruppe in der Gruppenphase, also Gruppe A, B, C...
+
+\section{Packet: dbs.project.entity.event}
+Diese Entitäten implementieren die abstrakte Klasse MatchEvent.
+
+\subsection{MatchEndEvent}
+Ein MatchEndEvent repräsentiert den Schlusspfiff in einem Spiel.
+
+\subsection{PlayerEvent}
+Ein PlayerEvent ist ein im Spiel auftretendes Ereignis, das einen Spieler betrifft. Die Klasse ist {\it abstract} und wird von CardEvent, GoalEvent, LineUpEvent und SubstitutionEvent implementiert.
+
+\section{Packet: dbs.project.entity.event.player}
+Diese Klassen implementieren die abstrakte Klasse PlayerEvent.
+
+\subsection{CardEvent}
+Ein CardEvent repräsentiert die Vergabe einer Karte an einen Spieler.
+
+\subsection{GoalEvent}
+Ein GoalEvent repräsentiert ein (Eigen-)Tor.
+
+\subsection{LineUpEvent}
+Ein LineUpEvent repräsentiert das Aufstellen eines Spielers in der Startelf.
+
+\subsection{SubstitutionEvent}
+Ein SubstitutionEvent repräsentiert das Auswechseln bzw. Einwechseln eines Spielers.
+
+\section{Packet: dbs.project.entity.permission}
+Diese Entitäten werden zur Authentifizierung und Rechtevergabe benötigt.
+
+\subsection{Actor}
+Ein Actor repräsentiert einen Akteur, der Daten in die Datenbank speichern, oder Daten aus ihr lesen will.
+
+\subsection{Permission}
+
+\subsection{Resource}
+
+
+\subsection{Role}
 %\input{}
 
 \end{document}
