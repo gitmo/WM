@@ -2,14 +2,9 @@ package dbs.project.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-@javax.persistence.SequenceGenerator(
-	    name="SEQ_STORE",
-	    sequenceName="my_sequence"
-	)
 public class Country {
 	@Id
 	@GeneratedValue
@@ -25,7 +20,7 @@ public class Country {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
