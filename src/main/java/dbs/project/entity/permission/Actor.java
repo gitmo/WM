@@ -38,7 +38,7 @@ public class Actor {
 	}
 	
 	public void setPassword(String plaintext) {
-		setPassword_hash(ActorService.setPasswordEncrypted(plaintext));
+		setPassword_hash(ActorService.encryptPassword(plaintext));
 	}
 
 	public String getPassword_hash() {
