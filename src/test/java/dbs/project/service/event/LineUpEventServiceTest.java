@@ -8,11 +8,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import dbs.project.entity.Match;
 import dbs.project.entity.Player;
 import dbs.project.entity.Team;
 
 public class LineUpEventServiceTest {
 	Team team;
+	Match match;
 
 	@Before
 	public void setUp() throws Exception {
@@ -24,7 +26,7 @@ public class LineUpEventServiceTest {
 
 	@Test
 	public void testGetPlayersByTeam() {
-		List<Player> players = LineUpEventService.getPlayersByTeam(team);
+		List<Player> players = LineUpEventService.getPlayersByMatch(match);
 		assertEquals(23, players.size());
 		int i=1;
 		for(Player player : players)

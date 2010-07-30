@@ -16,6 +16,7 @@ import dbs.project.entity.Player;
 import dbs.project.entity.event.player.GoalEvent;
 import dbs.project.entity.event.player.SubstitutionEvent;
 import dbs.project.exception.NewPlayerHasPlayedBefore;
+import dbs.project.exception.NoMinuteSet;
 import dbs.project.exception.NotInSameTeam;
 import dbs.project.exception.PlayerDoesNotPlay;
 import dbs.project.exception.PlayerDoesNotPlayForTeam;
@@ -161,6 +162,8 @@ public class MatchServiceTest {
 			MatchService.insertGoal(goal, match.getHostTeam().getPlayers().get(5), match);
 		} catch (PlayerDoesNotPlay e) {
 			fail("exception : "+e.getMessage());
+		} catch (NoMinuteSet e) {
+			fail("exception : "+e.getMessage());
 		}
 		
 	}
@@ -170,10 +173,11 @@ public class MatchServiceTest {
 		Player player = new Player("f", "l", "n", null, null, 12, 23);
 		GoalEvent goal = new GoalEvent(match, 11, player, match.getHostTeam());
 		try {
-			MatchService.insertGoal(goal, match.getHostTeam().getPlayers().get(5), match);
+			MatchService.insertGoal(goal, player, match);
 		} catch (PlayerDoesNotPlay e) {
-			fail("exception : "+e.getMessage());
-		}
+			assert(true);
+		} catch (NoMinuteSet e) {
+			fail("wrong exception : "+e.getMessage());}
 		
 	}
 
