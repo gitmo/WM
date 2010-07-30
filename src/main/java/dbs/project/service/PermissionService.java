@@ -9,6 +9,16 @@ import dbs.project.util.HibernateUtil;
 
 public class PermissionService {
 
+	/**
+	 * Checks if an actor has the permission to get access for an entity
+	 * 
+	 * @param <T>
+	 * @param <S>
+	 * @param actor
+	 * @param reqEntity
+	 * @param reqPerm
+	 * @return
+	 */
 	public static <T, S extends Serializable> boolean isAllowed(Actor actor,
 			T reqEntity, Permission reqPerm) {
 

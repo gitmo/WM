@@ -25,21 +25,20 @@ public class PlayerService {
 	 * @throws PlayerDoesNotPlay
 	 * @throws NoMatchWhistleEvent
 	 */
-	public static Tuple<MatchMinute, MatchMinute> playerEnterLeaveMatch(
+	public static Tuple<MatchMinute, MatchMinute> getPlayingTimeOfAPlayer(
 			Player player, Match match) throws PlayerDoesNotPlay,
 			NoMatchWhistleEvent {
 		MatchMinute in = null;
 		MatchMinute out = null;
-		List<SubstitutionEvent> subs = new ArrayList<SubstitutionEvent>();
-		Collections.filterAndChangeType(match.getEvents(),
-				new FilterSubstitutionEvent(), subs);
+		List<SubstitutionEvent> substitutions = MatchService.getSubstitutionEventsForMatch(match);
 
+		
 		if (MatchService.getGuestLineup(match).contains(player))
 			in = new MatchMinute(0, 0);
 		else if (MatchService.getHostLineup(match).contains(player))
 			in = new MatchMinute(0, 0);
 		else {
-			for (SubstitutionEvent es : subs) {
+			for (SubstitutionEvent es : substitutions) {
 				if (es.getNewPlayer() == player) {
 					in = es.getMinute();
 					break;
@@ -50,7 +49,7 @@ public class PlayerService {
 		if (in == null)
 			throw new PlayerDoesNotPlay();
 
-		for (SubstitutionEvent es : subs) {
+		for (SubstitutionEvent es : substitutions) {
 			if (es.getInvolvedPlayer() == player) {
 				out = es.getMinute();
 				return new Tuple<MatchMinute, MatchMinute>(in, out);
@@ -77,6 +76,13 @@ public class PlayerService {
 		return playerInLineUpOfMatch(player, match);
 	}
 
+	/**
+	 * checks if a player is in the line up of a match
+	 * 
+	 * @param player
+	 * @param match
+	 * @return
+	 */
 	public static boolean playerInLineUpOfMatch(Player player, Match match) {
 		if (MatchService.getGuestLineup(match).contains(player)
 				|| MatchService.getHostLineup(match).contains(player))

@@ -8,7 +8,9 @@ import java.util.Stack;
 import javax.swing.ListModel;
 
 import dbs.project.collections.filter.FilterCardEvent;
+import dbs.project.dao.MatchDao;
 import dbs.project.dao.TournamentDao;
+import dbs.project.dao.event.GoalEventDao;
 import dbs.project.entity.KnockoutMatch;
 import dbs.project.entity.Match;
 import dbs.project.entity.Player;
@@ -18,7 +20,6 @@ import dbs.project.entity.event.player.CardEvent;
 import dbs.project.entity.event.player.GoalEvent;
 import dbs.project.exception.TiedMatch;
 import dbs.project.exception.TournamentNotOver;
-import dbs.project.service.event.GoalEventService;
 import dbs.project.util.Collections;
 
 /**
@@ -41,8 +42,6 @@ public class TournamentService {
 		if (!finalMatch.isPlayed() || !forThirdPlace.isPlayed())
 			throw new TournamentNotOver();
 
-		// Result list: try to determine a winner for each place.
-		// TODO: Handle ties.
 		List<Team> champions = new LinkedList<Team>();
 		try {
 			champions.add(MatchService.getWinner(finalMatch));
@@ -118,8 +117,7 @@ public class TournamentService {
 
 		// Create a list of players with their goals attached (Topscorer obj.)
 		ArrayList<Topscorer> topscorers = new ArrayList<Topscorer>();
-		List<GoalEvent> allGoals = GoalEventService
-				.getGoalsByTournament(tournament);
+		List<GoalEvent> allGoals = getGoalsByTournament(tournament);
 		int i = -1;
 		for (GoalEvent eventGoal : allGoals) {
 			Topscorer player = new Topscorer(eventGoal.getInvolvedPlayer());
@@ -269,6 +267,21 @@ public class TournamentService {
 		}
 
 		return matches;
+	}
+	
+
+	/**
+	 * gets all goals of a tournament
+	 * 
+	 * @param tournament
+	 * @return
+	 */
+	public static List<GoalEvent> getGoalsByTournament(Tournament tournament) {
+		List<GoalEvent> events = new LinkedList<GoalEvent>();
+		for (Match match : MatchDao.findAllByTournament(tournament))
+			events.addAll(GoalEventDao.findAllByMatch(match));
+
+		return events;
 	}
 
 }

@@ -10,6 +10,7 @@ import dbs.project.exception.PlayerDoesNotPlayForTeam;
 import dbs.project.exception.TeamLineUpComplete;
 import dbs.project.service.MatchService;
 import dbs.project.service.TeamService;
+import dbs.project.util.MatchMinute;
 
 public class MatchGenerator {
 
@@ -22,7 +23,7 @@ public class MatchGenerator {
 		int j = 0;
 		for (int i = 0; i < 22; i++) {
 			List<Player> players = TeamService.getPlayersOnTheBench(match,
-					teams[j]);
+					teams[j], new MatchMinute(0));
 
 			Player newPlayer = players.get(randomizer.nextInt(players.size()));
 			try {

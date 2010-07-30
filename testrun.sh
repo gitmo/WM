@@ -1,13 +1,14 @@
-#!/bin/bash
+#!/bin/sh
 
 read -p 'Are you sure to delete everything from "test" DB now? (y/n): ' answer
 [[ $answer != "y" ]] && exit 1
 
 # Delete everything in DB test
-psql test <<< 'DROP SCHEMA public CASCADE; CREATE SCHEMA public AUTHORIZATION postgres;'
+echo 'DROP SCHEMA public CASCADE; CREATE SCHEMA public AUTHORIZATION postgres;'\
+  | psql test
 
 # Quick command line to empty the data base w/o dropping tables:
-# psql test <<< 'truncate table team,player,tournament cascade;'
+# echo 'truncate table team,player,tournament cascade;' | psql test
 
 # To execute anything with maven from the shell make sure to set
 # Otherwise any data written to the data base will have the wrong encoding.

@@ -11,7 +11,6 @@ import org.junit.Test;
 
 import dbs.project.collections.filter.FilterSubstitutionEvent;
 import dbs.project.dao.MatchDao;
-import dbs.project.dao.TeamDao;
 import dbs.project.entity.KnockoutMatch;
 import dbs.project.entity.Player;
 import dbs.project.entity.event.player.GoalEvent;
@@ -24,7 +23,6 @@ import dbs.project.exception.PlayerDoesNotPlayForTeam;
 import dbs.project.exception.TeamLineUpComplete;
 import dbs.project.exception.TeamNotSet;
 import dbs.project.helper.TestHelper;
-import dbs.project.service.event.LineUpEventService;
 import dbs.project.util.Collections;
 
 public class MatchServiceTest {
@@ -47,7 +45,7 @@ public class MatchServiceTest {
 		TestHelper.matchLineUp(match);
 		MatchDao.save(match);
 		
-		List<Player> playersByMatch = LineUpEventService.getPlayersByMatch(match);
+		List<Player> playersByMatch = MatchService.getLineupByMatch(match);
 		System.out.println(playersByMatch.size());
 		try {
 			MatchService.substitutePlayers(match.getGuestTeam().getPlayers().get(0), match.getGuestTeam().getPlayers().get(11), 23, match);
