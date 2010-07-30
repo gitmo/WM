@@ -50,6 +50,7 @@ public class TestHelper {
 				tmp.setGuestTeam(guest);
 				tmp.setGroup(group);
 
+				matchSetTeams(tmp);
 				matchLineUp(tmp);
 				
 				matches.add(tmp);
@@ -248,10 +249,11 @@ public class TestHelper {
 		KnockoutMatch match;
 		tmpKnockoutMatches.add(finalMatch);
 		while(tmpKnockoutMatches.size()>0){
-			System.out.println("playing games!");
 			match = tmpKnockoutMatches.remove(0);
 			
 			tmpKnockoutMatches.addAll(match.getChildren());
+			
+			matchSetTeams(match);
 			matchLineUp(match);
 			playMatch(match);
 			
@@ -288,6 +290,7 @@ public class TestHelper {
 		third.setHostTeam(finalMatch.getChildren().get(0).getGuestTeam());
 		third.setGuestTeam(finalMatch.getChildren().get(1).getGuestTeam());
 		
+		matchSetTeams(third);
 		matchLineUp(third);
 		playMatch(third);
 		
@@ -295,6 +298,19 @@ public class TestHelper {
 		
 	}
 
+	public static void matchSetTeams(Match match){
+		List<Team> hostTeam = new ArrayList<Team>();
+		hostTeam.add(match.getHostTeam());
+		List<Team> guestTeam = new ArrayList<Team>();
+		guestTeam.add(match.getGuestTeam());
+		
+		for(Player player : match.getHostTeam().getPlayers())
+			player.setTeams(hostTeam);
+		for(Player player : match.getGuestTeam().getPlayers())
+			player.setTeams(guestTeam);
+		
+	}
+	
 	public static void matchLineUp(Match match){
 		for(int i=0;i<11;i++){
 			MatchEvent event = new LineUpEvent(match,match.getHostTeam().getPlayers().get(i),match.getHostTeam());
@@ -304,7 +320,7 @@ public class TestHelper {
 		}
 	}
 
-	private static void playMatch(Match match){
+	public static void playMatch(Match match){
 
 		//generate Goal Event
 		MatchEvent event = new GoalEvent(match,89,match.getHostTeam().getPlayers().get(0),match.getHostTeam());

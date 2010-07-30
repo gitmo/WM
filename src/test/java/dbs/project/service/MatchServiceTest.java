@@ -32,6 +32,7 @@ public class MatchServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		match = TestHelper.match();
+//		TestHelper.matchSetTeams(match);
 		MatchDao.save(match);
 	}
 	
@@ -161,27 +162,13 @@ public class MatchServiceTest {
 
 	@Test
 	public void testGetResult() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testInsertGoal() {
-		TestHelper.matchLineUp(match);
+		TestHelper.playMatch(match);
 		MatchDao.save(match);
 		
-		GoalEvent goal = new GoalEvent(match, 11, match.getHostTeam().getPlayers().get(5), match.getHostTeam());
-		try {
-			MatchService.insertGoal(goal, match.getHostTeam().getPlayers().get(5), match);
-		} catch (PlayerDoesNotPlay e) {
-			fail("exception : "+e.getClass());
-		} catch (NoMinuteSet e) {
-			fail("exception : "+e.getClass());
-		} catch (TeamNotSet e) {
-			fail("exception : "+e.getClass());
-		} catch (PlayerDoesNotPlayForTeam e) {
-			fail("exception : "+e.getClass());
-		}
-		
+		assertEquals(match.getHostTeam().getName() + " - "
+				+ match.getGuestTeam().getName() + " " + "1"
+				+ " : " + "0" + " "
+				,MatchService.getResult(match));
 	}
 
 	@Test

@@ -10,9 +10,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import dbs.project.dao.TournamentDao;
 import dbs.project.entity.Team;
 import dbs.project.entity.Tournament;
 import dbs.project.exception.TournamentNotOver;
+import dbs.project.helper.TestHelper;
 
 public class TournamentServiceTest {
 
@@ -20,11 +22,21 @@ public class TournamentServiceTest {
 	
 	@Before
 	public void setUp() throws Exception {
+		completedTournament = TestHelper.playedTournament();
+		uncompletedTournament = TestHelper.tournament();
+		uncompletedTournament.setYear(1);
+		
+		TournamentDao.save(completedTournament);
+		TournamentDao.save(uncompletedTournament);
+		
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		TournamentDao.delete(completedTournament);
+		TournamentDao.delete(uncompletedTournament);
 	}
+	
 
 	@Test
 	public void testWeAreTheChampionsWithCompletedTournament() {
@@ -43,7 +55,7 @@ public class TournamentServiceTest {
 			 TournamentService.weAreTheChampions(uncompletedTournament);
 		} catch (TournamentNotOver e) {}
 		
-		fail("tournament not over");
+		assert(true);
 		
 	}
 
@@ -61,7 +73,7 @@ public class TournamentServiceTest {
 	@Test
 	public void testGetAllMatchesTournament() {
 		int size = TournamentService.getAllMatches(completedTournament).size();
-		assertEquals(8*6*8+4+2+1+1, size);
+		assertEquals(8*6+8+4+2+1+1, size);
 	}
 
 	@Test

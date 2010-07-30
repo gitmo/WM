@@ -90,10 +90,9 @@ public class KnockoutMatchService {
 		KnockoutMatch tmpNode;
 		while (stack.size() > 0) {
 			tmpNode = stack.pop();
-			if (tmpNode.getChildren().size() == 0)
-				matches.add(tmpNode);
-			else
+			if (!(tmpNode.getChildren().size() == 0))
 				stack.addAll(tmpNode.getChildren());
+			matches.add(tmpNode);
 		}
 
 		return matches;

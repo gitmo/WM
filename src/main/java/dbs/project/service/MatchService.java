@@ -137,17 +137,11 @@ public class MatchService {
 	public static void insertGoal(GoalEvent goal, Player player, Match match)
 			throws PlayerDoesNotPlay, NoMinuteSet, TeamNotSet, PlayerDoesNotPlayForTeam {
 
-		if (goal.getMinute() == null)
-			throw new NoMinuteSet();
-
-		if(goal.getScorringTeam()==null)
-			throw new TeamNotSet();
-		
 		List<Player> players = MatchService.getPlayingPlayersForMatch(match,goal.getMinute());
 		if(!players.contains(player))
 			throw new PlayerDoesNotPlay();
 		
-		if(!player.getTeams().contains(goal.getScorringTeam()))
+		if(!(player.getTeams().contains(goal.getScorringTeam())))
 			throw new PlayerDoesNotPlayForTeam();
 		
 		goal.setInvolvedPlayer(player);
