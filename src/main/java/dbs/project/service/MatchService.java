@@ -20,6 +20,7 @@ import dbs.project.entity.event.player.LineUpEvent;
 import dbs.project.entity.event.player.SubstitutionEvent;
 import dbs.project.exception.NewPlayerHasPlayedBefore;
 import dbs.project.exception.NoMatchWhistleEvent;
+import dbs.project.exception.NoSuchCard;
 import dbs.project.exception.NotInSameTeam;
 import dbs.project.exception.PlayerDoesNotPlay;
 import dbs.project.exception.PlayerDoesNotPlayForTeam;
@@ -329,10 +330,14 @@ public class MatchService {
 	 * @param affectedPlayer
 	 * @param color
 	 * @param match
+	 * @throws NoSuchCard 
 	 */
 	public static void addCard(int minute, Player affectedPlayer, String color,
-			Match match) {
+			Match match) throws NoSuchCard {
 
+		if(color != "rot" && color != "yellow" && color != "yellow/red" && color!="gelb" && color!="gelb/rot")
+			throw new NoSuchCard();
+		
 		CardEvent card = new CardEvent(match, minute, affectedPlayer, color);
 
 		match.addEvent(card);
@@ -414,7 +419,7 @@ public class MatchService {
 		List<Substitution> substitutions = new LinkedList<Substitution>();
 
 		for (SubstitutionEvent event : events) {
-			Substitution substitution = new Substitution(event.getMinute(), event.getInvolvedPlayer(), event.getNewPlayer());
+			Substitution substitution = new Substitution(event.getMinute(), event.getNewPlayer(), event.getInvolvedPlayer());
 			substitutions.add(substitution);
 		}
 

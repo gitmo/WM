@@ -14,6 +14,7 @@ import dbs.project.entity.Tournament;
 import dbs.project.entity.TournamentGroup;
 import dbs.project.entity.event.player.GoalEvent;
 import dbs.project.exception.NewPlayerHasPlayedBefore;
+import dbs.project.exception.NoSuchCard;
 import dbs.project.exception.NotInSameTeam;
 import dbs.project.exception.PlayerDoesNotPlay;
 import dbs.project.exception.PlayerDoesNotPlayForTeam;
@@ -155,7 +156,10 @@ public class GroupStageGenerator {
 					}
 				} else if (hazard < 40) {
 					String color = randomizer.nextBoolean() ? "rot" : "gelb";
-					MatchService.addCard(minute, affectedPlayer, color, match);
+					try {
+						MatchService.addCard(minute, affectedPlayer, color, match);
+					} catch (NoSuchCard e) {
+					}
 				} else if (hazard < 60) {
 					Player newPlayer = TeamService.getPlayersOnTheBench(match,
 							affectedTeam, new MatchMinute(minute, 0)).get(0);

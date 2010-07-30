@@ -13,11 +13,15 @@ import org.junit.Test;
 
 import dbs.project.collections.filter.FilterSubstitutionEvent;
 import dbs.project.dao.MatchDao;
+import dbs.project.dao.event.CardEventDao;
+import dbs.project.dao.event.MatchEndEventDao;
 import dbs.project.entity.KnockoutMatch;
 import dbs.project.entity.Player;
 import dbs.project.entity.event.player.GoalEvent;
 import dbs.project.entity.event.player.SubstitutionEvent;
 import dbs.project.exception.NewPlayerHasPlayedBefore;
+import dbs.project.exception.NoMatchWhistleEvent;
+import dbs.project.exception.NoSuchCard;
 import dbs.project.exception.NotInSameTeam;
 import dbs.project.exception.PlayerDoesNotPlay;
 import dbs.project.exception.PlayerDoesNotPlayForTeam;
@@ -26,6 +30,7 @@ import dbs.project.exception.TeamNotSet;
 import dbs.project.exception.TiedMatch;
 import dbs.project.helper.TestHelper;
 import dbs.project.util.Collections;
+import dbs.project.util.Substitution;
 
 public class MatchServiceTest {
 
@@ -311,47 +316,123 @@ public class MatchServiceTest {
 
 	@Test
 	public void testGetFinalWhistleTime() {
-		fail("Not yet implemented");
+		TestHelper.matchLineUp(match);
+		TestHelper.playMatch(match);
+		MatchDao.save(match);
+		
+		try {
+			assertEquals((Integer)90,MatchService.getFinalWhistleTime(match).getFirst());
+		} catch (NoMatchWhistleEvent e) {
+			fail("no Match End Event");
+		}
+		try {
+			assertEquals((Integer)0,MatchService.getFinalWhistleTime(match).getSecond());
+		} catch (NoMatchWhistleEvent e) {
+		}
+		
 	}
 
 	@Test
 	public void testGetHostLineup() {
-		fail("Not yet implemented");
+		TestHelper.matchLineUp(match);
+		MatchDao.save(match);
+		int i = 1;
+		for(Player player : MatchService.getHostLineup(match)){
+			assertEquals("player "+i, player.getName());
+			i++;
+		}
 	}
 
 	@Test
 	public void testGetGuestLineup() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetLineup() {
-		fail("Not yet implemented");
+		TestHelper.matchLineUp(match);
+		MatchDao.save(match);
+		int i = 24;
+		for(Player player : MatchService.getGuestLineup(match)){
+			assertEquals("player "+i, player.getName());
+			i++;
+		}
 	}
 
 	@Test
 	public void testGetLineupForTeam() {
-		fail("Not yet implemented");
+		TestHelper.matchLineUp(match);
+		MatchDao.save(match);
+		int i = 1;
+		for(Player player : MatchService.getLineupForTeam(match.getHostTeam(), match)){
+			assertEquals("player "+i, player.getName());
+			i++;
+		}
 	}
 
 	@Test
 	public void testSetLineup() {
-		fail("Not yet implemented");
+
+		List<Player> players= new ArrayList<Player>();
+		players.addAll(match.getHostTeam().getPlayers().subList(0, 11));
+		players.addAll(match.getGuestTeam().getPlayers().subList(11, 22));
+		try {
+			MatchService.setLineup(players, match);
+		} catch (Exception e) {
+			fail(e.getClass().toString());
+		}
+		int i=1;
+		for(Player player :MatchService.getLineupByMatch(match)){
+			assertEquals("player "+i, player.getName());
+			i++;
+			//guestplayers
+			if(i==12) i = 35;
+		}
 	}
 
 	@Test
 	public void testAddCard() {
-		fail("Not yet implemented");
+		try {
+			MatchService.addCard(12, match.getGuestTeam().getPlayers().get(0), "yellow", match);
+		} catch (NoSuchCard e) {
+			fail("no such card color");
+		}
+		
+		assertEquals(1,CardEventDao.findAllByMatch(match).size());
+		assertEquals(match.getGuestTeam().getPlayers().get(0), CardEventDao.findAllByMatch(match).get(0).getInvolvedPlayer());
+		assertEquals((Integer)12,CardEventDao.findAllByMatch(match).get(0).getMinute().getFirst());
+		assertEquals("yellow", CardEventDao.findAllByMatch(match).get(0).getColor());
+	
 	}
 
 	@Test
-	public void testGetSubstitutedPlayersByTeam() {
-		fail("Not yet implemented");
+	public void testAddCardNoSuchCard() {
+		try {
+			MatchService.addCard(12, match.getGuestTeam().getPlayers().get(0), "green", match);
+			assert(false);
+		} catch (NoSuchCard e) {
+			assert(true);
+		}
+	}
+	
+	@Test
+	public void testGetSubstitutedPlayersByTeamForMatch() {
+		TestHelper.matchLineUp(match);
+		TestHelper.playMatch(match);
+		MatchDao.save(match);
+		
+		assertEquals(1,MatchService.getSubstituedPlayersByTeamForMatch(match.getHostTeam(), match).size());
+		assertEquals((Integer)45,MatchService.getSubstituedPlayersByTeamForMatch(match.getHostTeam(), match).get(0).getMinute().getFirst());
+		assertEquals((Integer)0,MatchService.getSubstituedPlayersByTeamForMatch(match.getHostTeam(), match).get(0).getMinute().getSecond());
+		assertEquals(match.getHostTeam().getPlayers().get(11),MatchService.getSubstituedPlayersByTeamForMatch(match.getHostTeam(), match).get(0).getPlayerIn());
+		assertEquals(match.getHostTeam().getPlayers().get(1),MatchService.getSubstituedPlayersByTeamForMatch(match.getHostTeam(), match).get(0).getPlayerOut());
+			
 	}
 
 	@Test
 	public void testSetFinalWhistle() {
-		fail("Not yet implemented");
+		MatchService.setFinalWhistle(90, match);
+		
+		assertEquals(1,MatchEndEventDao.findAllByMatch(match).size());
+		assertEquals((Integer)90,MatchEndEventDao.findAllByMatch(match).get(0).getMinute().getFirst());
+		assertEquals((Integer)0,MatchEndEventDao.findAllByMatch(match).get(0).getMinute().getSecond());
+			
+		
 	}
 
 }

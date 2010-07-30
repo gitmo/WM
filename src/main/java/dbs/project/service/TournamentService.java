@@ -7,9 +7,9 @@ import java.util.Stack;
 
 import javax.swing.ListModel;
 
-import dbs.project.collections.filter.FilterCardEvent;
 import dbs.project.dao.MatchDao;
 import dbs.project.dao.TournamentDao;
+import dbs.project.dao.event.CardEventDao;
 import dbs.project.dao.event.GoalEventDao;
 import dbs.project.entity.KnockoutMatch;
 import dbs.project.entity.Match;
@@ -20,7 +20,6 @@ import dbs.project.entity.event.player.CardEvent;
 import dbs.project.entity.event.player.GoalEvent;
 import dbs.project.exception.TiedMatch;
 import dbs.project.exception.TournamentNotOver;
-import dbs.project.util.Collections;
 
 /**
  * Service methods for tournament specific functionality.
@@ -213,8 +212,7 @@ public class TournamentService {
 		for (Match match : allMatches) {
 			List<CardEvent> allCards = new LinkedList<CardEvent>();
 			// Filter events by cards
-			Collections.filterAndChangeType(match.getEvents(),
-					new FilterCardEvent(), allCards);
+			allCards = CardEventDao.findAllByMatch(match);
 			int i = -1;
 			for (CardEvent eventCard : allCards) {
 				PlayerWithCards player = new PlayerWithCards(
@@ -227,6 +225,7 @@ public class TournamentService {
 				else
 					// known offender add to his record
 					playersWithCards.get(i).cards++;
+				i=-1;
 			}
 		}
 
