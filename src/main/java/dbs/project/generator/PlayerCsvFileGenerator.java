@@ -2,15 +2,8 @@ package dbs.project.generator;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.Writer;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -19,7 +12,7 @@ import java.util.Vector;
 
 public class PlayerCsvFileGenerator {
 
-	private static final String OUTPUT_FOLDER = "/dev/";
+	private static final String OUTPUT_FOLDER = "/dev";
 	private static final String OUTPUT_FILE = "players.csv";
 	private static final String FIRSTNAME_FILE = "/dev/generator/spielerVor";
 	private static final String LASTNAME_FILE = "/dev/generator/spielerNach";
@@ -38,18 +31,16 @@ public class PlayerCsvFileGenerator {
 		Vector<String> firstnames = new Vector<String>();
 		Vector<String> lastnames = new Vector<String>();
 
-		BufferedReader in = new BufferedReader(new InputStreamReader(
-				ClassLoader.class.getResourceAsStream(FIRSTNAME_FILE)));
-
+		BufferedReader in = new BufferedReader(new FileReader(
+				TournamentGenerator.getAbsoluteFilePath(FIRSTNAME_FILE)));
 		String line;
 		while ((line = in.readLine()) != null) {
 			firstnames.add(line.trim());
 		}
 		in.close();
 
-		in = new BufferedReader(new InputStreamReader(
-				ClassLoader.class.getResourceAsStream(LASTNAME_FILE)));
-
+		in = new BufferedReader(new FileReader(
+				TournamentGenerator.getAbsoluteFilePath(LASTNAME_FILE)));
 		while ((line = in.readLine()) != null) {
 			lastnames.add(line.trim());
 		}
@@ -62,9 +53,10 @@ public class PlayerCsvFileGenerator {
 		Calendar birthday = new GregorianCalendar();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
-		String path = ClassLoader.class.getResource(OUTPUT_FOLDER).getPath()
-				+ "/" + OUTPUT_FILE;
-		BufferedWriter bw = new BufferedWriter(new FileWriter(path));
+		BufferedWriter bw = new BufferedWriter(new FileWriter(
+				TournamentGenerator.getAbsoluteFilePath(OUTPUT_FOLDER) + "/"
+						+ OUTPUT_FILE));
+
 		for (int i = 0; i < AMOUNT_OF_PLAYERS; i++) {
 			lastname = lastnames.get(randomizer.nextInt(lastnames.size()));
 			firstname = firstnames.get(randomizer.nextInt(firstnames.size()));

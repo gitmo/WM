@@ -3,6 +3,7 @@ package dbs.project.generator;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,8 +28,12 @@ import dbs.project.util.Tuple;
 
 public class TournamentGenerator {
 
+	private static final String TEAMS_CSV = "/dev/teams.csv";
+	private static final String PLAYERS_CSV = "/dev/players.csv";
+	private static final String STADIUMS_CSV = "/dev/stadiums.csv";
+
 	/**
-	 * Example: loadPlayersFromCsvFile("dev/players.csv")
+	 * Example: loadPlayersFromCsvFile("/dev/players.csv")
 	 * 
 	 * @param String
 	 *            csvFileName
@@ -67,12 +72,11 @@ public class TournamentGenerator {
 		return players;
 	}
 
-	public static String getRootpath() {
-		return System.getProperty("user.dir");
-	}
-
 	public static String getAbsoluteFilePath(String fileName) {
-		return getRootpath().concat("/target/classes/" + fileName);
+		URL resource = ClassLoader.class.getResource(fileName);
+		// if file was not yet created
+		return (resource == null) ? null : resource.getPath();
+
 	}
 
 	private static List<String[]> getCsvList(String fileName) {
@@ -145,8 +149,8 @@ public class TournamentGenerator {
 		PlayerCsvFileGenerator.generatePlayers();
 		TeamCsvFileGenerator.generateTeams();
 
-		List<Team> teams = TournamentGenerator.LoadAndPopulateTeams(
-				"dev/teams.csv", "dev/players.csv");
+		List<Team> teams = TournamentGenerator.LoadAndPopulateTeams(TEAMS_CSV,
+				PLAYERS_CSV);
 
 		Tournament tournament = new Tournament();
 
@@ -166,7 +170,7 @@ public class TournamentGenerator {
 		tournament.setName("Weltmeisterschaft");
 		tournament.setYear(Integer.parseInt(yearString));
 
-		List<Stadium> stadiums = loadSampleStadiumsFromCsv("dev/stadiums.csv");
+		List<Stadium> stadiums = loadSampleStadiumsFromCsv(STADIUMS_CSV);
 		Collections.shuffle(stadiums);
 		tournament.setStadiums(stadiums.subList(0, 8));
 
