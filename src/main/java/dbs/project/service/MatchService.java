@@ -33,6 +33,7 @@ import dbs.project.service.event.MatchEndService;
 import dbs.project.service.event.SubstitutionEventService;
 import dbs.project.util.Collections;
 import dbs.project.util.MatchMinute;
+import dbs.project.util.Substitution;
 import dbs.project.util.Tuple;
 
 public class MatchService {
@@ -329,13 +330,13 @@ public class MatchService {
 	}
 
 	/**
-	 * gets all substitued players of a team in a match 
+	 * gets all substitutions of a team in a match 
 	 * 
 	 * @param team
 	 * @param match
 	 * @return
 	 */
-	public static List<Tuple<Player, Player>> getSubstitutedPlayersByTeam(
+	public static List<Substitution> getSubstitutedPlayersByTeam(
 			Team team, Match match) {
 		return SubstitutionEventService.getSubstituedPlayersByTeam(team, match);
 	}
@@ -360,20 +361,23 @@ public class MatchService {
 	}
 
 	/**
-	 * gets all playing players for match
+	 * gets all playing players for match at a given time
 	 * 
 	 * @param match
 	 */
-	public static void getPlayingPlayersForMatch(Match match) {
+	public static List<Player> getPlayingPlayersForMatch(Match match, MatchMinute minute) {
 		List<Player> players = getLineupByMatch(match);
 		int i = -1;
-		for (Tuple<Player, Player> substitution : SubstitutionEventService
+		for (Substitution substitution : SubstitutionEventService
 				.getSubstitutedPlayersForMatch(match)) {
-			if ((i = players.indexOf(substitution.getFirst())) >= 0) {
+			i = players.indexOf(substitution.getPlayerOut());
+			if (i >= 0 && substitution.getMinute().compareTo(minute) < 1) {
 				players.remove(i);
-				players.add(substitution.getSecond());
+				players.add(substitution.getPlayerIn());
 			}
 		}
+		
+		return players;
 
 	}
 }

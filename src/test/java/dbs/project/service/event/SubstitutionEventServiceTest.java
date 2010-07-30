@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import dbs.project.entity.Match;
 import dbs.project.entity.Player;
+import dbs.project.util.Substitution;
 import dbs.project.util.Tuple;
 
 public class SubstitutionEventServiceTest {
@@ -25,7 +26,7 @@ public class SubstitutionEventServiceTest {
 
 	@Test
 	public void testGetSubstituedPlayersByTeam() {
-		List<Tuple<Player, Player>> players = SubstitutionEventService.getSubstituedPlayersByTeam(match.getHostTeam(), match);
+		List<Substitution> players = SubstitutionEventService.getSubstituedPlayersByTeam(match.getHostTeam(), match);
 		assertEquals(3, players.size());
 	}
 

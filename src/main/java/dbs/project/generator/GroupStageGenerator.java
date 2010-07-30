@@ -20,6 +20,7 @@ import dbs.project.exception.PlayerDoesNotPlay;
 import dbs.project.service.GroupStageService;
 import dbs.project.service.MatchService;
 import dbs.project.service.TeamService;
+import dbs.project.util.MatchMinute;
 
 public class GroupStageGenerator {
 	private static final int MAX_TEAMS_PER_GROUP = 4;
@@ -133,12 +134,13 @@ public class GroupStageGenerator {
 				else
 					affectedTeam = match.getHostTeam();
 
-				List<Player> players = TeamService.getPlayingPlayersForTeam(
-						match, affectedTeam);
-				Player affectedPlayer = players.get(randomizer.nextInt(11));
-
 				hazard = randomizer.nextInt(100);
 				minute = randomizer.nextInt(90);
+				
+				List<Player> players = TeamService.getPlayingPlayersInAMatchForTeam(
+						match, affectedTeam, new MatchMinute(minute));
+				Player affectedPlayer = players.get(randomizer.nextInt(11));
+
 				if (hazard < 20) {
 					GoalEvent goal = new GoalEvent();
 					goal.setMatch(match);
@@ -154,7 +156,7 @@ public class GroupStageGenerator {
 					MatchService.addCard(minute, affectedPlayer, color, match);
 				} else if (hazard < 60) {
 					Player newPlayer = TeamService.getPlayersOnTheBench(match,
-							affectedTeam).get(0);
+							affectedTeam, new MatchMinute(minute, 0)).get(0);
 					try {
 						MatchService.substitutePlayers(affectedPlayer,
 								newPlayer, minute, match);

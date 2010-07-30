@@ -8,31 +8,30 @@ import dbs.project.entity.Match;
 import dbs.project.entity.Player;
 import dbs.project.entity.Team;
 import dbs.project.entity.event.player.SubstitutionEvent;
+import dbs.project.util.Substitution;
 import dbs.project.util.Tuple;
 
 public class SubstitutionEventService {
 
-	public static List<Tuple<Player, Player>> getSubstituedPlayersByTeam(
+	public static List<Substitution> getSubstituedPlayersByTeam(
 			Team team, Match match) {
-		List<Tuple<Player, Player>> substitutions = getSubstitutedPlayersForMatch(match);
-		for (Tuple<Player, Player> substitution : substitutions)
-			if (!substitution.getFirst().getTeams().contains(team))
+		List<Substitution> substitutions = getSubstitutedPlayersForMatch(match);
+		for (Substitution substitution : substitutions)
+			if (!substitution.getPlayerOut().getTeams().contains(team))
 				substitutions.remove(substitution);
 
 		return substitutions;
 	}
 
-	public static List<Tuple<Player, Player>> getSubstitutedPlayersForMatch(
+	public static List<Substitution> getSubstitutedPlayersForMatch(
 			Match match) {
 
 		List<SubstitutionEvent> events = SubstitutionEventDao
 				.findAllByMatch(match);
-		List<Tuple<Player, Player>> substitutions = new LinkedList<Tuple<Player, Player>>();
+		List<Substitution> substitutions = new LinkedList<Substitution>();
 
 		for (SubstitutionEvent event : events) {
-			Tuple<Player, Player> substitution = new Tuple<Player, Player>();
-			substitution.setFirst(event.getInvolvedPlayer());
-			substitution.setSecond(event.getNewPlayer());
+			Substitution substitution = new Substitution(event.getMinute(), event.getInvolvedPlayer(), event.getNewPlayer());
 			substitutions.add(substitution);
 		}
 

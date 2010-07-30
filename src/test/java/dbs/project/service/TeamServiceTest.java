@@ -9,6 +9,7 @@ import org.junit.Test;
 import dbs.project.entity.Match;
 import dbs.project.entity.Player;
 import dbs.project.entity.Team;
+import dbs.project.util.MatchMinute;
 
 public class TeamServiceTest {
 	Team team = null;
@@ -26,14 +27,14 @@ public class TeamServiceTest {
 	@Test
 	public void testGetPlayingPlayersForTeam() {
 		int i = 1;
-		for(Player player : TeamService.getPlayingPlayersForTeam(match, team))
+		for(Player player : TeamService.getPlayingPlayersInAMatchForTeam(match, team, new MatchMinute(30)))
 			assertEquals("Player "+i, player.getName());
 	}
 
 	@Test
 	public void testGetPlayersOnTheBench() {
 		int i = 12;
-		for(Player player : TeamService.getPlayersOnTheBench(match, team))
+		for(Player player : TeamService.getPlayersOnTheBench(match, team,new MatchMinute(30)))
 			assertEquals("Player "+i, player.getName());
 	}
 
