@@ -11,7 +11,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import dbs.project.dao.TournamentDao;
 import dbs.project.entity.KnockoutMatch;
+import dbs.project.entity.Tournament;
 import dbs.project.helper.TestHelper;
 
 public class KnockoutMatchServiceTest {
@@ -20,7 +22,11 @@ public class KnockoutMatchServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		finalMatch = TestHelper.knockoutMatch();
+		Tournament tournament = TestHelper.playedTournament();
+		TournamentDao.save(tournament);
+		finalMatch = TestHelper.playedKnockoutMatch(tournament);
+		TournamentDao.delete(tournament);
+		tournament = null;
 	}
 
 	@After

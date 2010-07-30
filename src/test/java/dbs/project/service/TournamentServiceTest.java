@@ -35,6 +35,9 @@ public class TournamentServiceTest {
 	public void tearDown() throws Exception {
 		TournamentDao.delete(completedTournament);
 		TournamentDao.delete(uncompletedTournament);
+		
+		uncompletedTournament = null;
+		completedTournament = null;
 	}
 	
 
@@ -67,7 +70,7 @@ public class TournamentServiceTest {
 
 	@Test
 	public void testGetTopscorers() {
-		assertEquals("Player 1", TournamentService.getTopscorers(completedTournament));
+		assertEquals("player 1 7 Tore", TournamentService.getTopscorers(completedTournament));
 	}
 
 	@Test
@@ -78,7 +81,7 @@ public class TournamentServiceTest {
 
 	@Test
 	public void testGetPlayerWithMostCards() {
-		assertEquals("Player 2", TournamentService.getTopscorers(completedTournament));
+		assertEquals("player 3 7 Karten", TournamentService.getPlayerWithMostCards(completedTournament));
 	}
 
 	@Test

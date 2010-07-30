@@ -3,14 +3,12 @@ package dbs.project.service;
 import java.util.LinkedList;
 import java.util.List;
 
-import dbs.project.dao.PlayerDao;
 import dbs.project.dao.event.GoalEventDao;
 import dbs.project.entity.Match;
 import dbs.project.entity.Player;
 import dbs.project.entity.Team;
 import dbs.project.entity.event.player.GoalEvent;
 import dbs.project.util.MatchMinute;
-import dbs.project.util.Substitution;
 import dbs.project.util.Tuple;
 
 public class TeamService {
@@ -41,13 +39,14 @@ public class TeamService {
 	public static List<Player> getPlayersOnTheBench(Match match, Team team, MatchMinute minute) {
 		List<Player> allPlayers = team.getPlayers();
 		List<Player> playersWaiting = new LinkedList<Player>();
+		playersWaiting.addAll(allPlayers);
 		
 		for(Player player : getPlayingPlayersInAMatchForTeam(match, team , minute)) {
-			if(!allPlayers.contains(player))
-				playersWaiting.add(player);
+			if(allPlayers.contains(player))
+				playersWaiting.remove(player);
 		}
 		
-		return allPlayers;
+		return playersWaiting;
 	}
 	
 	

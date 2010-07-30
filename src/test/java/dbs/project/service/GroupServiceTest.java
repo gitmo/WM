@@ -121,6 +121,7 @@ public class GroupServiceTest {
 	@After
 	public void tearDown() throws Exception {
 		System.setOut(null);
+		group = null;
 	}
 
 	@Test

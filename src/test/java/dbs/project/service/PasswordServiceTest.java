@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,6 +20,11 @@ public class PasswordServiceTest {
 		service = PasswordService.getInstance();
 	}
 
+	@After
+	public void tearDown(){
+		service = null;
+	}
+	
 	@Test
 	public void testGetInstance() {
 		assertNotNull(service);
