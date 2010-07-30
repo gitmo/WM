@@ -39,4 +39,10 @@ public class SubstitutionEventService {
 		return substitutions;
 	}
 
+	public static List<SubstitutionEvent> getSubstitutionEventsForMatch(
+			Match match) {
+		
+		return SubstitutionEventDao.findAllByMatch(match);
+	}
+
 }
