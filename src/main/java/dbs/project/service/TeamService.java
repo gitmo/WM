@@ -3,6 +3,7 @@ package dbs.project.service;
 import java.util.LinkedList;
 import java.util.List;
 
+import dbs.project.dao.PlayerDao;
 import dbs.project.entity.Match;
 import dbs.project.entity.Player;
 import dbs.project.entity.Team;
@@ -21,10 +22,10 @@ public class TeamService {
 	 * @return
 	 */
 	public static List<Player> getPlayingPlayersInAMatchForTeam(Match match, Team team, MatchMinute minute) {
-		List<Player> players = MatchService.getPlayingPlayersForMatch(match, minute);
-		for(Player player : players)
-			if(!player.getTeams().contains(team))
-				players.remove(player);
+		List<Player> players = new LinkedList<Player>();
+		for(Player player : MatchService.getPlayingPlayersForMatch(match, minute))
+			if(player.getTeams().contains(team))
+				players.add(player);
 		
 		return players;
 	}
@@ -37,8 +38,13 @@ public class TeamService {
 	 * @return
 	 */
 	public static List<Player> getPlayersOnTheBench(Match match, Team team, MatchMinute minute) {
-		List<Player> allPlayers = MatchService.getLineupByMatch(match);
-		allPlayers.removeAll(getPlayingPlayersInAMatchForTeam(match, team , minute));
+		List<Player> allPlayers = team.getPlayers();
+		List<Player> playersWaiting = new LinkedList<Player>();
+		
+		for(Player player : getPlayingPlayersInAMatchForTeam(match, team , minute)) {
+			if(!allPlayers.contains(player))
+				playersWaiting.add(player);
+		}
 		
 		return allPlayers;
 	}
