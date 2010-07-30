@@ -20,7 +20,6 @@ import dbs.project.entity.event.player.LineUpEvent;
 import dbs.project.entity.event.player.SubstitutionEvent;
 import dbs.project.exception.NewPlayerHasPlayedBefore;
 import dbs.project.exception.NoMatchWhistleEvent;
-import dbs.project.exception.NoMinuteSet;
 import dbs.project.exception.NotInSameTeam;
 import dbs.project.exception.PlayerDoesNotPlay;
 import dbs.project.exception.PlayerDoesNotPlayForTeam;
@@ -61,7 +60,7 @@ public class MatchService {
 			}
 
 		}
-		if (sameTeam)
+		if (!sameTeam)
 			throw new NotInSameTeam();
 
 		SubstitutionEvent substitution = new SubstitutionEvent(match, minute,
@@ -135,7 +134,7 @@ public class MatchService {
 	 * @throws PlayerDoesNotPlayForTeam 
 	 */
 	public static void insertGoal(GoalEvent goal, Player player, Match match)
-			throws PlayerDoesNotPlay, NoMinuteSet, TeamNotSet, PlayerDoesNotPlayForTeam {
+			throws PlayerDoesNotPlay, TeamNotSet, PlayerDoesNotPlayForTeam {
 
 		List<Player> players = MatchService.getPlayingPlayersForMatch(match,goal.getMinute());
 		if(!players.contains(player))

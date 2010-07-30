@@ -16,7 +16,6 @@ import dbs.project.entity.Player;
 import dbs.project.entity.event.player.GoalEvent;
 import dbs.project.entity.event.player.SubstitutionEvent;
 import dbs.project.exception.NewPlayerHasPlayedBefore;
-import dbs.project.exception.NoMinuteSet;
 import dbs.project.exception.NotInSameTeam;
 import dbs.project.exception.PlayerDoesNotPlay;
 import dbs.project.exception.PlayerDoesNotPlayForTeam;
@@ -38,7 +37,7 @@ public class MatchServiceTest {
 	
 	@After
 	public void tearDown() throws Exception {
-//		MatchDao.delete(match);
+		MatchDao.delete(match);
 	}
 
 	@Test
@@ -46,8 +45,6 @@ public class MatchServiceTest {
 		TestHelper.matchLineUp(match);
 		MatchDao.save(match);
 		
-		List<Player> playersByMatch = MatchService.getLineupByMatch(match);
-		System.out.println(playersByMatch.size());
 		try {
 			MatchService.substitutePlayers(match.getGuestTeam().getPlayers().get(0), match.getGuestTeam().getPlayers().get(11), 23, match);
 		} catch (Exception e) {
@@ -105,13 +102,9 @@ public class MatchServiceTest {
 		MatchDao.save(match);
 		
 		try {
-			MatchService.substitutePlayers(match.getGuestTeam().getPlayers().get(6), match.getGuestTeam().getPlayers().get(20), 23, match);
-		} catch (NewPlayerHasPlayedBefore e) {
-			fail("wrong exception: " + e.getClass());
-		} catch (PlayerDoesNotPlay e) {
-			fail("wrong exception: " + e.getClass());
-		} catch (NotInSameTeam e) {
-			fail("wrong exception: " + e.getClass());
+			MatchService.substitutePlayers(match.getGuestTeam().getPlayers().get(0), match.getGuestTeam().getPlayers().get(11), 23, match);
+		} catch (Exception e) {
+			fail(e.getClass().toString());
 		}
 
 		try {
@@ -179,8 +172,6 @@ public class MatchServiceTest {
 			MatchService.insertGoal(goal, player, match);
 		} catch (PlayerDoesNotPlay e) {
 			assert(true);
-		} catch (NoMinuteSet e) {
-			fail("wrong exception : "+e.getClass());
 		} catch (TeamNotSet e) {
 			fail("wrong exception : "+e.getClass());
 		} catch (PlayerDoesNotPlayForTeam e) {
@@ -190,22 +181,23 @@ public class MatchServiceTest {
 	}
 
 	@Test
-	public void testInsertGoalNoMinuteSet() {
+	public void testInsertGoal() {
 		TestHelper.matchLineUp(match);
+		MatchDao.save(match);
 		
 		GoalEvent goal = new GoalEvent();
 		goal.setScorringTeam(match.getHostTeam());
+		goal.setMinute(23);
+		goal.setMatch(match);
+		
 		try {
 			MatchService.insertGoal(goal, match.getHostTeam().getPlayers().get(5), match);
-		} catch (PlayerDoesNotPlay e) {
-			fail("exception : "+e.getClass());
-		} catch (NoMinuteSet e) {
-			assert(true);
-		} catch (TeamNotSet e) {
-			fail("exception : "+e.getClass());
-		} catch (PlayerDoesNotPlayForTeam e) {
+		} catch (Exception e) {
 			fail("exception : "+e.getClass());
 		}
+		
+		assertEquals((Integer)1, MatchService.getGoalsByTeam(match.getHostTeam(), match).getFirst());
+		assertEquals((Integer)0, MatchService.getGoalsByTeam(match.getHostTeam(), match).getSecond());
 		
 	}
 	

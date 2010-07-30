@@ -14,7 +14,6 @@ import dbs.project.entity.Tournament;
 import dbs.project.entity.TournamentGroup;
 import dbs.project.entity.event.player.GoalEvent;
 import dbs.project.exception.NewPlayerHasPlayedBefore;
-import dbs.project.exception.NoMinuteSet;
 import dbs.project.exception.NotInSameTeam;
 import dbs.project.exception.PlayerDoesNotPlay;
 import dbs.project.exception.PlayerDoesNotPlayForTeam;
@@ -151,7 +150,6 @@ public class GroupStageGenerator {
 					try {
 						MatchService.insertGoal(goal, affectedPlayer, match);
 					} catch (PlayerDoesNotPlay e) {
-					} catch (NoMinuteSet e) {
 					} catch (TeamNotSet e) {
 					} catch (PlayerDoesNotPlayForTeam e) {
 					}

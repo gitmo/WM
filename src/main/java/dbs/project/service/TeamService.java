@@ -3,14 +3,12 @@ package dbs.project.service;
 import java.util.LinkedList;
 import java.util.List;
 
-import dbs.project.dao.PlayerDao;
 import dbs.project.dao.event.GoalEventDao;
 import dbs.project.entity.Match;
 import dbs.project.entity.Player;
 import dbs.project.entity.Team;
 import dbs.project.entity.event.player.GoalEvent;
 import dbs.project.util.MatchMinute;
-import dbs.project.util.Substitution;
 import dbs.project.util.Tuple;
 
 public class TeamService {

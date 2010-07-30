@@ -347,8 +347,26 @@ public class TestHelper {
 
 	public static KnockoutMatch match(){
 		KnockoutMatch match = new KnockoutMatch();
-		match.setHostTeam(teams().get(0));
-		match.setGuestTeam(teams().get(1));
+		List<Player> players = players();
+		List<Team> teams = teams();
+		
+		Team hostTeam = teams.get(0);
+		Team guestTeam = teams.get(1);
+		List<Team> hostTeams = new ArrayList<Team>();
+		List<Team> guestTeams = new ArrayList<Team>();
+		hostTeams.add(hostTeam);
+		guestTeams.add(guestTeam);
+		
+		hostTeam.setPlayers(players.subList(0, 23));
+		guestTeam.setPlayers(players.subList(23, 46));
+		
+		for(Player player:hostTeam.getPlayers())
+			player.setTeams(hostTeams);
+		for(Player player: guestTeam.getPlayers())
+			player.setTeams(guestTeams);
+
+		match.setHostTeam(hostTeam);
+		match.setGuestTeam(guestTeam);
 		match.setStadium(stadiums().get(0));
 		
 		return match;
