@@ -25,7 +25,7 @@ public class TeamService {
 	public static List<Player> getPlayingPlayersInAMatchForTeam(Match match, Team team, MatchMinute minute) {
 		List<Player> players = new LinkedList<Player>();
 		for(Player player : MatchService.getPlayingPlayersForMatch(match, minute))
-			if(player.getTeams().contains(team))
+			if(team.getPlayers().contains(player))
 				players.add(player);
 		
 		return players;

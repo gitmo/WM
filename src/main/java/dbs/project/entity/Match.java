@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -17,6 +19,7 @@ import org.hibernate.annotations.CascadeType;
 import dbs.project.service.MatchService;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class Match {
 	@Id
 	@GeneratedValue
@@ -32,7 +35,7 @@ public abstract class Match {
 	@Cascade(CascadeType.ALL)
 	protected Team guestTeam;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, optional=true)
 	@Cascade(CascadeType.ALL)
 	protected Stadium stadium;
 
@@ -40,7 +43,7 @@ public abstract class Match {
 	@Cascade(CascadeType.ALL)
 	protected List<MatchEvent> events;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, optional=true)
 	@Cascade(CascadeType.ALL)
 	protected Tournament tournament;
 

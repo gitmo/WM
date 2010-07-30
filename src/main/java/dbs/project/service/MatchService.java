@@ -179,13 +179,8 @@ public class MatchService {
 	 * @return
 	 */
 	public static Tuple<Integer, Integer> getGoalsByTeam(Team team, Match match) {
-		Tuple<Integer, Integer> goals = TeamService
+		return TeamService
 				.getGoalsForMatchByTeam(team, match);
-
-		goals.setFirst(goals.getFirst());
-		goals.setSecond(goals.getSecond());
-
-		return goals;
 	}
 
 	/**

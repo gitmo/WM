@@ -1,8 +1,18 @@
 package dbs.project.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.PreAction;
+
+import org.hibernate.HibernateException;
+import org.hibernate.criterion.Restrictions;
+
 import dbs.project.entity.Tournament;
+import dbs.project.entity.TournamentGroup;
 
 public class TournamentDao extends DaoBase {
 
@@ -48,4 +58,21 @@ public class TournamentDao extends DaoBase {
 		return session.createQuery("From Tournament").list();
 	}
 
+	@SuppressWarnings("deprecation")
+	public static void generateTournament(int year, String name) {
+		try {
+			Connection conn = session.connection();
+//			PreparedStatement stmt = conn.prepareStatement("SELECT createChampionship(?,?);");
+//			stmt.setInt(1, year);
+//			stmt.setString(2, name);
+//			stmt.execute();
+			Statement stmt = conn.createStatement();
+			stmt.executeQuery("SELECT createChampionship(252, 'Weltmeisterschaft');");
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }
