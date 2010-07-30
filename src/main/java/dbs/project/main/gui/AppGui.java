@@ -42,7 +42,8 @@ public class AppGui extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private final String APP_NAME = "Weltmeisterschaft DB";
-	private static final String FUSSBALL_JPG = "../../../../images/fussball.jpg";
+
+	private static final String FUSSBALL_JPG = "/images/fussball.jpg";
 
 	private JList tournamentsList;
 	private JPanel mainPanel, groupStageComponents, statistic;
@@ -72,13 +73,14 @@ public class AppGui extends JFrame {
 				.createEmptyBorder(10, 10, 10, 10));
 
 		initLeftComponents();
+		System.out.println(System.getProperty("user.dir"));
 		initTab();
 
 		this.add(this.mainPanel);
 	}
 
 	protected ImageIcon createImageIcon(String path, String description) {
-		java.net.URL imgURL = getClass().getResource(path);
+		java.net.URL imgURL = this.getClass().getResource(path);
 		if (imgURL != null) {
 			return new ImageIcon(imgURL, description);
 		} else {
@@ -132,7 +134,13 @@ public class AppGui extends JFrame {
 	}
 
 	private void refreshTabs(Tournament tournament) {
-		List<TournamentGroup> groups = tournament.getGroupStage().getGroups();
+		List<TournamentGroup> groups = null;
+		try {
+			tournament.getGroupStage().getGroups();
+		} catch (NullPointerException e) {
+			// Prevent null pointer exception if there's wrong data
+			return;
+		}
 
 		// Updates tables
 		refreshTables(groups);
