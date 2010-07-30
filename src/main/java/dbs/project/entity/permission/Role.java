@@ -34,7 +34,7 @@ public class Role {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -42,7 +42,7 @@ public class Role {
 	}
 
 	public Tournament getTournament() {
-		return tournament;
+		return this.tournament;
 	}
 
 	public void setTournament(Tournament tournament) {
@@ -50,7 +50,7 @@ public class Role {
 	}
 
 	public Role getInheritedRole() {
-		return inheritedRole;
+		return this.inheritedRole;
 	}
 
 	public void setInheritedRole(Role inheritedRole) {
@@ -58,7 +58,7 @@ public class Role {
 	}
 
 	public List<Permission> getPermissions() {
-		return permissions;
+		return this.permissions;
 	}
 
 	public void setPermissions(List<Permission> permissions) {

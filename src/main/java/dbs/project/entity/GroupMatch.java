@@ -22,13 +22,14 @@ public class GroupMatch extends Match {
 	}
 
 	public TournamentGroup getGroup() {
-		return group;
+		return this.group;
 	}
 
 	public void setGroup(TournamentGroup group) {
 		this.group = group;
 	}
 
+	@Override
 	public String toString() {
 		return super.toString();
 	}

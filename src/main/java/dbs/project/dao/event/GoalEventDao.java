@@ -12,8 +12,8 @@ public class GoalEventDao extends DaoBase {
 
 	@SuppressWarnings("unchecked")
 	public static List<GoalEvent> findAllByMatch(Match match) {
-		return (List<GoalEvent>) session.createCriteria(GoalEvent.class).add(
-				Restrictions.eq("match", match)).list();
+		return session.createCriteria(GoalEvent.class)
+				.add(Restrictions.eq("match", match)).list();
 	}
 
 }

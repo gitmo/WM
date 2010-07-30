@@ -35,7 +35,7 @@ public class GoalEventService {
 		List<GoalEvent> events = new LinkedList<GoalEvent>();
 		for (Match match : MatchDao.findAllByTournament(tournament))
 			events.addAll(GoalEventDao.findAllByMatch(match));
-		
+
 		return events;
 	}
 

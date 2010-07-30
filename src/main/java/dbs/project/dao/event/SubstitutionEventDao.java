@@ -45,9 +45,9 @@ public class SubstitutionEventDao extends DaoBase {
 	 */
 	@SuppressWarnings("unchecked")
 	public static List<SubstitutionEvent> findByPlayer(Player player) {
-		return (List<SubstitutionEvent>) session.createCriteria(
-				SubstitutionEvent.class).add(
-				Restrictions.or(Restrictions.eq("newPlayer", player),
+		return session
+				.createCriteria(SubstitutionEvent.class)
+				.add(Restrictions.or(Restrictions.eq("newPlayer", player),
 						Restrictions.eq("involvedPlayer", player))).list();
 	}
 
@@ -81,9 +81,8 @@ public class SubstitutionEventDao extends DaoBase {
 
 	@SuppressWarnings("unchecked")
 	public static List<SubstitutionEvent> findAllByMatch(Match match) {
-		return (List<SubstitutionEvent>) session.createCriteria(
-				SubstitutionEvent.class).add(Restrictions.eq("match", match))
-				.list();
+		return session.createCriteria(SubstitutionEvent.class)
+				.add(Restrictions.eq("match", match)).list();
 	}
 
 }

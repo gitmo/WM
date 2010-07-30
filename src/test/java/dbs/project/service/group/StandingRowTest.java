@@ -1,6 +1,6 @@
 package dbs.project.service.group;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import dbs.project.entity.GroupMatch;
-import dbs.project.entity.Match;
 import dbs.project.entity.Team;
 
 public class StandingRowTest {
@@ -28,13 +27,15 @@ public class StandingRowTest {
 
 	@Test
 	public void testGetRows() {
-		List<StandingRow> standings = StandingRow.getRows(teams, matches);
+		List<StandingRow> standings = StandingRow.getRows(this.teams,
+				this.matches);
 		assertEquals(4, standings.size());
 	}
 
 	@Test
 	public void testGetModel() {
-		TableModel model = StandingRow.getModel(matches.get(0).getTournament().getGroupStage().getGroups().get(0));
+		TableModel model = StandingRow.getModel(this.matches.get(0)
+				.getTournament().getGroupStage().getGroups().get(0));
 		assertEquals(4, model.getRowCount());
 	}
 

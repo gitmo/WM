@@ -21,11 +21,11 @@ public class TournamentGroup {
 
 	protected String name;
 
-	@OneToMany(fetch=FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected List<Team> teams;
 
-	@OneToMany(fetch=FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected List<GroupMatch> matches;
 
@@ -37,7 +37,7 @@ public class TournamentGroup {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -45,10 +45,10 @@ public class TournamentGroup {
 	}
 
 	public List<Team> getTeams() {
-		if (teams == null)
+		if (this.teams == null)
 			return new LinkedList<Team>();
 
-		return teams;
+		return this.teams;
 	}
 
 	public void setTeams(List<Team> teams) {
@@ -56,10 +56,10 @@ public class TournamentGroup {
 	}
 
 	public List<GroupMatch> getMatches() {
-		if (matches == null)
+		if (this.matches == null)
 			return new LinkedList<GroupMatch>();
 
-		return matches;
+		return this.matches;
 	}
 
 	public void setMatches(List<GroupMatch> matches) {
@@ -67,13 +67,14 @@ public class TournamentGroup {
 	}
 
 	public Tournament getTournament() {
-		return tournament;
+		return this.tournament;
 	}
 
 	public void setTournament(Tournament tournament) {
 		this.tournament = tournament;
 	}
 
+	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 

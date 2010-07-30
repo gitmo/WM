@@ -17,7 +17,7 @@ public class Resource {
 	Serializable key;
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -25,7 +25,7 @@ public class Resource {
 	}
 
 	public Serializable getKey() {
-		return key;
+		return this.key;
 	}
 
 	public void setKey(Serializable serObj) {

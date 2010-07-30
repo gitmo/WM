@@ -32,7 +32,7 @@ public abstract class Match {
 	@Cascade(CascadeType.ALL)
 	protected Team guestTeam;
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected Stadium stadium;
 
@@ -40,7 +40,7 @@ public abstract class Match {
 	@Cascade(CascadeType.ALL)
 	protected List<MatchEvent> events;
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected Tournament tournament;
 
@@ -56,7 +56,7 @@ public abstract class Match {
 	}
 
 	public Team getHostTeam() {
-		return hostTeam;
+		return this.hostTeam;
 	}
 
 	public void setHostTeam(Team hostTeam) {
@@ -64,7 +64,7 @@ public abstract class Match {
 	}
 
 	public Team getGuestTeam() {
-		return guestTeam;
+		return this.guestTeam;
 	}
 
 	public void setGuestTeam(Team guestTeam) {
@@ -72,7 +72,7 @@ public abstract class Match {
 	}
 
 	public Stadium getStadium() {
-		return stadium;
+		return this.stadium;
 	}
 
 	public void setStadium(Stadium stadium) {
@@ -80,10 +80,10 @@ public abstract class Match {
 	}
 
 	public List<MatchEvent> getEvents() {
-		if (events == null)
+		if (this.events == null)
 			return new LinkedList<MatchEvent>();
 
-		return events;
+		return this.events;
 	}
 
 	public void setEvents(List<MatchEvent> events) {
@@ -98,7 +98,7 @@ public abstract class Match {
 	}
 
 	public boolean isPlayed() {
-		return played;
+		return this.played;
 	}
 
 	public void setPlayed(boolean played) {
@@ -106,7 +106,7 @@ public abstract class Match {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -114,7 +114,7 @@ public abstract class Match {
 	}
 
 	public Tournament getTournament() {
-		return tournament;
+		return this.tournament;
 	}
 
 	public void setTournament(Tournament tournament) {
@@ -122,13 +122,14 @@ public abstract class Match {
 	}
 
 	public Date getDate() {
-		return date;
+		return this.date;
 	}
 
 	public void setDate(Date date) {
 		this.date = date;
 	}
 
+	@Override
 	public String toString() {
 		return MatchService.getResult(this);
 	}

@@ -55,7 +55,7 @@ public class PlayerDao extends DaoBase {
 	 */
 	@SuppressWarnings("unchecked")
 	public static List<Player> fetchAll() {
-		return (List<Player>) session.createQuery("From Player").list();
+		return session.createQuery("From Player").list();
 	}
 
 }

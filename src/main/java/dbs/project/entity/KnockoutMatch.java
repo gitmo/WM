@@ -29,10 +29,10 @@ public class KnockoutMatch extends Match {
 	}
 
 	public List<KnockoutMatch> getChildren() {
-		if (childs == null)
+		if (this.childs == null)
 			return new LinkedList<KnockoutMatch>();
 
-		return childs;
+		return this.childs;
 	}
 
 	public void setChildren(List<KnockoutMatch> childs) {

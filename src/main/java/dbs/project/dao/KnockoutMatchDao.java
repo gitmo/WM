@@ -50,8 +50,7 @@ public class KnockoutMatchDao extends DaoBase {
 	 */
 	@SuppressWarnings("unchecked")
 	public static List<KnockoutMatch> fetchAll() {
-		return (List<KnockoutMatch>) session.createQuery("From KnockoutMatch")
-				.list();
+		return session.createQuery("From KnockoutMatch").list();
 	}
 
 }

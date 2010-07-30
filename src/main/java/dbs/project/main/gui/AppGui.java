@@ -49,8 +49,8 @@ public class AppGui extends JFrame {
 	private JTree knockoutTree;
 
 	public AppGui() {
-		this.setName(APP_NAME);
-		this.setTitle(APP_NAME);
+		this.setName(this.APP_NAME);
+		this.setTitle(this.APP_NAME);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(1024, 768);
 
@@ -64,15 +64,17 @@ public class AppGui extends JFrame {
 
 	private void initComponents() {
 
-		mainPanel = new javax.swing.JPanel();
-		mainPanel.setName("mainPanel");
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
-		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		this.mainPanel = new javax.swing.JPanel();
+		this.mainPanel.setName("mainPanel");
+		this.mainPanel
+				.setLayout(new BoxLayout(this.mainPanel, BoxLayout.X_AXIS));
+		this.mainPanel.setBorder(BorderFactory
+				.createEmptyBorder(10, 10, 10, 10));
 
 		initLeftComponents();
 		initTab();
 
-		this.add(mainPanel);
+		this.add(this.mainPanel);
 	}
 
 	protected ImageIcon createImageIcon(String path, String description) {
@@ -89,40 +91,44 @@ public class AppGui extends JFrame {
 		JTabbedPane tabbComponents = new JTabbedPane();
 
 		// Vorrunde
-		groupStageComponents = new JPanel();
-		groupStageComponents.setLayout(new BoxLayout(groupStageComponents,
-				BoxLayout.Y_AXIS));
-		tabbComponents.add("Vorrunde", new JScrollPane(groupStageComponents));
+		this.groupStageComponents = new JPanel();
+		this.groupStageComponents.setLayout(new BoxLayout(
+				this.groupStageComponents, BoxLayout.Y_AXIS));
+		tabbComponents.add("Vorrunde", new JScrollPane(
+				this.groupStageComponents));
 
 		// Finalrunde
-		knockoutTree = new JTree();
-		tabbComponents.add("Finalrunde", knockoutTree);
-		knockoutTree.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		this.knockoutTree = new JTree();
+		tabbComponents.add("Finalrunde", this.knockoutTree);
+		this.knockoutTree.setBorder(BorderFactory.createEmptyBorder(10, 10, 10,
+				10));
 		ImageIcon icon = createImageIcon(FUSSBALL_JPG, "Fussballspiel");
 		if (icon != null) {
 			DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
 			renderer.setLeafIcon(icon);
 			renderer.setOpenIcon(icon);
 			renderer.setClosedIcon(icon);
-			knockoutTree.setCellRenderer(renderer);
+			this.knockoutTree.setCellRenderer(renderer);
 		}
 
 		// Statistik
-		statistic = new JPanel();
-		statistic.setLayout(new BoxLayout(statistic, BoxLayout.Y_AXIS));
-		statistic.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		statistic.setAlignmentX(0F);
-		JScrollPane bla = new JScrollPane(statistic);
+		this.statistic = new JPanel();
+		this.statistic
+				.setLayout(new BoxLayout(this.statistic, BoxLayout.Y_AXIS));
+		this.statistic.setBorder(BorderFactory
+				.createEmptyBorder(10, 10, 10, 10));
+		this.statistic.setAlignmentX(0F);
+		JScrollPane bla = new JScrollPane(this.statistic);
 		bla.setAlignmentX(0F);
 		tabbComponents.add("Statisik", bla);
 
-		if (tournamentsList.getModel().getSize() > 0) {
-			Tournament firstTournament = (Tournament) tournamentsList
+		if (this.tournamentsList.getModel().getSize() > 0) {
+			Tournament firstTournament = (Tournament) this.tournamentsList
 					.getModel().getElementAt(0);
 			refreshTabs(firstTournament);
 		}
 
-		mainPanel.add(tabbComponents);
+		this.mainPanel.add(tabbComponents);
 	}
 
 	private void refreshTabs(Tournament tournament) {
@@ -137,18 +143,18 @@ public class AppGui extends JFrame {
 		// Updates statistic
 		refreshStatistic(tournament);
 
-		mainPanel.validate();
-		mainPanel.repaint();
+		this.mainPanel.validate();
+		this.mainPanel.repaint();
 	}
 
 	private void refreshStatistic(Tournament tournament) {
-		statistic.removeAll();
+		this.statistic.removeAll();
 
-		addLine(statistic, "Torschützenkönig", TournamentService
-				.getTopscorers(tournament));
+		addLine(this.statistic, "Torschützenkönig",
+				TournamentService.getTopscorers(tournament));
 
-		addLine(statistic, "Spieler mit den meisten Karten", TournamentService
-				.getPlayerWithMostCards(tournament));
+		addLine(this.statistic, "Spieler mit den meisten Karten",
+				TournamentService.getPlayerWithMostCards(tournament));
 
 		JLabel stadiumLabel = new JLabel("Stadien");
 		stadiumLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
@@ -170,7 +176,7 @@ public class AppGui extends JFrame {
 		stadiums.add(stadiumLabel);
 		stadiums.add(stadiumList);
 		stadiums.setAlignmentX(0F);
-		statistic.add(stadiums);
+		this.statistic.add(stadiums);
 
 	}
 
@@ -195,7 +201,7 @@ public class AppGui extends JFrame {
 	}
 
 	private void refreshTables(List<TournamentGroup> groups) {
-		groupStageComponents.removeAll();
+		this.groupStageComponents.removeAll();
 		for (TournamentGroup group : groups) {
 			JLabel groupLabel = new JLabel(group.getName());
 			groupLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
@@ -227,14 +233,14 @@ public class AppGui extends JFrame {
 			tmpPanel.add(tablePanel);
 			tmpPanel.add(schedulePanel);
 
-			groupStageComponents.add(new JScrollPane(tmpPanel));
+			this.groupStageComponents.add(new JScrollPane(tmpPanel));
 		}
 	}
 
 	private void refreshTree(Tournament tournament) {
 		TreeModel treeModel = KnockoutMatchService.getAsTreeModel(tournament
 				.getFinalMatch());
-		knockoutTree.setModel(treeModel);
+		this.knockoutTree.setModel(treeModel);
 	}
 
 	private void initLeftComponents() {
@@ -249,20 +255,21 @@ public class AppGui extends JFrame {
 		components.add(label);
 
 		JScrollPane tournamentsScrollPane = new JScrollPane();
-		tournamentsList = new JList();
-		tournamentsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tournamentsScrollPane.setViewportView(tournamentsList);
+		this.tournamentsList = new JList();
+		this.tournamentsList
+				.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tournamentsScrollPane.setViewportView(this.tournamentsList);
 		refreshList();
 
 		ListSelectionListener listListener = new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				int i = ((JList) e.getSource()).getSelectedIndex();
-				Tournament selectedTournament = (Tournament) tournamentsList
+				Tournament selectedTournament = (Tournament) AppGui.this.tournamentsList
 						.getModel().getElementAt(i);
 				refreshTabs(selectedTournament);
 			}
 		};
-		tournamentsList.addListSelectionListener(listListener);
+		this.tournamentsList.addListSelectionListener(listListener);
 
 		// Button: create new tournament
 		JButton refreshTournament = new JButton();
@@ -287,8 +294,8 @@ public class AppGui extends JFrame {
 		ActionListener resultButtonPressed = new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				try {
-					int i = tournamentsList.getSelectedIndex();
-					Tournament selectedTournament = (Tournament) tournamentsList
+					int i = AppGui.this.tournamentsList.getSelectedIndex();
+					Tournament selectedTournament = (Tournament) AppGui.this.tournamentsList
 							.getModel().getElementAt(i);
 					GroupStageGenerator.enterResults(selectedTournament
 							.getGroupStage());
@@ -308,9 +315,9 @@ public class AppGui extends JFrame {
 		ActionListener refreshDataButtonPressed = new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				try {
-					int i = tournamentsList.getSelectedIndex();
+					int i = AppGui.this.tournamentsList.getSelectedIndex();
 					if (i != -1) { // there's a tournament selected
-						Tournament selectedTournament = (Tournament) tournamentsList
+						Tournament selectedTournament = (Tournament) AppGui.this.tournamentsList
 								.getModel().getElementAt(i);
 						refreshTabs(selectedTournament);
 					}
@@ -330,10 +337,10 @@ public class AppGui extends JFrame {
 		components.add(generateResults);
 		components.add(refreshData);
 
-		mainPanel.add(components);
+		this.mainPanel.add(components);
 	}
 
 	private void refreshList() {
-		tournamentsList.setModel(TournamentService.getListModel());
+		this.tournamentsList.setModel(TournamentService.getListModel());
 	}
 }

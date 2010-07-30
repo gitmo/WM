@@ -50,7 +50,7 @@ public class CountryDao extends DaoBase {
 	 */
 	@SuppressWarnings("unchecked")
 	public static List<Country> fetchAll() {
-		return (List<Country>) session.createQuery("From Country").list();
+		return session.createQuery("From Country").list();
 	}
 
 }

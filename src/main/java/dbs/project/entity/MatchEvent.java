@@ -20,7 +20,7 @@ public abstract class MatchEvent {
 	@GeneratedValue
 	protected Long id;
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected Match match;
 
@@ -41,7 +41,7 @@ public abstract class MatchEvent {
 	}
 
 	public Match getMatch() {
-		return match;
+		return this.match;
 	}
 
 	public void setMatch(Match match) {
@@ -49,7 +49,7 @@ public abstract class MatchEvent {
 	}
 
 	public MatchMinute getMinute() {
-		return new MatchMinute(minute, additionalMinute);
+		return new MatchMinute(this.minute, this.additionalMinute);
 	}
 
 	public void setMinute(int minute) {

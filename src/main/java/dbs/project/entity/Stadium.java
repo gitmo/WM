@@ -19,7 +19,7 @@ public class Stadium {
 
 	protected String city;
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected Country country;
 
@@ -29,7 +29,7 @@ public class Stadium {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -41,7 +41,7 @@ public class Stadium {
 	}
 
 	public String getCity() {
-		return city;
+		return this.city;
 	}
 
 	public void setCity(String city) {
@@ -49,7 +49,7 @@ public class Stadium {
 	}
 
 	public Country getCountry() {
-		return country;
+		return this.country;
 	}
 
 	public void setCountry(Country country) {
@@ -57,7 +57,7 @@ public class Stadium {
 	}
 
 	public Integer getCapacity() {
-		return capacity;
+		return this.capacity;
 	}
 
 	public void setCapacity(Integer capacity) {

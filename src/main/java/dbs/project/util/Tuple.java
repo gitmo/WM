@@ -12,7 +12,7 @@ public class Tuple<T, S> {
 	}
 
 	public T getFirst() {
-		return first;
+		return this.first;
 	}
 
 	public Tuple(T first, S second) {
@@ -25,7 +25,7 @@ public class Tuple<T, S> {
 	}
 
 	public S getSecond() {
-		return second;
+		return this.second;
 	}
 
 	public void setSecond(S second) {

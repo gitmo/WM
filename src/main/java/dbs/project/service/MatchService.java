@@ -129,14 +129,14 @@ public class MatchService {
 	 */
 	public static void insertGoal(GoalEvent goal, Player player, Match match)
 			throws PlayerDoesNotPlay, NoMinuteSet {
-		
-		if(goal.getMinute() == null)
-				throw new NoMinuteSet();
-		
+
+		if (goal.getMinute() == null)
+			throw new NoMinuteSet();
+
 		goal.setInvolvedPlayer(player);
 		goal.setMatch(match);
 		match.addEvent(goal);
-		
+
 		MatchDao.save(match);
 	}
 
@@ -249,7 +249,7 @@ public class MatchService {
 	public static List<Player> getLineupForTeam(Team team, Match match) {
 		return LineUpEventService.getPlayersByMatchForTeam(match, team);
 	}
-	
+
 	public static List<Player> getLineupByMatch(Match match) {
 		return LineUpEventService.getPlayersByMatch(match);
 	}
@@ -303,16 +303,17 @@ public class MatchService {
 
 		MatchDao.save(match);
 	}
-	
+
 	public static void getPlayingPlayersForMatch(Match match) {
 		List<Player> players = getLineupByMatch(match);
-		int i=-1;
-		for(Tuple<Player,Player> substitution : SubstitutionEventService.getSubstitutedPlayersForMatch(match)) {
-			if((i = players.indexOf(substitution.getFirst())) >= 0) {
+		int i = -1;
+		for (Tuple<Player, Player> substitution : SubstitutionEventService
+				.getSubstitutedPlayersForMatch(match)) {
+			if ((i = players.indexOf(substitution.getFirst())) >= 0) {
 				players.remove(i);
 				players.add(substitution.getSecond());
 			}
 		}
-		
+
 	}
 }

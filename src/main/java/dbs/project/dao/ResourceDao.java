@@ -55,7 +55,7 @@ public class ResourceDao extends DaoBase {
 	 */
 	@SuppressWarnings("unchecked")
 	public static List<Resource> fetchAll() {
-		return (List<Resource>) session.createQuery("From Resource").list();
+		return session.createQuery("From Resource").list();
 	}
 
 }

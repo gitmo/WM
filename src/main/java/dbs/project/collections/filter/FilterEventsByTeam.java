@@ -6,7 +6,7 @@ import dbs.project.entity.event.PlayerEvent;
 import dbs.project.util.collections.Filter;
 
 public class FilterEventsByTeam implements Filter<MatchEvent> {
-	private Team team;
+	private final Team team;
 
 	public FilterEventsByTeam(Team team) {
 		this.team = team;
@@ -17,7 +17,7 @@ public class FilterEventsByTeam implements Filter<MatchEvent> {
 			return false;
 
 		boolean teamInvolved = ((PlayerEvent) event).getInvolvedPlayer()
-				.getTeams().contains(team);
+				.getTeams().contains(this.team);
 		return teamInvolved ? true : false;
 	}
 }

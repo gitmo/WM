@@ -29,7 +29,7 @@ public abstract class Person {
 
 	protected Date birthday;
 
-	@ManyToMany(fetch=FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY)
 	protected List<Team> teams;
 
 	public Person() {
@@ -45,7 +45,7 @@ public abstract class Person {
 	}
 
 	public Integer getHeight() {
-		return height;
+		return this.height;
 	}
 
 	public void setHeight(Integer height) {
@@ -53,7 +53,7 @@ public abstract class Person {
 	}
 
 	public Integer getWeight() {
-		return weight;
+		return this.weight;
 	}
 
 	public void setWeight(Integer weight) {
@@ -61,7 +61,7 @@ public abstract class Person {
 	}
 
 	public String getFirstname() {
-		return firstname;
+		return this.firstname;
 	}
 
 	public void setFirstname(String firstname) {
@@ -69,7 +69,7 @@ public abstract class Person {
 	}
 
 	public String getLastname() {
-		return lastname;
+		return this.lastname;
 	}
 
 	public void setLastname(String lastname) {
@@ -77,7 +77,7 @@ public abstract class Person {
 	}
 
 	public Date getBirthday() {
-		return birthday;
+		return this.birthday;
 	}
 
 	public void setBirthday(Date birthday) {
@@ -85,24 +85,25 @@ public abstract class Person {
 	}
 
 	public List<Team> getTeams() {
-		if (teams == null)
+		if (this.teams == null)
 			return new LinkedList<Team>();
 
-		return teams;
+		return this.teams;
 	}
 
 	public void addTeam(Team team) {
-		if (teams == null)
-			teams = new LinkedList<Team>();
+		if (this.teams == null)
+			this.teams = new LinkedList<Team>();
 
-		teams.add(team);
+		this.teams.add(team);
 	}
 
 	public void setTeams(List<Team> teams) {
 		this.teams = teams;
 	}
 
+	@Override
 	public String toString() {
-		return String.format("%s %s", firstname, lastname);
+		return String.format("%s %s", this.firstname, this.lastname);
 	}
 }

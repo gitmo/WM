@@ -51,8 +51,8 @@ public class MatchDao extends DaoBase {
 	 */
 	@SuppressWarnings("unchecked")
 	public static List<Match> findByName(String name) {
-		return (List<Match>) session.createCriteria(Match.class).add(
-				Restrictions.eq("name", name)).list();
+		return session.createCriteria(Match.class)
+				.add(Restrictions.eq("name", name)).list();
 	}
 
 	/**
@@ -64,11 +64,13 @@ public class MatchDao extends DaoBase {
 	 */
 	@SuppressWarnings("unchecked")
 	public static List<Match> findByTeams(Team team1, Team team2) {
-		return (List<Match>) session.createCriteria(Match.class).add(
-				Restrictions.or(Restrictions.and(Restrictions.eq("hostTeam",
-						team1), Restrictions.eq("guestTeam", team2)),
-						Restrictions.and(Restrictions.eq("hostTeam", team2),
-								Restrictions.eq("guestTeam", team1)))).list();
+		return session
+				.createCriteria(Match.class)
+				.add(Restrictions.or(Restrictions.and(
+						Restrictions.eq("hostTeam", team1),
+						Restrictions.eq("guestTeam", team2)), Restrictions.and(
+						Restrictions.eq("hostTeam", team2),
+						Restrictions.eq("guestTeam", team1)))).list();
 	}
 
 	/**
@@ -78,13 +80,13 @@ public class MatchDao extends DaoBase {
 	 */
 	@SuppressWarnings("unchecked")
 	public static List<Match> fetchAll() {
-		return (List<Match>) session.createQuery("From Match").list();
+		return session.createQuery("From Match").list();
 	}
 
 	@SuppressWarnings("unchecked")
 	public static List<Match> findAllByTournament(Tournament tournament) {
-		return (List<Match>) session.createCriteria(Match.class).add(
-				Restrictions.eq("tournament", tournament)).list();
+		return session.createCriteria(Match.class)
+				.add(Restrictions.eq("tournament", tournament)).list();
 	}
 
 }

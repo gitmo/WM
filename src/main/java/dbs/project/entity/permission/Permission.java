@@ -23,7 +23,7 @@ public class Permission {
 	Resource resource;
 
 	public Resource getResource() {
-		return resource;
+		return this.resource;
 	}
 
 	public void setResource(Resource resource) {
@@ -31,7 +31,7 @@ public class Permission {
 	}
 
 	public long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(long id) {
@@ -39,7 +39,7 @@ public class Permission {
 	}
 
 	public AccessType getTypeOfAccess() {
-		return typeOfAccess;
+		return this.typeOfAccess;
 	}
 
 	public void setTypeOfAccess(Permission.AccessType typeOfAccess) {
