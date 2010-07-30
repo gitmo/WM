@@ -29,6 +29,7 @@ import dbs.project.exception.TeamLineUpComplete;
 import dbs.project.exception.TiedMatch;
 import dbs.project.service.event.GoalEventService;
 import dbs.project.service.event.LineUpEventService;
+import dbs.project.service.event.MatchEndService;
 import dbs.project.service.event.SubstitutionEventService;
 import dbs.project.util.Collections;
 import dbs.project.util.MatchMinute;
@@ -238,9 +239,7 @@ public class MatchService {
 	public static MatchMinute getFinalWhistleTime(Match match)
 			throws NoMatchWhistleEvent {
 
-		ArrayList<MatchEndEvent> end = new ArrayList<MatchEndEvent>();
-		Collections.filterAndChangeType(match.getEvents(),
-				new FilterMatchEndEvent(), end);
+		List<MatchEndEvent> end = MatchEndService.getByMatch(match);
 
 		if (end.size() < 1)
 			throw new NoMatchWhistleEvent();
@@ -249,34 +248,62 @@ public class MatchService {
 		return finalWhislte.getMinute();
 	}
 
+	/**
+	 * gets the lineup of the host team
+	 * 
+	 * @param match
+	 * @return
+	 */
 	public static List<Player> getHostLineup(Match match) {
 		return getLineupForTeam(match.getHostTeam(), match);
 	}
 
+	/**
+	 * gets the line up of the guest team
+	 * 
+	 * @param match
+	 * @return
+	 */
 	public static List<Player> getGuestLineup(Match match) {
 		return getLineupForTeam(match.getGuestTeam(), match);
 	}
 
-	public static List<Player> getLineup(Match match) {
-		List<LineUpEvent> lineupEvents = new LinkedList<LineUpEvent>();
-		Collections.filterAndChangeType(match.getEvents(),
-				new FilterLineUpEvent(), lineupEvents);
+//	public static List<Player> getLineup(Match match) {
+//		List<LineUpEvent> lineupEvents = new LinkedList<LineUpEvent>();
+//		Collections.filterAndChangeType(match.getEvents(),
+//				new FilterLineUpEvent(), lineupEvents);
+//
+//		List<Player> players = new LinkedList<Player>();
+//		for (LineUpEvent event : lineupEvents) {
+//			players.add(event.getInvolvedPlayer());
+//		}
+//		return players;
+//	}
 
-		List<Player> players = new LinkedList<Player>();
-		for (LineUpEvent event : lineupEvents) {
-			players.add(event.getInvolvedPlayer());
-		}
-		return players;
-	}
-
+	/**
+	 * lineup of given team
+	 * 
+	 */
 	public static List<Player> getLineupForTeam(Team team, Match match) {
 		return LineUpEventService.getPlayersByMatchForTeam(match, team);
 	}
-
+	
+	/**
+	 * lineup by a given match
+	 * 
+	 */
 	public static List<Player> getLineupByMatch(Match match) {
 		return LineUpEventService.getPlayersByMatch(match);
 	}
 
+	/**
+	 * inserts players to a lineup 
+	 * 
+	 * @param players
+	 * @param match
+	 * @throws PlayerDoesNotPlayForTeam
+	 * @throws TeamLineUpComplete
+	 */
 	public static void setLineup(List<Player> players, Match match)
 			throws PlayerDoesNotPlayForTeam, TeamLineUpComplete {
 		for (Player player : players) {
@@ -284,6 +311,14 @@ public class MatchService {
 		}
 	}
 
+	/**
+	 * persist a card for a player in a match
+	 * 
+	 * @param minute
+	 * @param affectedPlayer
+	 * @param color
+	 * @param match
+	 */
 	public static void addCard(int minute, Player affectedPlayer, String color,
 			Match match) {
 
@@ -293,27 +328,24 @@ public class MatchService {
 		MatchDao.save(match);
 	}
 
+	/**
+	 * gets all substitued players of a team in a match 
+	 * 
+	 * @param team
+	 * @param match
+	 * @return
+	 */
 	public static List<Tuple<Player, Player>> getSubstitutedPlayersByTeam(
 			Team team, Match match) {
-		// List<MatchEvent> teamEvents = new LinkedList<MatchEvent>();
-		// teamEvents = Collections.filter(match.getEvents(),
-		// new FilterEventsByTeam(team));
-		//
-		// List<SubstitutionEvent> substitutionEvents = new
-		// LinkedList<SubstitutionEvent>();
-		// Collections.filterAndChangeType(teamEvents,
-		// new FilterSubstitutionEvent(), substitutionEvents);
-		//
-		// List<Tuple<Player, Player>> players = new LinkedList<Tuple<Player,
-		// Player>>();
-		// for (SubstitutionEvent event : substitutionEvents)
-		// players.add(new Tuple<Player, Player>(event.getInvolvedPlayer(),
-		// event.getNewPlayer()));
-		//
-		// System.out.println("getSubstitutedPlayersByTeam: " + players.size());
 		return SubstitutionEventService.getSubstituedPlayersByTeam(team, match);
 	}
 
+	/**
+	 * ends a match and persist it
+	 * 
+	 * @param i
+	 * @param match
+	 */
 	public static void setFinalWhistle(int i, Match match) {
 		MatchEndEvent end = new MatchEndEvent(match, 90);
 		match.addEvent(end);
@@ -327,6 +359,11 @@ public class MatchService {
 		MatchDao.save(match);
 	}
 
+	/**
+	 * gets all playing players for match
+	 * 
+	 * @param match
+	 */
 	public static void getPlayingPlayersForMatch(Match match) {
 		List<Player> players = getLineupByMatch(match);
 		int i = -1;
