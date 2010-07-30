@@ -10,6 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import dbs.project.dao.TournamentGroupDao;
 import dbs.project.entity.GroupMatch;
 import dbs.project.entity.Team;
 import dbs.project.entity.TournamentGroup;
@@ -25,6 +26,7 @@ public class StandingRowTest {
 		group = TestHelper.playedGroupStage().getGroups().get(0);
 		teams = group.getTeams();
 		matches = group.getMatches();
+		TournamentGroupDao.save(group);
 	}
 
 	@After
