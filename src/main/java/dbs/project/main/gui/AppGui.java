@@ -21,7 +21,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.DimensionUIResource;
@@ -133,22 +132,22 @@ public class AppGui extends JFrame {
 		this.mainPanel.add(tabbComponents);
 	}
 
-	private void refreshTabs(Tournament tournament) {
+	private void refreshTabs(final Tournament tournament) {
 		List<TournamentGroup> groups = null;
+		// Catch wrong data
 		try {
-			tournament.getGroupStage().getGroups();
+			groups = tournament.getGroupStage().getGroups();
 			// Updates tables
 			refreshTables(groups);
-
-			// Updates tree
-			refreshTree(tournament);
-
-			// Updates statistic
-			refreshStatistic(tournament);
 		} catch (NullPointerException e) {
-			// Prevent null pointer exception if there's wrong data
-			return;
+			e.printStackTrace();
 		}
+
+		// Updates tree
+		refreshTree(tournament);
+
+		// Updates statistic
+		refreshStatistic(tournament);
 
 		this.mainPanel.validate();
 		this.mainPanel.repaint();
@@ -271,9 +270,11 @@ public class AppGui extends JFrame {
 		ListSelectionListener listListener = new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				int i = ((JList) e.getSource()).getSelectedIndex();
-				Tournament selectedTournament = (Tournament) AppGui.this.tournamentsList
-						.getModel().getElementAt(i);
-				refreshTabs(selectedTournament);
+				if (i != -1) {
+					Tournament selectedTournament = (Tournament) AppGui.this.tournamentsList
+							.getModel().getElementAt(i);
+					refreshTabs(selectedTournament);
+				}
 			}
 		};
 		this.tournamentsList.addListSelectionListener(listListener);
@@ -351,10 +352,6 @@ public class AppGui extends JFrame {
 	}
 
 	private void refreshList() {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				tournamentsList.setModel(TournamentService.getListModel());
-			}
-		});
+		tournamentsList.setModel(TournamentService.getListModel());
 	}
 }

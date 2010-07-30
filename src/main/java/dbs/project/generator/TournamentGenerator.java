@@ -235,7 +235,6 @@ public class TournamentGenerator {
 			throw instance.new CannotWriteToJARException();
 
 		String path = fileUrl.getPath() + "/" + outputFile;
-		System.out.println(path);
 		return new FileWriter(path);
 	}
 
