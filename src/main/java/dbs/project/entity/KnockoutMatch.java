@@ -7,18 +7,18 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class KnockoutMatch extends Match {
-	@OneToMany
+	@ManyToMany
 	@Cascade(CascadeType.ALL)
 	@Column(nullable = true)
-	protected List<KnockoutMatch> childs;
+	protected List<KnockoutMatch> childs = null;
 
 	public KnockoutMatch() {
 		super();

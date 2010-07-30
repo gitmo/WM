@@ -12,11 +12,13 @@ import dbs.project.dao.KnockoutMatchDao;
 import dbs.project.entity.GroupStage;
 import dbs.project.entity.KnockoutMatch;
 import dbs.project.entity.Team;
+import dbs.project.entity.Tournament;
 import dbs.project.entity.TournamentGroup;
 import dbs.project.exception.TiedMatch;
 
 public class KnockoutMatchService {
 
+	private static int nodeCounter = 1;
 	/**
 	 * JTree requires a TreeModel for DataRepresentation getAsTreeModel returns
 	 * the KnockoutStage in a TreeModel
@@ -83,7 +85,10 @@ public class KnockoutMatchService {
 	 */
 	public static List<KnockoutMatch> getAllMatches(KnockoutMatch root) {
 		List<KnockoutMatch> matches = new LinkedList<KnockoutMatch>();
-
+		
+		if(root == null)
+			return matches;
+		
 		// BFS iteration
 		Stack<KnockoutMatch> stack = new Stack<KnockoutMatch>();
 		stack.add(root);
@@ -104,16 +109,16 @@ public class KnockoutMatchService {
 	 * @param group
 	 */
 	public static void updatesKnockoutTree(TournamentGroup group) {
-		recUpdatesKnockoutTree(group.getTournament().getFinalMatch(), group
-				.getTournament().getGroupStage());
+		Tournament tournament = TournamentService.getByGroup(group);
+		nodeCounter = 0;
+		recUpdatesKnockoutTree(tournament.getFinalMatch(), tournament.getGroupStage(),0);
 	}
 
 	private static void recUpdatesKnockoutTree(KnockoutMatch node,
-			GroupStage groupStage) {
+			GroupStage groupStage, int height) {
 		// Achtelfinale
 		if (node.getChildren().size() < 1) {
-			int i = Integer.parseInt(node.getName().substring(
-					"Achtelfinale ".length())) - 1;
+			int i = nodeCounter++;
 			Team hostTeam, guestTeam;
 			if (i % 2 == 0) {
 				hostTeam = GroupService.getFirst(groupStage.getGroups().get(i));
@@ -146,8 +151,9 @@ public class KnockoutMatchService {
 			node.setHostTeam(guestTeam);
 		}
 
-		recUpdatesKnockoutTree(hostChild, groupStage);
-		recUpdatesKnockoutTree(guestChild, groupStage);
+		height++;
+		recUpdatesKnockoutTree(hostChild, groupStage,height);
+		recUpdatesKnockoutTree(guestChild, groupStage,height);
 	}
 
 }

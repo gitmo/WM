@@ -162,6 +162,18 @@ public class TournamentGenerator {
 		}
 		return teams;
 	}
+	
+	public static int randomYear() {
+		Calendar tournamentYear = new GregorianCalendar();
+		int year = new Random().nextInt(100);
+		year -= year % 4;
+		tournamentYear.set(Calendar.YEAR, 1970 + year);
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy");
+
+		String yearString = formatter.format(tournamentYear.getTime());
+		
+		return Integer.parseInt(yearString);
+	}
 
 	public static void generateTournament() throws Exception {
 
@@ -176,18 +188,9 @@ public class TournamentGenerator {
 		List<Country> hostCountries = new ArrayList<Country>();
 		hostCountries.add(teams.get(0).getCountry());
 		tournament.setHostCountries(hostCountries);
-
-		Random random = new Random();
-
-		Calendar tournamentYear = new GregorianCalendar();
-		int year = random.nextInt(50);
-		year -= year % 4;
-		tournamentYear.set(Calendar.YEAR, 1970 + year);
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy");
-
-		String yearString = formatter.format(tournamentYear.getTime());
+		
 		tournament.setName("Weltmeisterschaft");
-		tournament.setYear(Integer.parseInt(yearString));
+		tournament.setYear(randomYear());
 
 		List<Stadium> stadiums = loadSampleStadiumsFromCsv(STADIUMS_CSV);
 		Collections.shuffle(stadiums);

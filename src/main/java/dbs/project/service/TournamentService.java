@@ -16,6 +16,7 @@ import dbs.project.entity.Match;
 import dbs.project.entity.Player;
 import dbs.project.entity.Team;
 import dbs.project.entity.Tournament;
+import dbs.project.entity.TournamentGroup;
 import dbs.project.entity.event.player.CardEvent;
 import dbs.project.entity.event.player.GoalEvent;
 import dbs.project.exception.TiedMatch;
@@ -156,7 +157,8 @@ public class TournamentService {
 				.getGroupStage()));
 		matches.addAll(KnockoutMatchService.getAllMatches(tournament
 				.getFinalMatch()));
-		matches.add(tournament.getMatchForThirdPlace());
+		if(tournament.getMatchForThirdPlace() != null)
+			matches.add(tournament.getMatchForThirdPlace());
 		return matches;
 	}
 
@@ -280,6 +282,21 @@ public class TournamentService {
 			events.addAll(GoalEventDao.findAllByMatch(match));
 
 		return events;
+	}
+
+	/**
+	 * gets a tournament by a given group
+	 * 
+	 * @param group
+	 * @return
+	 */
+	public static Tournament getByGroup(TournamentGroup group) {
+		List<Tournament> tournaments = TournamentDao.fetchAll();
+		for(Tournament tournament : tournaments)
+			if(tournament.getGroupStage().getGroups().contains(group))
+				return tournament;
+		
+		return null;
 	}
 
 }

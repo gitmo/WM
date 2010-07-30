@@ -27,6 +27,7 @@ import javax.swing.plaf.DimensionUIResource;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeModel;
 
+import dbs.project.dao.TournamentDao;
 import dbs.project.entity.Stadium;
 import dbs.project.entity.Tournament;
 import dbs.project.entity.TournamentGroup;
@@ -280,10 +281,9 @@ public class AppGui extends JFrame {
 		this.tournamentsList.addListSelectionListener(listListener);
 
 		// Button: create new tournament
-		JButton refreshTournament = new JButton();
-		refreshTournament.setText("Turnier generieren");
-		refreshTournament.setName("tournamentCreateButton");
-		ActionListener refreshButtonPressed = new ActionListener() {
+		JButton createTournamentJava = new JButton();
+		createTournamentJava.setText("Turnier generieren (java generator)");
+		ActionListener javaButtonPressed = new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				try {
 					TournamentGenerator.generateTournament();
@@ -294,11 +294,27 @@ public class AppGui extends JFrame {
 				refreshList();
 			}
 		};
-		refreshTournament.addActionListener(refreshButtonPressed);
+		createTournamentJava.addActionListener(javaButtonPressed);
 
+		// Button: create new tournament
+		JButton createTournamentStoredProcedure = new JButton();
+		createTournamentStoredProcedure.setText("Turnier erstellen\n(stored procedure)");
+		ActionListener procedureButtonPressed = new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				try {
+					TournamentDao.generateTournament(TournamentGenerator.randomYear(), "Weltmeisterschaft");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				refreshList();
+			}
+		};
+		createTournamentStoredProcedure.addActionListener(procedureButtonPressed);
+		
 		// Button: simulate group stage
 		JButton generateResults = new JButton();
-		generateResults.setText("Gruppenphase spielen");
+		generateResults.setText("Gruppenphase simulieren (zeitintensiv)");
 		ActionListener resultButtonPressed = new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				try {
@@ -344,7 +360,8 @@ public class AppGui extends JFrame {
 		// Liste hinzufügen
 		components.add(tournamentsScrollPane);
 		// Button hinzufügen
-		components.add(refreshTournament);
+		components.add(createTournamentStoredProcedure);
+		components.add(createTournamentJava);
 		components.add(generateResults);
 		components.add(refreshData);
 

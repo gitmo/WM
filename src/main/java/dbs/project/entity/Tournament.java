@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -19,7 +20,7 @@ public class Tournament {
 
 	protected String name;
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@ManyToMany
 	@Cascade(CascadeType.ALL)
 	protected List<Country> hostCountries;
 
@@ -35,7 +36,7 @@ public class Tournament {
 	@Cascade(CascadeType.ALL)
 	protected GroupStage groupStage;
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected List<Stadium> stadiums;
 
