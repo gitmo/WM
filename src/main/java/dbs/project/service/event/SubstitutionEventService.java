@@ -22,7 +22,8 @@ public class SubstitutionEventService {
 		return substitutions;
 	}
 
-	public static List<Tuple<Player, Player>> getSubstitutedPlayersForMatch(Match match) {
+	public static List<Tuple<Player, Player>> getSubstitutedPlayersForMatch(
+			Match match) {
 
 		List<SubstitutionEvent> events = SubstitutionEventDao
 				.findAllByMatch(match);

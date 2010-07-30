@@ -32,7 +32,7 @@ public class SubstitutionEvent extends PlayerEvent {
 	}
 
 	public Player getNewPlayer() {
-		return newPlayer;
+		return this.newPlayer;
 	}
 
 	public void setNewPlayer(Player newPlayer) {

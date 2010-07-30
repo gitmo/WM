@@ -19,7 +19,7 @@ public class Advisor extends Person {
 	}
 
 	public String getTask() {
-		return task;
+		return this.task;
 	}
 
 	public void setTask(String task) {

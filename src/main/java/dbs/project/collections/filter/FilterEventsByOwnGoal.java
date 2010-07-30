@@ -16,7 +16,7 @@ public class FilterEventsByOwnGoal implements Filter<MatchEvent> {
 		if (!new FilterGoalEvent().apply(goal))
 			return false;
 
-		return team == ((GoalEvent) goal).getScorringTeam() ? true : false;
+		return this.team == ((GoalEvent) goal).getScorringTeam() ? true : false;
 	}
 
 }

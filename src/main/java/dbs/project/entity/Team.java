@@ -28,15 +28,15 @@ public class Team {
 	@Transient
 	protected Map<Integer, Player> trikotNumbers;
 
-	@OneToMany(fetch=FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected List<Advisor> advisors;
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected Country country;
 
-	@ManyToMany(fetch=FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected List<Player> players;
 
@@ -54,7 +54,7 @@ public class Team {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -62,10 +62,10 @@ public class Team {
 	}
 
 	public List<Player> getPlayers() {
-		if (players == null)
+		if (this.players == null)
 			return new LinkedList<Player>();
 
-		return players;
+		return this.players;
 	}
 
 	public void setPlayers(List<Player> players) {
@@ -73,10 +73,10 @@ public class Team {
 	}
 
 	public Map<Integer, Player> getTrikotNumbers() {
-		if (trikotNumbers == null)
+		if (this.trikotNumbers == null)
 			return new HashMap<Integer, Player>();
 
-		return trikotNumbers;
+		return this.trikotNumbers;
 	}
 
 	public void setTrikotNumbers(Map<Integer, Player> trikotNumbers) {
@@ -84,10 +84,10 @@ public class Team {
 	}
 
 	public List<Advisor> getAdvisors() {
-		if (advisors == null)
+		if (this.advisors == null)
 			return new LinkedList<Advisor>();
 
-		return advisors;
+		return this.advisors;
 	}
 
 	public void setAdvisors(List<Advisor> advisors) {
@@ -95,7 +95,7 @@ public class Team {
 	}
 
 	public Country getCountry() {
-		return country;
+		return this.country;
 	}
 
 	public void setCountry(Country country) {
@@ -113,6 +113,7 @@ public class Team {
 		return (this.getName() == obj.getName()) ? true : false;
 	}
 
+	@Override
 	public String toString() {
 		return getName();
 	}

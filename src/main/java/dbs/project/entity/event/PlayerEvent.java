@@ -34,21 +34,24 @@ public abstract class PlayerEvent extends MatchEvent {
 		setInvolvedPlayer(involvedPlayer);
 	}
 
+	@Override
 	public MatchMinute getMinute() {
-		return new MatchMinute(minute, additionalMinute);
+		return new MatchMinute(this.minute, this.additionalMinute);
 	}
 
+	@Override
 	public void setMinute(int minute) {
 		this.minute = minute;
 	}
 
+	@Override
 	public void setMinute(int minute, int additionalTime) {
 		this.minute = minute;
 		this.additionalMinute = additionalTime;
 	}
 
 	public Player getInvolvedPlayer() {
-		return involvedPlayer;
+		return this.involvedPlayer;
 	}
 
 	public void setInvolvedPlayer(Player involvedPlayer) {

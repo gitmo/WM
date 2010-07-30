@@ -45,8 +45,7 @@ public class TournamentGroupDao extends DaoBase {
 	 */
 	@SuppressWarnings("unchecked")
 	public static List<TournamentGroup> fetchAll() {
-		return (List<TournamentGroup>) session.createQuery(
-				"From TournamentGroup").list();
+		return session.createQuery("From TournamentGroup").list();
 	}
 
 }

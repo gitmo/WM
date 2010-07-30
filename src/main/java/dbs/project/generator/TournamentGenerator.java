@@ -101,8 +101,7 @@ public class TournamentGenerator {
 			List<Advisor> advisors = new ArrayList<Advisor>();
 
 			advisors.add(new Advisor(line[1], line[2], null, 0, 0, "Trainer"));
-			advisors
-					.add(new Advisor(line[3], line[4], null, 0, 0, "Co-Trainer"));
+			advisors.add(new Advisor(line[3], line[4], null, 0, 0, "Co-Trainer"));
 			advisors.add(new Advisor(line[5], line[6], null, 0, 0,
 					"Mannschaftsarzt"));
 

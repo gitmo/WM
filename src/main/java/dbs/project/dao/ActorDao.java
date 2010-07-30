@@ -55,7 +55,7 @@ public class ActorDao extends DaoBase {
 	 */
 	@SuppressWarnings("unchecked")
 	public static List<Actor> fetchAll() {
-		return (List<Actor>) session.createQuery("From Actor").list();
+		return session.createQuery("From Actor").list();
 	}
 
 }

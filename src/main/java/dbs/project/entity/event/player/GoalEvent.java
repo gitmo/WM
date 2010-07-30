@@ -33,7 +33,7 @@ public class GoalEvent extends PlayerEvent {
 	}
 
 	public Team getScorringTeam() {
-		return scorringTeam;
+		return this.scorringTeam;
 	}
 
 	public void setScorringTeam(Team scorringTeam) {

@@ -50,7 +50,7 @@ public class StadiumDao extends DaoBase {
 	 */
 	@SuppressWarnings("unchecked")
 	public static List<Stadium> fetchAll() {
-		return (List<Stadium>) session.createQuery("From Stadium").list();
+		return session.createQuery("From Stadium").list();
 	}
 
 }

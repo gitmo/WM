@@ -24,8 +24,8 @@ public class GroupService {
 
 		if (group.getMatches() == null)
 			throw new NoGroupMatchesSet();
-		List<StandingRow> rows = StandingRow.getRows(group.getTeams(), group
-				.getMatches());
+		List<StandingRow> rows = StandingRow.getRows(group.getTeams(),
+				group.getMatches());
 
 		int i = 1;
 		for (StandingRow row : rows)
@@ -48,7 +48,6 @@ public class GroupService {
 		return sb.toString();
 	}
 
-	
 	/**
 	 * Checks if all matches are played in a tournament group
 	 * 
@@ -63,7 +62,6 @@ public class GroupService {
 		return true;
 	}
 
-	
 	/**
 	 * gets the first placed team in a tournament group
 	 * 

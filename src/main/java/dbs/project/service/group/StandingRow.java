@@ -59,7 +59,7 @@ public class StandingRow implements Comparable<StandingRow> {
 	}
 
 	public Integer getPlayedGames() {
-		return playedGames;
+		return this.playedGames;
 	}
 
 	public void incPlayedGames() {
@@ -84,13 +84,12 @@ public class StandingRow implements Comparable<StandingRow> {
 		}
 	}
 
+	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(String.format("%15s\t\t", this.getTeam().getName()));
 		sb.append(this.getPoints() + "\t\t");
-		sb
-				.append(this.getGoalsScored() + ":" + this.getGoalsAgainst()
-						+ "\t\t");
+		sb.append(this.getGoalsScored() + ":" + this.getGoalsAgainst() + "\t\t");
 		sb.append(this.getPlayedGames() + "\n");
 
 		return sb.toString();
@@ -140,8 +139,8 @@ public class StandingRow implements Comparable<StandingRow> {
 		columnNames.add("Torverhältniss");
 
 		Vector<Vector<String>> columnData = new Vector<Vector<String>>();
-		for (StandingRow sr : StandingRow.getRows(group.getTeams(), group
-				.getMatches())) {
+		for (StandingRow sr : StandingRow.getRows(group.getTeams(),
+				group.getMatches())) {
 			Vector<String> row = new Vector<String>();
 			row.add(sr.getTeam().getName());
 			row.add(sr.getPlayedGames().toString());

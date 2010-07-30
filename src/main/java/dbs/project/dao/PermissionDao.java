@@ -55,7 +55,7 @@ public class PermissionDao extends DaoBase {
 	 */
 	@SuppressWarnings("unchecked")
 	public static List<Permission> fetchAll() {
-		return (List<Permission>) session.createQuery("From Permission").list();
+		return session.createQuery("From Permission").list();
 	}
 
 }

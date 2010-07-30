@@ -12,7 +12,7 @@ public class FilterPlayersByTeam implements Filter<Player> {
 	}
 
 	public boolean apply(Player player) {
-		return team.getPlayers().contains(player) ? true : false;
+		return this.team.getPlayers().contains(player) ? true : false;
 	}
 
 }

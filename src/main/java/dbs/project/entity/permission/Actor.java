@@ -30,19 +30,19 @@ public class Actor {
 	String password_hash;
 
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public void setPassword(String plaintext) {
 		setPassword_hash(ActorService.encryptPassword(plaintext));
 	}
 
 	public String getPassword_hash() {
-		return password_hash;
+		return this.password_hash;
 	}
 
 	public void setPassword_hash(String password_hash) {
@@ -50,7 +50,7 @@ public class Actor {
 	}
 
 	public List<Role> getRoles() {
-		return roles;
+		return this.roles;
 	}
 
 	public void setRoles(List<Role> roles) {
@@ -58,7 +58,7 @@ public class Actor {
 	}
 
 	public List<Permission> getPermissions() {
-		return permissions;
+		return this.permissions;
 	}
 
 	public void setPermissions(List<Permission> permissions) {

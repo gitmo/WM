@@ -25,8 +25,9 @@ public class PlayerService {
 	 * @throws PlayerDoesNotPlay
 	 * @throws NoMatchWhistleEvent
 	 */
-	public static Tuple<MatchMinute, MatchMinute> playerEnterLeaveMatch(Player player,
-			Match match) throws PlayerDoesNotPlay, NoMatchWhistleEvent {
+	public static Tuple<MatchMinute, MatchMinute> playerEnterLeaveMatch(
+			Player player, Match match) throws PlayerDoesNotPlay,
+			NoMatchWhistleEvent {
 		MatchMinute in = null;
 		MatchMinute out = null;
 		List<SubstitutionEvent> subs = new ArrayList<SubstitutionEvent>();
@@ -73,16 +74,15 @@ public class PlayerService {
 
 		if (SubstitutionEventDao.findByPlayerAndMatch(player, match).size() > 0)
 			return true;
-			return playerInLineUpOfMatch(player, match);
+		return playerInLineUpOfMatch(player, match);
 	}
 
-	
-	public static boolean playerInLineUpOfMatch(Player player, Match match){
+	public static boolean playerInLineUpOfMatch(Player player, Match match) {
 		if (MatchService.getGuestLineup(match).contains(player)
 				|| MatchService.getHostLineup(match).contains(player))
 			return true;
 		return false;
 
 	}
-	
+
 }

@@ -49,8 +49,8 @@ public class TeamDao extends DaoBase {
 	 */
 	@SuppressWarnings("unchecked")
 	public static List<Team> findByName(String name) {
-		return (List<Team>) session.createCriteria(Team.class).add(
-				Restrictions.eq("name", name)).list();
+		return session.createCriteria(Team.class)
+				.add(Restrictions.eq("name", name)).list();
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class TeamDao extends DaoBase {
 	 */
 	@SuppressWarnings("unchecked")
 	public static List<Team> fetchAll() {
-		return (List<Team>) session.createQuery("From Team").list();
+		return session.createQuery("From Team").list();
 	}
 
 }

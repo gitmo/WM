@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 
 import sun.misc.BASE64Encoder;
 
+@SuppressWarnings("restriction")
 public final class PasswordService {
 	private static PasswordService instance;
 	static {

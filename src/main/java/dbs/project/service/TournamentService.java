@@ -105,7 +105,7 @@ public class TournamentService {
 			@Override
 			public boolean equals(Object obj) {
 				if (obj instanceof Topscorer)
-					return player == ((Topscorer) obj).player;
+					return this.player == ((Topscorer) obj).player;
 
 				return false; // Comparing apples and oranges
 			}
@@ -198,7 +198,7 @@ public class TournamentService {
 			@Override
 			public boolean equals(Object obj) {
 				if (obj instanceof PlayerWithCards)
-					return player == ((PlayerWithCards) obj).player;
+					return this.player == ((PlayerWithCards) obj).player;
 
 				return false; // Apples and oranges
 			}
@@ -218,8 +218,8 @@ public class TournamentService {
 					new FilterCardEvent(), allCards);
 			int i = -1;
 			for (CardEvent eventCard : allCards) {
-				PlayerWithCards player = new PlayerWithCards(eventCard
-						.getInvolvedPlayer());
+				PlayerWithCards player = new PlayerWithCards(
+						eventCard.getInvolvedPlayer());
 				i = playersWithCards.indexOf(player);
 				// TODO: Are we of by one? I.e. shouldn't a first offender get a
 				// card count of one?

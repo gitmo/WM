@@ -13,19 +13,24 @@ import dbs.project.entity.event.player.LineUpEvent;
 public class LineUpEventDao extends DaoBase {
 	@SuppressWarnings("unchecked")
 	public static List<LineUpEvent> findByMatchForTeam(Match match, Team team) {
-		return (List<LineUpEvent>) session.createCriteria(LineUpEvent.class)
-				.add(Restrictions.and(Restrictions.eq("team", team), Restrictions.eq("match", match))).list();
+		return session
+				.createCriteria(LineUpEvent.class)
+				.add(Restrictions.and(Restrictions.eq("team", team),
+						Restrictions.eq("match", match))).list();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public static List<LineUpEvent> findByMatch(Match match) {
-		return (List<LineUpEvent>) session.createCriteria(LineUpEvent.class)
+		return session.createCriteria(LineUpEvent.class)
 				.add(Restrictions.eq("match", match)).list();
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public static List<LineUpEvent> getByPlayerAndMatch(Player player, Match match){
-		List<LineUpEvent> events = session.createCriteria(LineUpEvent.class).add(Restrictions.eq("involvedPlayer", player)).add(Restrictions.eq("match", match)).list();
+	public static List<LineUpEvent> getByPlayerAndMatch(Player player,
+			Match match) {
+		List<LineUpEvent> events = session.createCriteria(LineUpEvent.class)
+				.add(Restrictions.eq("involvedPlayer", player))
+				.add(Restrictions.eq("match", match)).list();
 		return events;
 	}
 

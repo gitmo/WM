@@ -27,7 +27,7 @@ public class LineUpEvent extends PlayerEvent {
 	}
 
 	public Team getTeam() {
-		return team;
+		return this.team;
 	}
 
 	public void setTeam(Team team) {

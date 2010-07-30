@@ -14,7 +14,7 @@ public class MatchEventDao extends DaoBase {
 	 */
 	@SuppressWarnings("unchecked")
 	public static List<MatchEvent> fetchAll() {
-		return (List<MatchEvent>) session.createQuery("From MatchEvent").list();
+		return session.createQuery("From MatchEvent").list();
 	}
 
 }

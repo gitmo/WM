@@ -21,7 +21,7 @@ public class Player extends Person {
 	}
 
 	public String getNickname() {
-		return nickname;
+		return this.nickname;
 	}
 
 	public void setNickname(String nickname) {
@@ -29,13 +29,14 @@ public class Player extends Person {
 	}
 
 	public String getClub() {
-		return club;
+		return this.club;
 	}
 
 	public void setClub(String club) {
 		this.club = club;
 	}
 
+	@Override
 	public String toString() {
 		return String.format("%s %s geboren am %s (Groesse: %d, Gewicht: %d)",
 				getFirstname(), getLastname(), getBirthday(), getHeight(),

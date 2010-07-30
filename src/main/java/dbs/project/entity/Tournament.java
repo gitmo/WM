@@ -19,23 +19,23 @@ public class Tournament {
 
 	protected String name;
 
-	@OneToMany(fetch=FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected List<Country> hostCountries;
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected KnockoutMatch finalMatch;
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected KnockoutMatch matchForThirdPlace;
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected GroupStage groupStage;
 
-	@OneToMany(fetch=FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	protected List<Stadium> stadiums;
 
@@ -43,7 +43,7 @@ public class Tournament {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -59,10 +59,10 @@ public class Tournament {
 	}
 
 	public List<Country> getHostCountries() {
-		if (hostCountries == null)
+		if (this.hostCountries == null)
 			return new LinkedList<Country>();
 
-		return hostCountries;
+		return this.hostCountries;
 	}
 
 	public void setHostCountries(List<Country> hostCountries) {
@@ -70,7 +70,7 @@ public class Tournament {
 	}
 
 	public GroupStage getGroupStage() {
-		return groupStage;
+		return this.groupStage;
 	}
 
 	public void setGroupStage(GroupStage groupStage) {
@@ -78,10 +78,10 @@ public class Tournament {
 	}
 
 	public List<Stadium> getStadiums() {
-		if (stadiums == null)
+		if (this.stadiums == null)
 			return new LinkedList<Stadium>();
 
-		return stadiums;
+		return this.stadiums;
 	}
 
 	public void setStadiums(List<Stadium> stadiums) {
@@ -89,7 +89,7 @@ public class Tournament {
 	}
 
 	public KnockoutMatch getFinalMatch() {
-		return finalMatch;
+		return this.finalMatch;
 	}
 
 	public void setFinalMatch(KnockoutMatch finalMatch) {
@@ -101,9 +101,10 @@ public class Tournament {
 	}
 
 	public KnockoutMatch getMatchForThirdPlace() {
-		return matchForThirdPlace;
+		return this.matchForThirdPlace;
 	}
 
+	@Override
 	public String toString() {
 		return getName() + " " + getYear();
 	}
