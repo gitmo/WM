@@ -370,7 +370,7 @@ public class MatchServiceTest {
 
 		List<Player> players= new ArrayList<Player>();
 		players.addAll(match.getHostTeam().getPlayers().subList(0, 11));
-		players.addAll(match.getGuestTeam().getPlayers().subList(11, 22));
+		players.addAll(match.getGuestTeam().getPlayers().subList(0,11));
 		try {
 			MatchService.setLineup(players, match);
 		} catch (Exception e) {
@@ -381,7 +381,7 @@ public class MatchServiceTest {
 			assertEquals("player "+i, player.getName());
 			i++;
 			//guestplayers
-			if(i==12) i = 35;
+			if(i==12) i = 24;
 		}
 	}
 
