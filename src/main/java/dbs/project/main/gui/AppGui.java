@@ -73,7 +73,6 @@ public class AppGui extends JFrame {
 				.createEmptyBorder(10, 10, 10, 10));
 
 		initLeftComponents();
-		System.out.println(System.getProperty("user.dir"));
 		initTab();
 
 		this.add(this.mainPanel);
@@ -137,19 +136,18 @@ public class AppGui extends JFrame {
 		List<TournamentGroup> groups = null;
 		try {
 			tournament.getGroupStage().getGroups();
+			// Updates tables
+			refreshTables(groups);
+
+			// Updates tree
+			refreshTree(tournament);
+
+			// Updates statistic
+			refreshStatistic(tournament);
 		} catch (NullPointerException e) {
 			// Prevent null pointer exception if there's wrong data
 			return;
 		}
-
-		// Updates tables
-		refreshTables(groups);
-
-		// Updates tree
-		refreshTree(tournament);
-
-		// Updates statistic
-		refreshStatistic(tournament);
 
 		this.mainPanel.validate();
 		this.mainPanel.repaint();
@@ -309,7 +307,8 @@ public class AppGui extends JFrame {
 						GroupStageGenerator.enterResults(selectedTournament
 								.getGroupStage());
 						refreshTabs(selectedTournament);
-					}
+					} else
+						System.out.println("Please select a tournament first.");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
