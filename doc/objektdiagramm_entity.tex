@@ -31,7 +31,7 @@
 
 
 \title{Objektmodell: Design}
-\author{NvG, FH, SR}
+\author{Felix Höffken, Sebastian Raitz, Nico von Geyso}
 
 % Activate to display a given date or no date
 \date{}
@@ -85,86 +85,100 @@
 %\setcounter{section}{5}
 
 %\clearpage
+\section{Klassendiagramm}
+Alle Klassen sind auch als Diagramm in den Dateien {\it objektdiagramm\_entity.png} und {\it objektdiagramm\_permission.png} zu finden.
+
 \section{Packet: dbs.project.entity}
 
-\subsection{Advisor}
-Ein Advisor repräsentiert eine Person, die für ein Team arbeitet, z.B. Trainer, TeamArzt, ...
+\begin{description}
 
-\subsection{Country}
+\item [Advisor]
+Ein Advisor repräsentiert eine Person, die für ein Team arbeitet, z.B. Trainer, Teamarzt, ...
+
+\item [Country]
 Country repräsentiert ein Land.
 
-\subsection{GroupMatch}
+\item [GroupMatch]
 Ein GroupMatch ist ein Spiel, dass in der Gruppenphase ausgetragen wird.
 
-\subsection{GroupStage}
+\item [GroupStage]
 Die GroupStage ist die Gruppenphase des Turniers.
 
-\subsection{KnockOutMatch}
+\item [KnockOutMatch]
 Ein KnockOutMatch ist ein Spiel, dass in der KO-Runde ausgetragen wird.
 
-\subsection{Match}
+\item [Match]
 Ein Match ist ein Spiel, also die Oberklasse von KnockOutMatch und GroupMatch. Sie ist {\it abstact} kann also nicht implementiert werden.
 
-\subsection{MatchEvent}
+\item [MatchEvent]
 Ein MatchEvent ist ein Event, dass während eines Spiels auftreten kann. Es ist {\it abstact} kann also nicht direkt implementiert werden.
 Es gibt mehrere Unterklassen, die später erklärt werden.
 
-\subsection{Person}
+\item [Person]
 Eine Person ist eine Person, die in dem Turnier auftritt. Sie ist {\it abstract} und die Überklasse von Player und Advisor.
 
-\subsection{Player}
+\item [Player]
 Ein Player repräsentiert einen Spieler im Turnier.
 
-\subsection{Stadium}
+\item [Stadium]
 Ein Stadium repräsentiert ein Stadion.
 
-\subsection{Team}
+\item [Team]
 Ein Team ist eine Gruppe aus Advisorn und Spielern, usw. Sie repräsentieren die Mannschafte, die gegeneinander spielen.
 
-\subsection{Tournament}
+\item [Tournament]
 Ein Tournament ist ein Turnier - da mehrere Turniere in unsere Datenbank passen sollen ist sie nötig.
 
-\subsection{TournamentGroup}
+\item [TournamentGroup]
 Eine TournamentGroup repräsentiert eine Gruppe in der Gruppenphase, also Gruppe A, B, C...
+
+\end{description}
 
 \section{Packet: dbs.project.entity.event}
 Diese Entitäten implementieren die abstrakte Klasse MatchEvent.
 
-\subsection{MatchEndEvent}
+\begin{description}
+
+\item [MatchEndEvent]
 Ein MatchEndEvent repräsentiert den Schlusspfiff in einem Spiel.
 
-\subsection{PlayerEvent}
+\item [PlayerEvent]
 Ein PlayerEvent ist ein im Spiel auftretendes Ereignis, das einen Spieler betrifft. Die Klasse ist {\it abstract} und wird von CardEvent, GoalEvent, LineUpEvent und SubstitutionEvent implementiert.
+
+\end{description}
 
 \section{Packet: dbs.project.entity.event.player}
 Diese Klassen implementieren die abstrakte Klasse PlayerEvent.
 
-\subsection{CardEvent}
+\begin{description}
+\item [CardEvent]
 Ein CardEvent repräsentiert die Vergabe einer Karte an einen Spieler.
 
-\subsection{GoalEvent}
+\item [GoalEvent]
 Ein GoalEvent repräsentiert ein (Eigen-)Tor.
 
-\subsection{LineUpEvent}
+\item [LineUpEvent]
 Ein LineUpEvent repräsentiert das Aufstellen eines Spielers in der Startelf.
 
-\subsection{SubstitutionEvent}
+\item [SubstitutionEvent]
 Ein SubstitutionEvent repräsentiert das Auswechseln bzw. Einwechseln eines Spielers.
+\end{description}
 
 \section{Packet: dbs.project.entity.permission}
 Diese Entitäten werden zur Authentifizierung und Rechtevergabe benötigt.
 
-\subsection{Actor}
+\begin{description}
+\item [Actor]
 Ein Actor repräsentiert einen Akteur, der Daten in die Datenbank speichern, oder Daten aus ihr lesen will.
 
-\subsection{Permission}
+\item [Permission]
 Permissions verwalten den Zugang zu gewissen Ressourcen im System.
 
-\subsection{Resource}
-Eine Ressource spiegelt eine Entität wieder. Hat ein Akteur also die Berechtigung (Permission) für eine Ressource, so kann er diese je nach Berechtigung einsehen oder verwalten.
+\item [Resource]
+Eine Ressource spiegelt ein Recht auf eine Entität wieder. Hat ein Akteur also die Berechtigung (Permission) für eine Ressource, so kann er diese je nach vergebener Berechtigung einsehen oder verwalten.
 
-\subsection{Role}
+\item [Role]
 Akteuren können gewisse Rollen zugewiesen werden. Diese haben wieder je nach Einstellung Berechtigungen auf Ressourcen.
-%\input{}
+\end{description}
 
 \end{document}
