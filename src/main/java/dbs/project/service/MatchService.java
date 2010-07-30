@@ -228,7 +228,9 @@ public class MatchService {
 	 * @return
 	 */
 	private static boolean isTied(Match match) {
-		return getPointsByTeam(match.getHostTeam(), match) == 0 ? true : false;
+		if(getPointsByTeam(match.getGuestTeam(), match)==0 && getPointsByTeam(match.getHostTeam(), match)==0)
+			return true;
+		return getPointsByTeam(match.getHostTeam(), match) == 1 ? true : false;
 	}
 
 	/**

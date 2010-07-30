@@ -46,9 +46,8 @@ public class TeamServiceTest {
 		
 		int i = 12;
 		for(Player player : TeamService.getPlayersOnTheBench(match, team,new MatchMinute(30))){
-			System.out.println(player);
-//			assertEquals("Player "+i, player.getName());
-//			i++;
+			assertEquals("player "+i, player.getName());
+			i++;
 		}
 	}
 
