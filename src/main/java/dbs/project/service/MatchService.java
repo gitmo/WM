@@ -74,7 +74,7 @@ public class MatchService {
 	}
 
 	/**
-	 * inserts Player to Match(the LineUp)
+	 * add player to lineup
 	 * 
 	 * @param player
 	 * @param match
@@ -99,6 +99,13 @@ public class MatchService {
 		MatchDao.save(match);
 	}
 
+	/**
+	 * calculates the number of players of a team's lineup
+	 * 
+	 * @param team
+	 * @param match
+	 * @return
+	 */
 	private static int getLineupSize(Team team, Match match) {
 		return getLineupForTeam(team, match).size();
 	}
@@ -168,17 +175,6 @@ public class MatchService {
 	 * @return
 	 */
 	public static Tuple<Integer, Integer> getGoalsByTeam(Team team, Match match) {
-		// Tuple<Integer, Integer> goals = new Tuple<Integer, Integer>();
-		// int goalsScored, goalsAgainst;
-
-		// List<MatchEvent> goalEvents = Collections.filter(match.getEvents(),
-		// new FilterGoalEvent());
-		//
-		// List<MatchEvent> realGoals = Collections.filter(goalEvents,
-		// new FilterEventsByOwnGoal(team));
-		// goalsScored = realGoals.size();
-		// goalsAgainst = goalEvents.size() - goalsScored;
-
 		Tuple<Integer, Integer> goals = GoalEventService
 				.getGoalsForMatchByTeam(team, match);
 
@@ -188,6 +184,13 @@ public class MatchService {
 		return goals;
 	}
 
+	/**
+	 * gives the winning team of a match
+	 * 
+	 * @param match
+	 * @return
+	 * @throws TiedMatch
+	 */
 	public static Team getWinner(Match match) throws TiedMatch {
 		if (MatchService.isTied(match))
 			throw new TiedMatch();
@@ -198,6 +201,13 @@ public class MatchService {
 		return match.getGuestTeam();
 	}
 
+	/**
+	 * gives the looser team of a match
+	 * 
+	 * @param match
+	 * @return
+	 * @throws TiedMatch
+	 */
 	public static Team getLooser(Match match) throws TiedMatch {
 		if (MatchService.isTied(match))
 			throw new TiedMatch();
@@ -208,10 +218,23 @@ public class MatchService {
 		return match.getHostTeam();
 	}
 
+	/**
+	 * checks if the game is a draw
+	 * 
+	 * @param match
+	 * @return
+	 */
 	private static boolean isTied(Match match) {
 		return getPointsByTeam(match.getHostTeam(), match) == 0 ? true : false;
 	}
 
+	/**
+	 * duration of a match
+	 * 
+	 * @param match
+	 * @return
+	 * @throws NoMatchWhistleEvent
+	 */
 	public static MatchMinute getFinalWhistleTime(Match match)
 			throws NoMatchWhistleEvent {
 
