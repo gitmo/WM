@@ -8,10 +8,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import dbs.project.dao.MatchDao;
 import dbs.project.entity.Match;
 import dbs.project.entity.Player;
 import dbs.project.exception.NoMatchWhistleEvent;
 import dbs.project.exception.PlayerDoesNotPlay;
+import dbs.project.helper.TestHelper;
 import dbs.project.util.MatchMinute;
 import dbs.project.util.Tuple;
 
@@ -21,10 +23,13 @@ public class PlayerServiceTest {
 	
 	@Before
 	public void setUp() throws Exception {
+		match = TestHelper.match();
+		MatchDao.save(match);
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		MatchDao.delete(match);
 	}
 
 	@Test
@@ -51,7 +56,7 @@ public class PlayerServiceTest {
 	@Test
 	public void testPlayerHasPlayedWithPlayerOnBench() {
 		List<Player> players = match.getHostTeam().getPlayers();
-		Player player = players.get(players.size());
+		Player player = players.get(players.size()-1);
 		assertFalse(PlayerService.playerHasPlayed(player, match));
 	}
 

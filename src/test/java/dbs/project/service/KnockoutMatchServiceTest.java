@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import dbs.project.entity.KnockoutMatch;
+import dbs.project.entity.Tournament;
 import dbs.project.helper.TestHelper;
 
 public class KnockoutMatchServiceTest {
@@ -20,7 +21,8 @@ public class KnockoutMatchServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		finalMatch = TestHelper.knockoutMatch();
+		Tournament tournament = TestHelper.playedTournament();
+		finalMatch = TestHelper.playedKnockoutMatch(tournament);
 	}
 
 	@After

@@ -107,7 +107,7 @@ public class TestHelper {
 	public static Tournament tournament(){
 		Tournament tournament = new Tournament();
 		tournament.setGroupStage(groupStage());
-		tournament.setFinalMatch(knockoutMatch());
+		tournament.setFinalMatch(knockoutMatch(tournament.getGroupStage()));
 		tournament.setYear(0);
 		tournament.setName("testTournament");
 		tournament.setStadiums(stadiums());
@@ -129,9 +129,8 @@ public class TestHelper {
 		return groupStage;
 	}
 
-	public static KnockoutMatch knockoutMatch(){
+	public static KnockoutMatch knockoutMatch(GroupStage groupStage){
 		KnockoutMatch finalMatch = new KnockoutMatch("Finale");
-		GroupStage groupStage = playedGroupStage();
 		
 		//initialize halfFinals
 		List<KnockoutMatch> halfFinals = new ArrayList<KnockoutMatch>();
@@ -207,8 +206,63 @@ public class TestHelper {
 		return finalMatch;
 	}
 
-	public static KnockoutMatch playedKnockoutMatch(){
-		KnockoutMatch finalMatch = knockoutMatch();
+//	public static KnockoutMatch playedKnockoutMatch(){
+//		KnockoutMatch finalMatch = knockoutMatch();
+//		
+//		List<KnockoutMatch> halfFinals = finalMatch.getChildren();
+//		
+//		List<KnockoutMatch> quarterFinals1 =  halfFinals.get(0).getChildren();
+//		List<KnockoutMatch> quarterFinals2 =  halfFinals.get(1).getChildren();
+//		
+//		List<KnockoutMatch> bestOfSixteen1 = quarterFinals1.get(0).getChildren();
+//		List<KnockoutMatch> bestOfSixteen2 = quarterFinals1.get(1).getChildren();
+//		List<KnockoutMatch> bestOfSixteen3 = quarterFinals2.get(0).getChildren();
+//		List<KnockoutMatch> bestOfSixteen4 = quarterFinals2.get(1).getChildren();
+//		
+//		//generate quarterFinals
+//		quarterFinals1.get(0).setHostTeam(bestOfSixteen1.get(0).getHostTeam());
+//		quarterFinals1.get(0).setGuestTeam(bestOfSixteen1.get(1).getHostTeam());
+//		
+//		quarterFinals1.get(1).setHostTeam(bestOfSixteen2.get(0).getHostTeam());
+//		quarterFinals1.get(1).setGuestTeam(bestOfSixteen2.get(1).getHostTeam());
+//		
+//		quarterFinals2.get(0).setHostTeam(bestOfSixteen3.get(0).getHostTeam());
+//		quarterFinals2.get(0).setGuestTeam(bestOfSixteen3.get(1).getHostTeam());
+//		
+//		quarterFinals2.get(1).setHostTeam(bestOfSixteen4.get(0).getHostTeam());
+//		quarterFinals2.get(1).setGuestTeam(bestOfSixteen4.get(1).getHostTeam());
+//		
+//		//generate halfFinals
+//		halfFinals.get(0).setHostTeam(quarterFinals1.get(0).getHostTeam());
+//		halfFinals.get(0).setGuestTeam(quarterFinals1.get(1).getHostTeam());
+//		
+//		halfFinals.get(1).setHostTeam(quarterFinals2.get(0).getHostTeam());
+//		halfFinals.get(1).setGuestTeam(quarterFinals2.get(1).getHostTeam());
+//		
+//		//generate finalMatch
+//		finalMatch.setHostTeam(halfFinals.get(0).getHostTeam());
+//		finalMatch.setGuestTeam(halfFinals.get(1).getHostTeam());
+//		
+//		//generate matchEvents
+//		List<KnockoutMatch> tmpKnockoutMatches = new ArrayList<KnockoutMatch>();
+//		KnockoutMatch match;
+//		tmpKnockoutMatches.add(finalMatch);
+//		while(tmpKnockoutMatches.size()>0){
+//			match = tmpKnockoutMatches.remove(0);
+//			
+//			tmpKnockoutMatches.addAll(match.getChildren());
+//			
+//			matchSetTeams(match);
+//			matchLineUp(match);
+//			playMatch(match);
+//			
+//		}
+//		
+//		return finalMatch;
+//	}
+
+	public static KnockoutMatch playedKnockoutMatch(Tournament tournament){
+		KnockoutMatch finalMatch = knockoutMatch(tournament.getGroupStage());
 		
 		List<KnockoutMatch> halfFinals = finalMatch.getChildren();
 		
@@ -256,22 +310,39 @@ public class TestHelper {
 			matchSetTeams(match);
 			matchLineUp(match);
 			playMatch(match);
+			match.setTournament(tournament);
 			
 		}
 		
 		return finalMatch;
 	}
 
+	
 	public static Tournament playedTournament(){
 		Tournament t = new Tournament();
-		t.setFinalMatch(playedKnockoutMatch());
-		t.setGroupStage(playedGroupStage());
+		t.setGroupStage(playedGroupStage(t));
+		t.setFinalMatch(playedKnockoutMatch(t));
 		t.setName("test tournament");
 		t.setYear(0);
 		t.setStadiums(stadiums());
-		t.setMatchForThirdPlace(matchForThirdPlace());
+		t.setMatchForThirdPlace(matchForThirdPlace(t));
 		
 		return t;
+	}
+
+	private static GroupStage playedGroupStage(Tournament t) {
+		GroupStage groupStage = groupStage();
+		List<TournamentGroup> groups = groupStage.getGroups();
+		for(TournamentGroup group : groups)
+			for(GroupMatch match : group.getMatches()){
+				
+				match.setPlayed(true);
+				
+				playMatch(match);
+				match.setTournament(t);
+			}
+				
+		return groupStage;
 	}
 
 	public static KnockoutMatch match(){
@@ -283,9 +354,9 @@ public class TestHelper {
 		return match;
 	}
 	
-	private static KnockoutMatch matchForThirdPlace() {
+	private static KnockoutMatch matchForThirdPlace(Tournament t) {
 		KnockoutMatch third = new KnockoutMatch();
-		KnockoutMatch finalMatch = playedKnockoutMatch();
+		KnockoutMatch finalMatch = t.getFinalMatch();
 		
 		third.setHostTeam(finalMatch.getChildren().get(0).getGuestTeam());
 		third.setGuestTeam(finalMatch.getChildren().get(1).getGuestTeam());
@@ -293,6 +364,7 @@ public class TestHelper {
 		matchSetTeams(third);
 		matchLineUp(third);
 		playMatch(third);
+		third.setTournament(t);
 		
 		return third;
 		

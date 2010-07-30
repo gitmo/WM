@@ -118,8 +118,10 @@ public class TournamentService {
 		// Create a list of players with their goals attached (Topscorer obj.)
 		ArrayList<Topscorer> topscorers = new ArrayList<Topscorer>();
 		List<GoalEvent> allGoals = getGoalsByTournament(tournament);
+		System.out.println("goals: "+ allGoals.size());
 		int i = -1;
 		for (GoalEvent eventGoal : allGoals) {
+			i=-1;
 			Topscorer player = new Topscorer(eventGoal.getInvolvedPlayer());
 			i = topscorers.indexOf(player);
 			// TODO: of by one? See getPlayerWithMostCards.
@@ -133,7 +135,10 @@ public class TournamentService {
 		// Special case: no goals yet.
 		if (topscorers.size() == 0)
 			return "Es wurden keine Tore geschoßen";
-
+		
+		System.out.println("scorer: " + topscorers.size());
+		for(Topscorer scorer : topscorers)
+			System.out.println(scorer.player + " " + scorer.goals);
 		// Sort (via compareTo) ...
 		java.util.Collections.sort(topscorers);
 
@@ -259,11 +264,8 @@ public class TournamentService {
 		KnockoutMatch tmpNode;
 		while (stack.size() > 0) {
 			tmpNode = stack.pop();
-			if (tmpNode.getChildren().size() == 0) // Leaf: add this match
-				matches.add(tmpNode);
-			else
-				// Node: there's more to traverses
-				stack.addAll(tmpNode.getChildren());
+			stack.addAll(tmpNode.getChildren()); //add empty list of children
+			matches.add(tmpNode); //add match
 		}
 
 		return matches;
@@ -278,7 +280,8 @@ public class TournamentService {
 	 */
 	public static List<GoalEvent> getGoalsByTournament(Tournament tournament) {
 		List<GoalEvent> events = new LinkedList<GoalEvent>();
-		for (Match match : MatchDao.findAllByTournament(tournament))
+		List<Match> matches = MatchDao.findAllByTournament(tournament);
+		for (Match match : matches)
 			events.addAll(GoalEventDao.findAllByMatch(match));
 
 		return events;

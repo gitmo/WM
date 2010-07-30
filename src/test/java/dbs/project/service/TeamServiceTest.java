@@ -6,9 +6,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import dbs.project.dao.MatchDao;
 import dbs.project.entity.Match;
 import dbs.project.entity.Player;
 import dbs.project.entity.Team;
+import dbs.project.helper.TestHelper;
 import dbs.project.util.MatchMinute;
 
 public class TeamServiceTest {
@@ -17,6 +19,9 @@ public class TeamServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		match = TestHelper.match();
+		MatchDao.save(match);
+		team = match.getHostTeam();
 	}
 
 	@After
