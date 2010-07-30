@@ -12,17 +12,26 @@ import org.junit.Test;
 
 import dbs.project.entity.GroupMatch;
 import dbs.project.entity.Team;
+import dbs.project.entity.TournamentGroup;
+import dbs.project.helper.TestHelper;
 
 public class StandingRowTest {
 	List<Team> teams;
 	List<GroupMatch> matches;
+	TournamentGroup group;
 
 	@Before
 	public void setUp() throws Exception {
+		group = TestHelper.playedGroupStage().getGroups().get(0);
+		teams = group.getTeams();
+		matches = group.getMatches();
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		group = null;
+		teams = null;
+		matches = null;
 	}
 
 	@Test
@@ -34,8 +43,7 @@ public class StandingRowTest {
 
 	@Test
 	public void testGetModel() {
-		TableModel model = StandingRow.getModel(this.matches.get(0)
-				.getTournament().getGroupStage().getGroups().get(0));
+		TableModel model = StandingRow.getModel(group);
 		assertEquals(4, model.getRowCount());
 	}
 
