@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.LinkedList;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,7 +32,7 @@ public class PermissionServiceTest {
 		final String plaintextPW = "plaintext";
 
 		a = new Actor();
-		a.setEmail("mudda@fucker.org");
+		a.setEmail("jogi@baer.org");
 		a.setPassword(plaintextPW);
 
 		t = new Tournament();
@@ -53,6 +54,14 @@ public class PermissionServiceTest {
 		ResourceDao.save(r);
 		ActorDao.save(a);
 		PermissionDao.save(p);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		TournamentDao.delete(t);
+		ResourceDao.delete(r);
+		ActorDao.delete(a);
+		PermissionDao.delete(p);
 	}
 
 	@Test
