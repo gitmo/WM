@@ -8,17 +8,19 @@ import sun.misc.BASE64Encoder;
 
 public final class PasswordService {
 	private static PasswordService instance;
-
-	private PasswordService() {
+	static {
+		instance = new PasswordService();
 	}
 
-	// First get the instance of this singleton
+	private PasswordService() {}
+
+	/**
+	 * singleton access
+	 * 
+	 * @return
+	 */
 	public static synchronized PasswordService getInstance() {
-		if (instance == null) {
-			return new PasswordService();
-		} else {
-			return instance;
-		}
+		return instance;
 	}
 
 	/**
