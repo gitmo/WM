@@ -3,16 +3,11 @@ package dbs.project.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
-import javax.swing.text.html.HTMLDocument.HTMLReader.PreAction;
-
 import org.hibernate.HibernateException;
-import org.hibernate.criterion.Restrictions;
 
 import dbs.project.entity.Tournament;
-import dbs.project.entity.TournamentGroup;
 
 public class TournamentDao extends DaoBase {
 

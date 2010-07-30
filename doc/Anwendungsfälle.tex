@@ -1,0 +1,117 @@
+%
+%  DBS-Project
+%
+%  NvG, FH, SR
+%
+\documentclass[11pt,german]{scrartcl}
+
+% See geometry.pdf to learn the layout options.
+\usepackage{geometry}
+\geometry{a4paper}
+
+% To begin paragraphs with an empty line
+\usepackage[parfill]{parskip}
+
+% Use utf-8 encoding for foreign characters
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% Setup for fullpage use
+\usepackage{fullpage}
+
+% More symbols
+\usepackage{amsmath}
+\usepackage{amssymb}
+%\usepackage{latexsym}
+
+% Package for including code in the document
+\usepackage{listings}
+\usepackage{color}
+\usepackage{moreverb}
+
+
+\title{Anwendungsfälle}
+\author{NvG, FH, SR}
+
+% Activate to display a given date or no date
+\date{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\renewcommand{\labelenumi}{\alph{enumi})}
+\renewcommand{\labelenumii}{$\bullet$}
+
+% define a macro ausgabe which takes as argument
+% your ausgabe.txt file’s name 
+% \newcommand{\ausgabe}[1] {\hrule\small\verbatiminput{#1}\normalsize\hrule}
+
+\definecolor{light-gray}{gray}{0.95}
+
+\lstset{
+  language=Java,               % choose the language of the code
+  basicstyle=\scriptsize,   % size of fonts used for the code
+  numbers=left,             % where to put the line-numbers
+  numberstyle=\tiny,        % size of fonts for used line-numbers
+  stepnumber=1,             % step between line-numbers
+  numbersep=5pt,            % how far the line-numbers are from the code
+  backgroundcolor=\color{light-gray},  % background color, add \usepackage{color}
+  showspaces=false,         % show spaces adding particular underscores
+  showstringspaces=false,   % underline spaces within strings
+  showtabs=false,           % show tabs within strings adding particular underscores
+  frame=single,             % adds a frame around the code
+  tabsize=4,                % sets default tabsize to 2 spaces
+  captionpos=b,             % sets the caption-position to bottom
+  breaklines=true,          % sets automatic line breaking
+  breakatwhitespace=false,  % sets if automatic breaks should only happen at whitespace
+  escapeinside={\%*}{*)},   % if you want to add a comment within your code
+  extendedchars=true,
+  literate=%
+    {Ö}{{\"O}}1
+    {Ä}{{\"A}}1
+    {Ü}{{\"U}}1
+    {ß}{{\ss}}2
+    {ü}{{\"u}}1
+    {ä}{{\"a}}1
+    {ö}{{\"o}}1
+    {°}{{}}0
+}
+
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\setcounter{section}{5}
+
+%\clearpage
+
+\section{Einsatz eintragen}
+Die methode {\it insertPlayerToMatch(Player player, Match match);} ist in {\it MatchService} implementiert. Falls aller Voraussetzungen erfüllt sind wird ein {\it LineUpEvent} generiert und dem Spiel hinzugefügt. Danach wird das Match gespeichert um die Änderungen konsistent zu machen.\\
+Nötige Voraussetzungen für das erstellen eines {\it LineUpEvents} sind:\\
+\begin{itemize}
+	\item Der Spieler gehört zu einem der spielenden Teams.
+	\item Das Team für das der Spieler spielt hat noch keine 11 Spieler in der Startaufstellung.
+\end{itemize}
+Um Spieler in das Spiel einzügen, nachdem das Spiel begonnen hat existiert die {\it substitutePlayers(Player playerOut, PlayerIn, Integer Minute, Match match);}. Hierbei wird der Spieler {\it PlayerOut} durch {\it PlayerIn} ersetzt, falls {\it PlayerOut} zur gegebenen {\it Minute} im Spiel({\it match}) ist, beide in der selben Manschaft spielen, die Mannschaft am Spiel teilnimmt und {\it PlayerIn} davor noch nicht gespielt hat.\\
+Zum Austauschen der Spieler wird ein {\it SubstitutionEvent} erstellt und dem {\it Match} hinzugefügt.
+
+\section{Tor eintragen}
+Die Methode {\it insertGoal(GoalEvent goal, Player player, Match match);} ist in der{\it MatchService}-Klasse implementiert. Beim {\it goal} müssen das Team, dass das Tor gutgeschrieben bekommt und die Spielminute eingetragen sein. Falls der Spieler im Match spielt, wird das Tor hinzugefügt.\\
+Ein Eigentor wird dadurch erstellt, dass im {\it GoalEvent} die Mannschaft des Gegners angegeben wird.
+
+\section{Ergebnis ausgeben}
+Die Methode {\it getResult(Match match);} ist auch in {\it MatchService} implementiert. Es wird entweder das Zwischen- oder das Endergebnis ausgegeben, je nachdem, wann die Methode aufgerufen wird.
+
+\section{Gruppentabelle berechnen}
+Die Methode {\it printStandings(TournamentGroup group);} ist in {\it GroupService} implementiert. Falls die Spiele in der Gruppe schon initialisiert wurden wird die Tabelle ausgegeben. Die Tabelle besteht 4 Zeilen , die aus Rang, Teamname, gespielten Spielen, Torverhältnis und Punkten bestehen. 
+
+\section{Sieger ausgeben}
+Die Methode {\it weAreTheChampions(Tournament tournament);} ist in {\it TournamentService} implementiert. Es werden die beiden Finalisten und der Dritte des Turniers ausgegeben.
+
+\section{aufrufende Funktionen}
+Alle Funktionen werden in den Testklassen ihres Service-Layers getestet. Die Testklassen befinden sich im Packet {\it dbs.project.service} im Ordner {\it src/test/} und heißen $\langle$ {\it KlasseServiceTest} $\rangle$ .java, wobei Klasse natürlich für die jeweilige Klasse steht.
+
+%\input{}
+
+\end{document}

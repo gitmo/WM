@@ -30,7 +30,6 @@ import dbs.project.exception.TeamNotSet;
 import dbs.project.exception.TiedMatch;
 import dbs.project.helper.TestHelper;
 import dbs.project.util.Collections;
-import dbs.project.util.Substitution;
 
 public class MatchServiceTest {
 
@@ -188,8 +187,6 @@ public class MatchServiceTest {
 			assert(true);
 		} catch (TeamNotSet e) {
 			fail("wrong exception : "+e.getClass());
-		} catch (PlayerDoesNotPlayForTeam e) {
-			fail("exception : "+e.getMessage());
 		}
 		
 	}
