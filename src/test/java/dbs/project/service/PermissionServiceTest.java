@@ -32,7 +32,7 @@ public class PermissionServiceTest {
 
 		a = new Actor();
 		a.setEmail("mudda@fucker.org");
-		ActorService.setPasswordEncrypted(a, plaintextPW);
+		a.setPassword(plaintextPW);
 
 		t = new Tournament();
 		t.setYear(1990);

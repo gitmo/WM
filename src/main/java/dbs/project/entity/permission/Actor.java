@@ -10,6 +10,8 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import dbs.project.service.ActorService;
+
 @Entity
 public class Actor {
 	@Id
@@ -33,6 +35,10 @@ public class Actor {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public void setPassword(String plaintext) {
+		setPassword_hash(ActorService.setPasswordEncrypted(plaintext));
 	}
 
 	public String getPassword_hash() {

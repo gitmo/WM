@@ -7,7 +7,7 @@ import dbs.project.entity.permission.Actor;
 
 public class ActorService {
 
-	public static void setPasswordEncrypted(Actor a, String plaintext) {
+	public static String setPasswordEncrypted(String plaintext) {
 		String base64Hash = null;
 		try {
 			base64Hash = PasswordService.getInstance().encrypt(plaintext);
@@ -16,6 +16,6 @@ public class ActorService {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		a.setPassword_hash(base64Hash);
+		return base64Hash;
 	}
 }
