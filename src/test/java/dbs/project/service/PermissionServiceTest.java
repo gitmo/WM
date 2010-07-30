@@ -59,9 +59,9 @@ public class PermissionServiceTest {
 	@After
 	public void tearDown() throws Exception {
 		TournamentDao.delete(t);
-		ResourceDao.delete(r);
 		ActorDao.delete(a);
 		PermissionDao.delete(p);
+		ResourceDao.delete(r);
 	}
 
 	@Test
