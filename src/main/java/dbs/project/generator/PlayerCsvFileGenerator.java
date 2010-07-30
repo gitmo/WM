@@ -2,13 +2,14 @@ package dbs.project.generator;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Random;
 import java.util.Vector;
+
+import dbs.project.generator.TournamentGenerator.CannotWriteToJARException;
 
 public class PlayerCsvFileGenerator {
 
@@ -25,22 +26,22 @@ public class PlayerCsvFileGenerator {
 	 * Erzeugt die Datei player.csv Vorname, Nachname, Geburtszeitpunkt,
 	 * Groesse, Gewicht
 	 * 
-	 * @throws Exception
+	 * @throws IOException
 	 */
-	public static void generatePlayers() throws Exception {
+	public static void generatePlayers() throws IOException {
 		Vector<String> firstnames = new Vector<String>();
 		Vector<String> lastnames = new Vector<String>();
 
-		BufferedReader in = new BufferedReader(new FileReader(
-				TournamentGenerator.getAbsoluteFilePath(FIRSTNAME_FILE)));
+		BufferedReader in = new BufferedReader(
+				TournamentGenerator.inputStreamReaderFromPath(FIRSTNAME_FILE));
 		String line;
 		while ((line = in.readLine()) != null) {
 			firstnames.add(line.trim());
 		}
 		in.close();
 
-		in = new BufferedReader(new FileReader(
-				TournamentGenerator.getAbsoluteFilePath(LASTNAME_FILE)));
+		in = new BufferedReader(
+				TournamentGenerator.inputStreamReaderFromPath(LASTNAME_FILE));
 		while ((line = in.readLine()) != null) {
 			lastnames.add(line.trim());
 		}
@@ -53,9 +54,13 @@ public class PlayerCsvFileGenerator {
 		Calendar birthday = new GregorianCalendar();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
-		BufferedWriter bw = new BufferedWriter(new FileWriter(
-				TournamentGenerator.getAbsoluteFilePath(OUTPUT_FOLDER) + "/"
-						+ OUTPUT_FILE));
+		BufferedWriter bw;
+		try {
+			bw = new BufferedWriter(TournamentGenerator.createFileWriter(
+					OUTPUT_FOLDER, OUTPUT_FILE));
+		} catch (CannotWriteToJARException e) {
+			return;
+		}
 
 		for (int i = 0; i < AMOUNT_OF_PLAYERS; i++) {
 			lastname = lastnames.get(randomizer.nextInt(lastnames.size()));

@@ -303,11 +303,13 @@ public class AppGui extends JFrame {
 			public void actionPerformed(ActionEvent ev) {
 				try {
 					int i = AppGui.this.tournamentsList.getSelectedIndex();
-					Tournament selectedTournament = (Tournament) AppGui.this.tournamentsList
-							.getModel().getElementAt(i);
-					GroupStageGenerator.enterResults(selectedTournament
-							.getGroupStage());
-					refreshTabs(selectedTournament);
+					if (i != -1) { // there's a tournament selected
+						Tournament selectedTournament = (Tournament) AppGui.this.tournamentsList
+								.getModel().getElementAt(i);
+						GroupStageGenerator.enterResults(selectedTournament
+								.getGroupStage());
+						refreshTabs(selectedTournament);
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

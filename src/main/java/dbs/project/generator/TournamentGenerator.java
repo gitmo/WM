@@ -1,8 +1,8 @@
 package dbs.project.generator;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,6 +27,15 @@ import dbs.project.entity.Tournament;
 import dbs.project.util.Tuple;
 
 public class TournamentGenerator {
+
+	private static TournamentGenerator instance;
+	static {
+		instance = new TournamentGenerator();
+	}
+
+	public class CannotWriteToJARException extends Exception {
+		private static final long serialVersionUID = 1L;
+	}
 
 	private static final String TEAMS_CSV = "/dev/teams.csv";
 	private static final String PLAYERS_CSV = "/dev/players.csv";
@@ -72,27 +81,37 @@ public class TournamentGenerator {
 		return players;
 	}
 
-	public static String getAbsoluteFilePath(String fileName) {
-		URL resource = ClassLoader.class.getResource(fileName);
-		// if file was not yet created
-		return (resource == null) ? null : resource.getPath();
+	public static URL getFileUrl(String fileName) {
+		return ClassLoader.class.getResource(fileName);
 
 	}
 
+	public static InputStreamReader inputStreamReaderFromPath(String fileName) {
+		try {
+			return new InputStreamReader(getFileUrl(fileName).openStream());
+		} catch (IOException e) {
+			System.out.println("Error creating InputStreamReader from "
+					+ fileName);
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	private static List<String[]> getCsvList(String fileName) {
-		String filePath = getAbsoluteFilePath(fileName);
-		CSVReader reader;
+		CSVReader reader = null;
 		List<String[]> csvList = null;
 		try {
-			reader = new CSVReader(new FileReader(filePath));
+			reader = new CSVReader(inputStreamReaderFromPath(fileName));
 			csvList = reader.readAll();
-			reader.close();
-		} catch (FileNotFoundException e) {
-			System.err.println("file " + filePath + "not found");
 		} catch (IOException e) {
-			System.err.println("could not read file");
+			e.printStackTrace();
+		} finally {
+			try {
+				reader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-
 		return csvList;
 	}
 
@@ -208,8 +227,19 @@ public class TournamentGenerator {
 		return stadiums;
 	}
 
+	public static FileWriter createFileWriter(String outputFolder,
+			String outputFile) throws IOException, CannotWriteToJARException {
+
+		URL fileUrl = TournamentGenerator.getFileUrl(outputFolder);
+		if (fileUrl.getProtocol() != "file")
+			throw instance.new CannotWriteToJARException();
+
+		String path = fileUrl.getPath() + "/" + outputFile;
+		System.out.println(path);
+		return new FileWriter(path);
+	}
+
 	public static void main(String[] args) throws Exception {
 		generateTournament();
 	}
-
 }
