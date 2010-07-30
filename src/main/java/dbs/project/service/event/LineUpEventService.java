@@ -21,9 +21,10 @@ public class LineUpEventService {
 
 	public static List<Player> getPlayersByMatch(Match match) {
 		List<Player> players = new LinkedList<Player>();
-		for (LineUpEvent event : LineUpEventDao.findByMatch(match))
+		for (LineUpEvent event : LineUpEventDao.findByMatch(match)){
 			players.add(event.getInvolvedPlayer());
-
+			System.out.println(event.getInvolvedPlayer());
+		}
 		return players;
 	}
 }

@@ -71,10 +71,10 @@ public class SubstitutionEventDao extends DaoBase {
 	 * @param match
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public static List<SubstitutionEvent> findByPlayerAndMatch(Player player,
 			Match match) {
-		List<SubstitutionEvent> res = findByPlayer(player);
-		res.retainAll(findByMatch(match));
+		List<SubstitutionEvent> res = session.createCriteria(SubstitutionEvent.class).add(Restrictions.eq("involvedPlayer",player)).add(Restrictions.eq("match",match)).list();
 		return res;
 
 	}

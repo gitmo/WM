@@ -26,6 +26,7 @@ import dbs.project.exception.PlayerDoesNotPlay;
 import dbs.project.exception.PlayerDoesNotPlayForTeam;
 import dbs.project.exception.PlayersTeamNotInMatch;
 import dbs.project.exception.TeamLineUpComplete;
+import dbs.project.exception.TeamNotSet;
 import dbs.project.exception.TiedMatch;
 import dbs.project.service.event.GoalEventService;
 import dbs.project.service.event.LineUpEventService;
@@ -133,13 +134,25 @@ public class MatchService {
 	 * @param player
 	 * @param match
 	 * @throws PlayerDoesNotPlay
+	 * @throws TeamNotSet 
+	 * @throws PlayerDoesNotPlayForTeam 
 	 */
 	public static void insertGoal(GoalEvent goal, Player player, Match match)
-			throws PlayerDoesNotPlay, NoMinuteSet {
+			throws PlayerDoesNotPlay, NoMinuteSet, TeamNotSet, PlayerDoesNotPlayForTeam {
 
 		if (goal.getMinute() == null)
 			throw new NoMinuteSet();
 
+		if(goal.getScorringTeam()==null)
+			throw new TeamNotSet();
+		
+		List<Player> players = MatchService.getPlayingPlayersForMatch(match);
+		if(!players.contains(player))
+			throw new PlayerDoesNotPlay();
+		
+		if(!player.getTeams().contains(goal.getScorringTeam()))
+			throw new PlayerDoesNotPlayForTeam();
+		
 		goal.setInvolvedPlayer(player);
 		goal.setMatch(match);
 		match.addEvent(goal);
@@ -327,7 +340,7 @@ public class MatchService {
 		MatchDao.save(match);
 	}
 
-	public static void getPlayingPlayersForMatch(Match match) {
+	public static List<Player> getPlayingPlayersForMatch(Match match) {
 		List<Player> players = getLineupByMatch(match);
 		int i = -1;
 		for (Tuple<Player, Player> substitution : SubstitutionEventService
@@ -337,6 +350,6 @@ public class MatchService {
 				players.add(substitution.getSecond());
 			}
 		}
-
+		return players;
 	}
 }
