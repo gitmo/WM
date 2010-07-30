@@ -29,8 +29,25 @@
 \usepackage{color}
 \usepackage{moreverb}
 
+% This is now the recommended way for checking for PDFLaTeX:
+\usepackage{ifpdf}
 
-\title{Datenbankschema: Design}
+%\newif\ifpdf
+%\ifx\pdfoutput\undefined
+%\pdffalse % we are not running PDFLaTeX
+%\else
+%\pdfoutput=1 % we are running PDFLaTeX
+%\pdftrue
+%\fi
+
+\ifpdf
+\usepackage[pdftex]{graphicx}
+\else
+\usepackage{graphicx}
+\fi
+
+
+\title{Relationales Schema: Design}
 \author{NvG, FH, SR}
 
 % Activate to display a given date or no date
@@ -49,7 +66,7 @@
 \definecolor{light-gray}{gray}{0.95}
 
 \lstset{
-  language=SQL,               % choose the language of the code
+  language=SQL,             % choose the language of the code
   basicstyle=\scriptsize,   % size of fonts used for the code
   numbers=left,             % where to put the line-numbers
   numberstyle=\tiny,        % size of fonts for used line-numbers
@@ -83,10 +100,20 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{relationales Schema}
-\lstinputlisting{sql/create.sql}
+Siehe create.sql
+%\lstinputlisting{../sql/create.sql}
+
+\begin{figure}[htb]
+\begin{center}
+\leavevmode
+\includegraphics[width=\textwidth]{../diagrams/relationales_schema.pdf}
+\end{center}
+\caption{Relationales Schema}
+\label{fig:schema}
+\end{figure}
 
 \section{Stored procedure}
-\lstinputlisting{sql/createChampionship.sql}
+\lstinputlisting{../sql/createChampionship.sql}
 
 %\setcounter{section}{5}
 

@@ -29,9 +29,26 @@
 \usepackage{color}
 \usepackage{moreverb}
 
+% This is now the recommended way for checking for PDFLaTeX:
+\usepackage{ifpdf}
+
+%\newif\ifpdf
+%\ifx\pdfoutput\undefined
+%\pdffalse % we are not running PDFLaTeX
+%\else
+%\pdfoutput=1 % we are running PDFLaTeX
+%\pdftrue
+%\fi
+
+\ifpdf
+\usepackage[pdftex]{graphicx}
+\else
+\usepackage{graphicx}
+\fi
+
 
 \title{Objektmodell: Design}
-\author{Felix Höffken, Sebastian Raitz, Nico von Geyso}
+\author{Felix Höffken, Sebastian Raitza, Nico von Geyso}
 
 % Activate to display a given date or no date
 \date{}
@@ -86,14 +103,14 @@
 
 %\clearpage
 \section{Klassendiagramm}
-Alle Klassen sind auch als Diagramm in den Dateien {\it objektdiagramm\_entity.png} und {\it objektdiagramm\_permission.png} zu finden.
+Alle Klassen sind auch als Diagramm in den Dateien {\it objektdiagramm\_entity.pdf} und {\it objektdiagramm\_permission.pdf} zu finden.
 
 \section{Packet: dbs.project.entity}
 
 \begin{description}
 
 \item [Advisor]
-Ein Advisor repräsentiert eine Person, die für ein Team arbeitet, z.B. Trainer, Teamarzt, ...
+Ein Advisor repräsentiert einen Betreuer, also eine Person, die für ein Team arbeitet (z.B. Trainer, Teamarzt, ...).
 
 \item [Country]
 Country repräsentiert ein Land.
@@ -130,7 +147,7 @@ Ein Team ist eine Gruppe aus Advisorn und Spielern, usw. Sie repräsentieren die
 Ein Tournament ist ein Turnier - da mehrere Turniere in unsere Datenbank passen sollen ist sie nötig.
 
 \item [TournamentGroup]
-Eine TournamentGroup repräsentiert eine Gruppe in der Gruppenphase, also Gruppe A, B, C...
+Eine TournamentGroup repräsentiert eine Gruppe in der Gruppenphase (Gruppe A, B, C, ...) .
 
 \end{description}
 
@@ -146,6 +163,17 @@ Ein MatchEndEvent repräsentiert den Schlusspfiff in einem Spiel.
 Ein PlayerEvent ist ein im Spiel auftretendes Ereignis, das einen Spieler betrifft. Die Klasse ist {\it abstract} und wird von CardEvent, GoalEvent, LineUpEvent und SubstitutionEvent implementiert.
 
 \end{description}
+
+\begin{figure}[htb]
+\begin{center}
+\leavevmode
+\includegraphics[height=0.75\textheight,angle=90]{../diagrams/objektdiagramm_entity.pdf}
+\end{center}
+\caption{Objektmodell: WM}
+\label{fig:entities}
+\end{figure}
+
+
 
 \section{Packet: dbs.project.entity.event.player}
 Diese Klassen implementieren die abstrakte Klasse PlayerEvent.
@@ -180,5 +208,14 @@ Eine Ressource spiegelt ein Recht auf eine Entität wieder. Hat ein Akteur also 
 \item [Role]
 Akteuren können gewisse Rollen zugewiesen werden. Diese haben wieder je nach Einstellung Berechtigungen auf Ressourcen.
 \end{description}
+
+\begin{figure}[htb]
+\begin{center}
+\leavevmode
+\includegraphics[width=\textwidth]{../diagrams/objektdiagramm_permission.pdf}
+\end{center}
+\caption{Objektmodell: Authentifizierung und Rechtevergabe}
+\label{fig:permission}
+\end{figure}
 
 \end{document}

@@ -1,6 +1,9 @@
 #!/bin/sh
 
-read -p 'Are you sure to delete everything from "test" DB now? (y/n): ' answer
+# Use this alias cmd to load the stored procedures
+alias loadproc="psql test < ./doc/sql/createChampionship.sql"
+
+read -p 'Are you sure to delete everything from local DB "test" now? (y/n): ' answer
 [[ $answer != "y" ]] && exit 1
 
 # Delete everything in DB test
@@ -14,10 +17,6 @@ echo 'DROP SCHEMA public CASCADE; CREATE SCHEMA public AUTHORIZATION postgres;'\
 # Otherwise any data written to the data base will have the wrong encoding.
 export MAVEN_OPTS="-Dfile.encoding=UTF-8"
 
-# To populate tables with generated data:
-# mvn compile
-# mvn exec:java -Dexec.mainClass="dbs.project.dev.Generator"
-
 # Here’s how to launch our GUI:
 # mvn exec:java -Dexec.mainClass="dbs.project.main.gui.AppGui" 
 
@@ -26,3 +25,8 @@ export MAVEN_OPTS="-Dfile.encoding=UTF-8"
 
 # This will run everything (compile, export schema, run AppGui)
 mvn test
+
+# Load stored procedure now as the database is created
+loadproc
+
+#java -jar WM-0.0.1-SNAPSHOT-jar-with-dependencies.jar
