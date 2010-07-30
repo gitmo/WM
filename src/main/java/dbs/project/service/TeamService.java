@@ -39,13 +39,14 @@ public class TeamService {
 	public static List<Player> getPlayersOnTheBench(Match match, Team team, MatchMinute minute) {
 		List<Player> allPlayers = team.getPlayers();
 		List<Player> playersWaiting = new LinkedList<Player>();
+		playersWaiting.addAll(allPlayers);
 		
 		for(Player player : getPlayingPlayersInAMatchForTeam(match, team , minute)) {
-			if(!allPlayers.contains(player))
-				playersWaiting.add(player);
+			if(allPlayers.contains(player))
+				playersWaiting.remove(player);
 		}
 		
-		return allPlayers;
+		return playersWaiting;
 	}
 	
 	

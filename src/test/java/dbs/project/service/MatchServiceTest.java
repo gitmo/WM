@@ -38,6 +38,7 @@ public class MatchServiceTest {
 	@After
 	public void tearDown() throws Exception {
 		MatchDao.delete(match);
+		match = null;
 	}
 
 	@Test

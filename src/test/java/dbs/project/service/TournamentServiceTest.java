@@ -35,6 +35,9 @@ public class TournamentServiceTest {
 	public void tearDown() throws Exception {
 		TournamentDao.delete(completedTournament);
 		TournamentDao.delete(uncompletedTournament);
+		
+		uncompletedTournament = null;
+		completedTournament = null;
 	}
 	
 

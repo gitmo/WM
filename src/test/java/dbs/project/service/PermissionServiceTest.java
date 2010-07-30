@@ -62,6 +62,10 @@ public class PermissionServiceTest {
 		ActorDao.delete(a);
 		PermissionDao.delete(p);
 		ResourceDao.delete(r);
+		a = null;
+		p = null;
+		t = null;
+		r = null;
 	}
 
 	@Test

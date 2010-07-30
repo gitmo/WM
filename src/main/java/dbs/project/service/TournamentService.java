@@ -118,7 +118,6 @@ public class TournamentService {
 		// Create a list of players with their goals attached (Topscorer obj.)
 		ArrayList<Topscorer> topscorers = new ArrayList<Topscorer>();
 		List<GoalEvent> allGoals = getGoalsByTournament(tournament);
-		System.out.println("goals: "+ allGoals.size());
 		int i = -1;
 		for (GoalEvent eventGoal : allGoals) {
 			i=-1;
@@ -136,9 +135,6 @@ public class TournamentService {
 		if (topscorers.size() == 0)
 			return "Es wurden keine Tore geschoßen";
 		
-		System.out.println("scorer: " + topscorers.size());
-		for(Topscorer scorer : topscorers)
-			System.out.println(scorer.player + " " + scorer.goals);
 		// Sort (via compareTo) ...
 		java.util.Collections.sort(topscorers);
 
