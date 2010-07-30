@@ -60,8 +60,8 @@
       </component>
      </components>
      <componentProperties>
-      <export>true</export><!-- export to the database (otherwise to file) -->
-      <update>true</update>
+      <export>false</export><!-- export to the database (otherwise to file) -->
+      <update>false</update>
       <drop>true</drop>
       <create>true</create>
       <!-- this is created in target/hibernate3/sql -->
