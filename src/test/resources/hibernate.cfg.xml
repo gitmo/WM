@@ -28,7 +28,11 @@
         <mapping class="dbs.project.entity.Stadium" />
         <mapping class="dbs.project.entity.Team" />
         <mapping class="dbs.project.entity.Tournament" />
-        
+         
+        <mapping class="dbs.project.entity.permission.Actor" />
+        <mapping class="dbs.project.entity.permission.Role" />
+        <mapping class="dbs.project.entity.permission.Permission" />
+        <mapping class="dbs.project.entity.permission.Resource" />
         
         <mapping class="dbs.project.entity.event.MatchEndEvent" />
         <mapping class="dbs.project.entity.event.PlayerEvent" />
