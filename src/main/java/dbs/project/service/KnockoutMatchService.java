@@ -75,6 +75,12 @@ public class KnockoutMatchService {
 
 	}
 
+	/**
+	 * get all matches of the knockout stage
+	 * 
+	 * @param root
+	 * @return
+	 */
 	public static List<KnockoutMatch> getAllMatches(KnockoutMatch root) {
 		List<KnockoutMatch> matches = new LinkedList<KnockoutMatch>();
 
@@ -93,12 +99,17 @@ public class KnockoutMatchService {
 		return matches;
 	}
 
-	public static void generateMatches(TournamentGroup group) {
-		rekGenerateMatches(group.getTournament().getFinalMatch(), group
+	/**
+	 * Updates the knockout tree if some games are already played
+	 * 
+	 * @param group
+	 */
+	public static void updatesKnockoutTree(TournamentGroup group) {
+		recUpdatesKnockoutTree(group.getTournament().getFinalMatch(), group
 				.getTournament().getGroupStage());
 	}
 
-	private static void rekGenerateMatches(KnockoutMatch node,
+	private static void recUpdatesKnockoutTree(KnockoutMatch node,
 			GroupStage groupStage) {
 		// Achtelfinale
 		if (node.getChildren().size() < 1) {
@@ -136,8 +147,8 @@ public class KnockoutMatchService {
 			node.setHostTeam(guestTeam);
 		}
 
-		rekGenerateMatches(hostChild, groupStage);
-		rekGenerateMatches(guestChild, groupStage);
+		recUpdatesKnockoutTree(hostChild, groupStage);
+		recUpdatesKnockoutTree(guestChild, groupStage);
 	}
 
 }

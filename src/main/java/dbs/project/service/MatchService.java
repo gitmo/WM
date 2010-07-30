@@ -298,7 +298,7 @@ public class MatchService {
 		if (match instanceof GroupMatch) {
 			TournamentGroup group = ((GroupMatch) match).getGroup();
 			if (GroupService.areAllMatchesPlayed(group))
-				KnockoutMatchService.generateMatches(group);
+				KnockoutMatchService.updatesKnockoutTree(group);
 		}
 
 		MatchDao.save(match);

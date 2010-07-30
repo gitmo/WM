@@ -48,6 +48,13 @@ public class GroupService {
 		return sb.toString();
 	}
 
+	
+	/**
+	 * Checks if all matches are played in a tournament group
+	 * 
+	 * @param group
+	 * @return true or false
+	 */
 	public static boolean areAllMatchesPlayed(TournamentGroup group) {
 		for (Match match : group.getMatches())
 			if (!match.isPlayed())
@@ -56,11 +63,24 @@ public class GroupService {
 		return true;
 	}
 
+	
+	/**
+	 * gets the first placed team in a tournament group
+	 * 
+	 * @param group
+	 * @return
+	 */
 	public static Team getFirst(TournamentGroup group) {
 		return StandingRow.getRows(group.getTeams(), group.getMatches()).get(0)
 				.getTeam();
 	}
 
+	/**
+	 * gets the second placed team in a tournament group
+	 * 
+	 * @param group
+	 * @return
+	 */
 	public static Team getSecond(TournamentGroup group) {
 		return StandingRow.getRows(group.getTeams(), group.getMatches()).get(1)
 				.getTeam();

@@ -49,7 +49,7 @@ public class GroupStageService {
 	}
 
 	/**
-	 * return all Matches in a GroupStage
+	 * return all group matches of a tournament
 	 * 
 	 * @param groupStage
 	 * @return
