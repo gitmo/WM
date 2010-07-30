@@ -371,6 +371,8 @@ public class MatchServiceTest {
 		List<Player> players= new ArrayList<Player>();
 		players.addAll(match.getHostTeam().getPlayers().subList(0, 11));
 		players.addAll(match.getGuestTeam().getPlayers().subList(0,11));
+		MatchDao.save(match);
+		
 		try {
 			MatchService.setLineup(players, match);
 		} catch (Exception e) {
