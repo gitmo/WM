@@ -21,6 +21,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.DimensionUIResource;
@@ -350,6 +351,10 @@ public class AppGui extends JFrame {
 	}
 
 	private void refreshList() {
-		this.tournamentsList.setModel(TournamentService.getListModel());
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				tournamentsList.setModel(TournamentService.getListModel());
+			}
+		});
 	}
 }
