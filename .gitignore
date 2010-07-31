@@ -13,3 +13,4 @@ target/
 doc/namen.txt
 
 doc/tex/*.command
+release/

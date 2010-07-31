@@ -102,15 +102,14 @@
 \section*{Installationsanleitung}
 \subsection*{Programm}
 \begin{enumerate}
-\item Erstelle eine Postgres Datenbank mit folgenden Daten
-\begin{verbatim}Datenbankname: test
-Benutzername: postgres
+\item Starte den PostgreSql-Server
+\item Erstelle folgenden Postgres-Benutzer
+\begin{verbatim}Benutzername: postgres
 Benutzerpassword: postgres\end{verbatim}
 
-\item Erstelle die Datenbank mit Hilfe der Datei {\tt create.sql}. Zu finden ist diese im Ordner {\tt doc/sql}
-
-\item Erstelle die {\it stored procedures} mit Hilfe der Datei {\tt createChampionship.sql}
-
+\item Erstelle das Schema (mit Tabellen und Funktionen) aus der Datei {\tt dump.sql} mit Hilfe von {\tt psql}
+\begin{verbatim}psql --username=postgres -h localhost test < dump.sql
+x
 \item Führe das Programm mittels {\tt java -jar WM-0.0.1-SNAPSHOT-jar-with-dependencies.jar} aus.
 \end{enumerate}
 
