@@ -8,7 +8,7 @@ set -o errexit
 export MAVEN_OPTS="-Dfile.encoding=UTF-8"
 
 # Use this alias cmd to load the stored procedures
-alias loadproc="psql test < ./src/main/resources/dev/stored_procedures/createChampionship.sql"
+alias loadproc="psql -U postgres -h localhost test < ./src/main/resources/dev/stored_procedures/createChampionship.sql"
 
 
 
