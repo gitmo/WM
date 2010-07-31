@@ -48,7 +48,7 @@
 
 
 \title{Relationales Schema: Design}
-\author{NvG, FH, SR}
+\author{Felix Höffken, Sebastian Raitza, Nico von Geyso}
 
 % Activate to display a given date or no date
 \date{}
@@ -95,9 +95,13 @@
 }
 
 
-%\maketitle
+\maketitle
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{OR-Mapper Vorgehensweise}
+Wir haben uns entschieden mit \emph{Hibernate} zu Arbeiten. Dabei wurde ausgehend von einem Java-Objektmodell ein relationales Modell erstellt. In unserem Build-Prozess (mittels \emph{Maven}) wird das Schema jedesmal regeneriert und in die Datenbank exportiert. Ein Snapshot der Datenbank inklusive \emph{Stored Procedure} zur Turniererstellung folgt unten.
+
+Alle Testdaten werden von unserer GUI-Anwendung automatisch generiert und in der Datenbank persistiert. Die Turniererstellung  aus dem Programm heraus ist sowohl über die \emph{Stored Procedure} als über Java-Methoden möglich.
 
 \section*{relationales Schema}
 \subsection*{Grafisches Model}
@@ -110,10 +114,6 @@
 %\label{fig:schema}
 %\end{figure}
 
-\subsection*{OR-Mapper Vorgehensweise}
-Wir haben uns entschieden mit \emph{Hibernate} zu Arbeiten. Dabei wurde ausgehend von einem Java-Objektmodell ein relationales Modell erstellt. In unserem Build-Prozess (mittels \emph{Maven}) wird das Schema jedesmal regeneriert und in die Datenbank exportiert. Ein Snapshot der Datenbank inklusive \emph{Stored Procedure} zur Turniererstellung folgt unten.
-
-Alle Testdaten werden von unserer GUI-Anwendung automatisch generiert und in der Datenbank persistiert. Die Turniererstellung  aus dem Programm heraus ist sowohl über die \emph{Stored Procedure} als über Java-Methoden generiert möglich.
 
 \subsection*{SQL (Postgres)}
 \lstinputlisting{../sql/create.sql}
