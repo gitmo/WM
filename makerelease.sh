@@ -47,4 +47,4 @@ zip -r "$ZIP" "$ZIP"
 zip -T "$ZIP"
 
 # Test
-java $JAVA_OPTS -jar release/WM-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+java $JAVA_OPTS -jar "$ZIP"/WM-0.0.1-SNAPSHOT-jar-with-dependencies.jar

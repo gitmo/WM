@@ -1,7 +1,10 @@
 #!/bin/sh
 
+set -x
+set -o errexit
+
 # Use this alias cmd to load the stored procedures
-alias loadproc="psql test < ./doc/sql/createChampionship.sql"
+alias loadproc="psql test < ./src/main/resources/dev/stored_procedures/createChampionship.sql"
 
 read -p 'Are you sure to delete everything from local DB "test" now? (y/n): ' answer
 [[ $answer != "y" ]] && exit 1
@@ -30,3 +33,4 @@ mvn test
 loadproc
 
 #java -jar WM-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+
