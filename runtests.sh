@@ -11,7 +11,7 @@ export MAVEN_OPTS="-Dfile.encoding=UTF-8"
 alias loadproc="psql -U postgres -h localhost test < ./src/main/resources/dev/stored_procedures/createChampionship.sql"
 
 
-# Unpacking sources if not existand
+# Unpacking sources if not existant
 [ -d src/ ] || tar xvf sources.tar.gz
 
 
