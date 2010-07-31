@@ -11,12 +11,6 @@ export MAVEN_OPTS="-Dfile.encoding=UTF-8"
 alias loadproc="psql test < ./src/main/resources/dev/stored_procedures/createChampionship.sql"
 
 
-
-# Unpacking sources if not existand
-[ -d src/ ] || tar xvf sources.tar.gz
-
-
-# Delete schema in DB test
 read -p 'Are you sure to delete everything from local DB "test" now? (y/n): ' answer
 [[ $answer != "y" ]] && exit 1
 
@@ -42,5 +36,5 @@ loadproc
 # Here’s how to launch our GUI:
 # mvn exec:java -Dexec.mainClass="dbs.project.main.gui.AppGui" 
 # Or:
-# java -Dfile.encoding=UTF-8 -jar release/WM-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+# java -Dfile.encoding=UTF-8 -jar WM-0.0.1-SNAPSHOT-jar-with-dependencies.jar
 
