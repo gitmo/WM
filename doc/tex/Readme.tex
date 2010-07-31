@@ -153,14 +153,11 @@ java -Dfile.encoding=UTF-8 -jar WM-0.0.1-SNAPSHOT-jar-with-dependencies.jar
 \subsection*{Tests}
 
 \begin{enumerate}
-\item Extrahieren des Source-Trees
-\begin{lstlisting}
-tar xvf sources.tar.gz
-\end{lstlisting}
-\item Starten der Tests mit Maven (im Grunde {\tt mvn test})
+\item Starten der Tests (mit Maven)
 \begin{lstlisting}
 ./runtests.sh
 \end{lstlisting}
+Dies löscht das Schema aus der Datenbank, extrahiert den Source-Tree und führt {\tt mvn test} aus. Das Schema wird dabei automatisch im \emph{Maven buildcyle} mittels \emph{Hibernate} erstellt und in die Datenbank exportiert.
 \end{enumerate}
 
 
