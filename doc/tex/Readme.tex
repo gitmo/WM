@@ -107,8 +107,10 @@
 \begin{verbatim}Benutzername: postgres
 Benutzerpassword: postgres\end{verbatim}
 
+\item Lösche falls vorhanden die Datenbank {\it test} 
+
 \item Erstelle das Schema (mit Tabellen und Funktionen) aus der Datei {\tt dump.sql}
-\begin{verbatim}psql --username=postgres -h localhost test < doc/sql/dump.sql\end{verbatim}
+\begin{verbatim}psql --username=postgres -h localhost < doc/sql/dump.sql\end{verbatim}
 
 \item Führe das Programm mittels {\tt java -jar WM-0.0.1-SNAPSHOT-jar-with-dependencies.jar} aus.
 \end{enumerate}
