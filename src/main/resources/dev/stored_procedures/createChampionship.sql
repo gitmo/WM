@@ -1,8 +1,6 @@
-
 --
 -- Erstellt einen Turnierplan
 --
-DROP FUNCTION createChampionship(int, text);
 CREATE OR REPLACE FUNCTION createChampionship(int, text) RETURNS VOID AS
 $$
 DECLARE
