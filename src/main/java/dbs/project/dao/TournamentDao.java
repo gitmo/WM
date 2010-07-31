@@ -53,14 +53,23 @@ public class TournamentDao extends DaoBase {
 		return session.createQuery("From Tournament").list();
 	}
 
+	/**
+	 * Executes the stored procedure createChampionship
+	 * (creates a new tournament with sample teams)
+	 * 
+	 * @param year
+	 * @param name
+	 */
 	@SuppressWarnings("deprecation")
 	public static void generateTournament(int year, String name) {
 		try {
+			session.beginTransaction();
 			Connection conn = session.connection();
 			PreparedStatement stmt = conn.prepareStatement("SELECT createChampionship(?,?);");
 			stmt.setInt(1, year);
 			stmt.setString(2, name);
 			stmt.execute();
+			session.getTransaction().commit();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
