@@ -142,7 +142,7 @@ Benutzerpassword: postgres\end{verbatim}
 psql --username=postgres -h localhost test < doc/sql/create.sql
 \end{lstlisting}
 
-\item Die GUI starten mit.
+\item Die GUI starten mit:
 \begin{lstlisting}
 java -Dfile.encoding=UTF-8 -jar WM-0.0.1-SNAPSHOT-jar-with-dependencies.jar
 \end{lstlisting}
@@ -171,7 +171,7 @@ Dies liegt meistens daran, dass bereits ein Turnier mit der Jahreszahl in der Da
 
 \item Die Turnier-Simulation ist extrem zeitaufwendig, da für jedes Spiel der Gruppenphase 22 Spieler per seperaten einzelnen Anfragen aufgestellt werden und dann nochmals 10 zufällige MatchEvents generiert werden.
 
-\item Es können Constraints-Fehler auftreten, da Hibernate und Raw-SQL Queries nicht auf gleicher Art und Weise die Sequence-Id verwalten.
+%\item Es können Constraints-Fehler auftreten, da Hibernate und Raw-SQL Queries nicht auf gleicher Art und Weise die Sequence-Id verwalten.
 \end{itemize}
 
 \end{document}
