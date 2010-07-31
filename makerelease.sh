@@ -8,10 +8,9 @@ export JAVA_OPTS=$MAVEN_OPTS
 
 ZIP=Konrad_vonGeysoHoeffkenRaitza
 
-# In linux there is no .Trash folder (for gnome there is ~/.local/share/Trash)
-if [ -d release ]; then
-	! [ -d ~./Trash ] && mv release/ ~/.Trash/release-$$ || rm -r release
-fi
+rm -f ./"$ZIP.zip"
+rm -rf ./"$ZIP"
+rm -rf ./release
 
 mkdir release/
 
@@ -43,10 +42,8 @@ cp -rp doc/diagrams release/doc
 cp -p doc/namen.txt release/
 
 # ZIP content
-rm -f "$ZIP.zip"
 mv release "$ZIP"
 zip -r "$ZIP" "$ZIP"
-mv "$ZIP" release
 zip -T "$ZIP"
 
 # Test
