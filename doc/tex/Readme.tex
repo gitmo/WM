@@ -46,9 +46,38 @@
 \usepackage{graphicx}
 \fi
 
+\lstset{
+  language=BASH,             % choose the language of the code
+  basicstyle=\scriptsize,   % size of fonts used for the code
+  numbers=left,             % where to put the line-numbers
+  numberstyle=\tiny,        % size of fonts for used line-numbers
+  stepnumber=1,             % step between line-numbers
+  numbersep=5pt,            % how far the line-numbers are from the code
+  backgroundcolor=\color{light-gray},  % background color, add \usepackage{color}
+  showspaces=false,         % show spaces adding particular underscores
+  showstringspaces=false,   % underline spaces within strings
+  showtabs=false,           % show tabs within strings adding particular underscores
+  frame=single,             % adds a frame around the code
+  tabsize=4,                % sets default tabsize to 2 spaces
+  captionpos=b,             % sets the caption-position to bottom
+  breaklines=true,          % sets automatic line breaking
+  breakatwhitespace=false,  % sets if automatic breaks should only happen at whitespace
+  escapeinside={\%*}{*)},   % if you want to add a comment within your code
+  extendedchars=true,
+  literate=%
+    {Ö}{{\"O}}1
+    {Ä}{{\"A}}1
+    {Ü}{{\"U}}1
+    {ß}{{\ss}}2
+    {ü}{{\"u}}1
+    {ä}{{\"a}}1
+    {ö}{{\"o}}1
+    {°}{{}}0
+}
+
 
 \title{Readme}
-\author{NvG, FH, SR}
+\author{Nico von Geyso, Felix Höffken, Sebastian Raitza}
 
 % Activate to display a given date or no date
 \date{}
@@ -67,10 +96,10 @@
 
 \lstset{
   language=SQL,             % choose the language of the code
-  basicstyle=\scriptsize,   % size of fonts used for the code
+  basicstyle=\ttfamily\small, 
   numbers=left,             % where to put the line-numbers
   numberstyle=\tiny,        % size of fonts for used line-numbers
-  stepnumber=1,             % step between line-numbers
+  stepnumber=0,             % step between line-numbers
   numbersep=5pt,            % how far the line-numbers are from the code
   backgroundcolor=\color{light-gray},  % background color, add \usepackage{color}
   showspaces=false,         % show spaces adding particular underscores
@@ -108,14 +137,32 @@
 Benutzername: postgres
 Benutzerpassword: postgres\end{verbatim}
 
-\item Erstelle das Schema (mit Tabellen und Funktionen) aus der Datei {\tt dump.sql}
-\begin{verbatim}psql --username=postgres -h localhost test < doc/sql/dump.sql\end{verbatim}
+\item Erstelle das Schema (mit Tabellen und Funktionen) aus der Datei {\tt create.sql}
+\begin{lstlisting}
+psql --username=postgres -h localhost test < doc/sql/create.sql
+\end{lstlisting}
 
-\item Führe das Programm mittels {\tt java -jar WM-0.0.1-SNAPSHOT-jar-with-dependencies.jar} aus.
+\item Die GUI starten mit.
+\begin{lstlisting}
+java -Dfile.encoding=UTF-8 -jar WM-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+\end{lstlisting}
 \end{enumerate}
 
+
+
 \subsection*{Tests}
-to add...
+
+\begin{enumerate}
+\item Extrahieren des Source-Trees
+\begin{lstlisting}
+tar xvf sources.tar.gz
+\end{lstlisting}
+\item Starten der Tests mit Maven (im Grunde {\tt mvn test})
+\begin{lstlisting}
+./runtests.sh
+\end{lstlisting}
+\end{enumerate}
+
 
 \section*{Gut zu wissen...}
 \begin{itemize}
