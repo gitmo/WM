@@ -10,7 +10,7 @@ ZIP=Konrad_vonGeysoHoeffkenRaitza
 
 # In linux there is no .Trash folder (for gnome there is ~/.local/share/Trash)
 if [ -d release ]; then
-	[ -d ~./Trash ] && mv release/ ~/.Trash/release-$$ || rm -r release
+	! [ -d ~./Trash ] && mv release/ ~/.Trash/release-$$ || rm -r release
 fi
 
 mkdir release/
@@ -22,25 +22,25 @@ mkdir release/
 mvn clean
 
 # Sources
-mvn source:jar
-cp target/WM-0.0.1-SNAPSHOT-sources.jar release/
+# mvn source:jar
+# cp target/WM-0.0.1-SNAPSHOT-sources.jar release/
 
 # Test sources
-mvn source:test-jar
-cp target/WM-0.0.1-SNAPSHOT-test-sources.jar release/
+# mvn source:test-jar
+# cp target/WM-0.0.1-SNAPSHOT-test-sources.jar release/
 
 # Runnable jar
 mvn -DskipTests=true assembly:assembly
-cp target/WM-0.0.1-SNAPSHOT-jar-with-dependencies.jar release/
+cp -p target/WM-0.0.1-SNAPSHOT-jar-with-dependencies.jar release/
+
+# Sources
+tar -vcf release/sources.tgz src/ pom.xml runtests.sh
 
 mkdir release/doc
 cp -rp doc/tex/*pdf release/doc
 cp -rp doc/sql release/doc
 cp -rp doc/diagrams release/doc
 cp -p doc/namen.txt release/
-
-cp -p runtests.sh release/
-cp -p pom.xml release/
 
 # ZIP content
 rm -f "$ZIP.zip"
