@@ -33,7 +33,8 @@ mvn -DskipTests=true assembly:assembly
 cp -p target/WM-0.0.1-SNAPSHOT-jar-with-dependencies.jar release/
 
 # Sources
-tar -vcf release/sources.tar.gz src/ pom.xml runtests.sh
+tar -vcf release/sources.tar.gz src/ pom.xml
+cp -p runtests.sh release/
 
 mkdir release/doc
 cp -rp doc/tex/*pdf release/doc
