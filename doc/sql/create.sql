@@ -9,23 +9,129 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET escape_string_warning = off;
 
+SET search_path = public, pg_catalog;
+
+ALTER TABLE ONLY public.role_permission DROP CONSTRAINT fkf8a569386ac4edcc;
+ALTER TABLE ONLY public.role_permission DROP CONSTRAINT fkf8a56938401023a7;
+ALTER TABLE ONLY public.stadium DROP CONSTRAINT fkf21d53ddfcf4fc9d;
+ALTER TABLE ONLY public.matchevent DROP CONSTRAINT fke491d7f5df1dd7b0;
+ALTER TABLE ONLY public.matchevent DROP CONSTRAINT fke491d7f5db6578d7;
+ALTER TABLE ONLY public.matchevent DROP CONSTRAINT fke491d7f5c7168977;
+ALTER TABLE ONLY public.matchevent DROP CONSTRAINT fke491d7f56a9e6294;
+ALTER TABLE ONLY public.matchevent DROP CONSTRAINT fke491d7f560766fd;
+ALTER TABLE ONLY public.match_match DROP CONSTRAINT fkd7c3a68b884bbd1;
+ALTER TABLE ONLY public.match_match DROP CONSTRAINT fkd7c3a68b1fd58223;
+ALTER TABLE ONLY public.team_player DROP CONSTRAINT fkd4e5f703db6578d7;
+ALTER TABLE ONLY public.team_player DROP CONSTRAINT fkd4e5f70318f27aa6;
+ALTER TABLE ONLY public.actor_permission DROP CONSTRAINT fkcf243699d36f2a65;
+ALTER TABLE ONLY public.actor_permission DROP CONSTRAINT fkcf243699401023a7;
+ALTER TABLE ONLY public.match_matchevent DROP CONSTRAINT fkbfc93acfdcc26853;
+ALTER TABLE ONLY public.match_matchevent DROP CONSTRAINT fkbfc93acf60766fd;
+ALTER TABLE ONLY public.tournamentgroup_team DROP CONSTRAINT fkb7678b26d57db48a;
+ALTER TABLE ONLY public.tournamentgroup_team DROP CONSTRAINT fkb7678b26cdc8c6de;
+ALTER TABLE ONLY public.tournament_stadium DROP CONSTRAINT fkabf317a7db034f8f;
+ALTER TABLE ONLY public.tournament_stadium DROP CONSTRAINT fkabf317a774b12939;
+ALTER TABLE ONLY public.team_advisor DROP CONSTRAINT fka1d587deea5528a;
+ALTER TABLE ONLY public.team_advisor DROP CONSTRAINT fka1d587dedb6578d7;
+ALTER TABLE ONLY public.player DROP CONSTRAINT fk8ea387019b9d8d6d;
+ALTER TABLE ONLY public.tournamentgroup DROP CONSTRAINT fk6372df674b12939;
+ALTER TABLE ONLY public.groupstage_tournamentgroup DROP CONSTRAINT fk62cd5967d361fb7;
+ALTER TABLE ONLY public.groupstage_tournamentgroup DROP CONSTRAINT fk62cd596526daa28;
+ALTER TABLE ONLY public.permission DROP CONSTRAINT fk57f7a1ef94470e9c;
+ALTER TABLE ONLY public.tournament_country DROP CONSTRAINT fk5625b3409a553667;
+ALTER TABLE ONLY public.tournament_country DROP CONSTRAINT fk5625b34074b12939;
+ALTER TABLE ONLY public.person_team DROP CONSTRAINT fk49fd4907ce781a97;
+ALTER TABLE ONLY public.person_team DROP CONSTRAINT fk49fd4907cdc8c6de;
+ALTER TABLE ONLY public.match DROP CONSTRAINT fk46ae9a5f0ec562f;
+ALTER TABLE ONLY public.match DROP CONSTRAINT fk46ae9a5e2487ff;
+ALTER TABLE ONLY public.match DROP CONSTRAINT fk46ae9a5d4eaebd3;
+ALTER TABLE ONLY public.match DROP CONSTRAINT fk46ae9a574b12939;
+ALTER TABLE ONLY public.match DROP CONSTRAINT fk46ae9a515c9d2b6;
+ALTER TABLE ONLY public.tournament DROP CONSTRAINT fk3b743609fcd043a4;
+ALTER TABLE ONLY public.tournament DROP CONSTRAINT fk3b7436097d361fb7;
+ALTER TABLE ONLY public.tournament DROP CONSTRAINT fk3b74360966de6d99;
+ALTER TABLE ONLY public.tournamentgroup_match DROP CONSTRAINT fk3525aa1cd57db48a;
+ALTER TABLE ONLY public.tournamentgroup_match DROP CONSTRAINT fk3525aa1c2801c0aa;
+ALTER TABLE ONLY public.team DROP CONSTRAINT fk27b67dfcf4fc9d;
+ALTER TABLE ONLY public.role DROP CONSTRAINT fk26f496da563832;
+ALTER TABLE ONLY public.role DROP CONSTRAINT fk26f49674b12939;
+ALTER TABLE ONLY public.actor_role DROP CONSTRAINT fk26e2d0c0e4a0b3e5;
+ALTER TABLE ONLY public.actor_role DROP CONSTRAINT fk26e2d0c0d36f2a65;
+ALTER TABLE ONLY public.advisor DROP CONSTRAINT fk1fc9f7a09b9d8d6d;
+ALTER TABLE ONLY public.tournamentgroup_team DROP CONSTRAINT tournamentgroup_team_teams_id_key;
+ALTER TABLE ONLY public.tournamentgroup DROP CONSTRAINT tournamentgroup_pkey;
+ALTER TABLE ONLY public.tournamentgroup_match DROP CONSTRAINT tournamentgroup_match_matches_id_key;
+ALTER TABLE ONLY public.tournament DROP CONSTRAINT tournament_pkey;
+ALTER TABLE ONLY public.team DROP CONSTRAINT team_pkey;
+ALTER TABLE ONLY public.team_advisor DROP CONSTRAINT team_advisor_advisors_id_key;
+ALTER TABLE ONLY public.stadium DROP CONSTRAINT stadium_pkey;
+ALTER TABLE ONLY public.role DROP CONSTRAINT role_pkey;
+ALTER TABLE ONLY public.role_permission DROP CONSTRAINT role_permission_permissions_id_key;
+ALTER TABLE ONLY public.resource DROP CONSTRAINT resource_pkey;
+ALTER TABLE ONLY public.player DROP CONSTRAINT player_pkey;
+ALTER TABLE ONLY public.person DROP CONSTRAINT person_pkey;
+ALTER TABLE ONLY public.permission DROP CONSTRAINT permission_pkey;
+ALTER TABLE ONLY public.matchevent DROP CONSTRAINT matchevent_pkey;
+ALTER TABLE ONLY public.match DROP CONSTRAINT match_pkey;
+ALTER TABLE ONLY public.match_matchevent DROP CONSTRAINT match_matchevent_events_id_key;
+ALTER TABLE ONLY public.groupstage_tournamentgroup DROP CONSTRAINT groupstage_tournamentgroup_groups_groupid_key;
+ALTER TABLE ONLY public.groupstage DROP CONSTRAINT groupstage_pkey;
+ALTER TABLE ONLY public.country DROP CONSTRAINT country_pkey;
+ALTER TABLE ONLY public.advisor DROP CONSTRAINT advisor_pkey;
+ALTER TABLE ONLY public.actor_role DROP CONSTRAINT actor_role_roles_name_key;
+ALTER TABLE ONLY public.actor DROP CONSTRAINT actor_pkey;
+ALTER TABLE ONLY public.actor_permission DROP CONSTRAINT actor_permission_permissions_id_key;
+DROP TABLE public.tournamentgroup_team;
+DROP TABLE public.tournamentgroup_match;
+DROP TABLE public.tournamentgroup;
+DROP TABLE public.tournament_stadium;
+DROP TABLE public.tournament_country;
+DROP TABLE public.tournament;
+DROP TABLE public.team_player;
+DROP TABLE public.team_advisor;
+DROP TABLE public.role_permission;
+DROP TABLE public.role;
+DROP TABLE public.resource;
+DROP TABLE public.person_team;
+DROP TABLE public.person;
+DROP TABLE public.permission;
+DROP TABLE public.matchevent;
+DROP TABLE public.match_matchevent;
+DROP TABLE public.match_match;
+DROP TABLE public.match;
+DROP SEQUENCE public.hibernate_sequence;
+DROP TABLE public.groupstage_tournamentgroup;
+DROP TABLE public.advisor;
+DROP TABLE public.actor_role;
+DROP TABLE public.actor_permission;
+DROP TABLE public.actor;
+DROP FUNCTION public.getstadiumsforcountry(bigint);
+DROP TABLE public.stadium;
+DROP FUNCTION public.getplayer();
+DROP TABLE public.player;
+DROP FUNCTION public.getnextsequence();
+DROP FUNCTION public.getcountry();
+DROP TABLE public.country;
+DROP FUNCTION public.generateteam();
+DROP TABLE public.team;
+DROP FUNCTION public.generatematch(bigint, bigint, bigint);
+DROP FUNCTION public.generateknockouttree(integer, bigint);
+DROP FUNCTION public.generategroupstage();
+DROP TABLE public.groupstage;
+DROP FUNCTION public.generategroupmatches(bigint);
+DROP FUNCTION public.createchampionship(integer, text);
+DROP FUNCTION public.concat(character varying, bigint);
+DROP FUNCTION public.concat(character varying, integer);
+DROP PROCEDURAL LANGUAGE plpgsql;
+DROP SCHEMA public;
 --
--- Name: test; Type: DATABASE; Schema: -; Owner: postgres
+-- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
 --
 
-CREATE DATABASE test WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'de_DE.utf8' LC_CTYPE = 'de_DE.utf8';
+CREATE SCHEMA public;
 
 
-ALTER DATABASE test OWNER TO postgres;
-
-\connect test
-
-SET statement_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = off;
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-SET escape_string_warning = off;
+ALTER SCHEMA public OWNER TO postgres;
 
 --
 -- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: -; Owner: postgres
