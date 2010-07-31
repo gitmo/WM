@@ -25,15 +25,16 @@ echo 'DROP SCHEMA public CASCADE; CREATE SCHEMA public AUTHORIZATION postgres;'\
 # This will export the schema
 # mvn process-classes
 
-# Here’s how to launch our GUI:
-# mvn exec:java -Dexec.mainClass="dbs.project.main.gui.AppGui" 
-
-# Or
-#java -Dfile.encoding=UTF-8 -jar release/WM-0.0.1-SNAPSHOT-jar-with-dependencies.jar
-
-# This will run everything (compile, export schema, run AppGui)
+# This will run everything (compile, export schema, test)
 mvn test
 
 
 # Load stored procedure now as the database is created
 loadproc
+
+
+# Here’s how to launch our GUI:
+# mvn exec:java -Dexec.mainClass="dbs.project.main.gui.AppGui" 
+# Or:
+# java -Dfile.encoding=UTF-8 -jar release/WM-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+
