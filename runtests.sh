@@ -11,6 +11,11 @@ export MAVEN_OPTS="-Dfile.encoding=UTF-8"
 alias loadproc="psql -U postgres -h localhost test < ./src/main/resources/dev/stored_procedures/createChampionship.sql"
 
 
+# Unpacking sources if not existand
+[ -d src/ ] || tar xvf sources.tar.gz
+
+
+# Delete schema in DB test
 read -p 'Are you sure to delete everything from local DB "test" now? (y/n): ' answer
 [[ $answer != "y" ]] && exit 1
 
