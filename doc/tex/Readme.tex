@@ -168,7 +168,7 @@ Dies liegt meistens daran, dass bereits ein Turnier mit der Jahreszahl in der Da
 
 \item Die Turnier-Simulation ist extrem zeitaufwendig, da für jedes Spiel der Gruppenphase 22 Spieler per seperaten einzelnen Anfragen aufgestellt werden und dann nochmals 10 zufällige MatchEvents generiert werden.
 
-%\item Es können Constraints-Fehler auftreten, da Hibernate und Raw-SQL Queries nicht auf gleicher Art und Weise die Sequence-Id verwalten.
+\item Das vermischte Generieren der Turniere (Java-Generator und Stored procedure) kann zu Problemen führen, da anscheinend Hibernate anders als Postgres {\it sequences} verwaltet.
 \end{itemize}
 
 \end{document}
