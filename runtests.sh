@@ -11,7 +11,6 @@ export MAVEN_OPTS="-Dfile.encoding=UTF-8"
 alias loadproc="psql -U postgres -h localhost test < ./src/main/resources/dev/stored_procedures/createChampionship.sql"
 
 
-
 # Unpacking sources if not existand
 [ -d src/ ] || tar xvf sources.tar.gz
 
@@ -42,5 +41,5 @@ loadproc
 # Here’s how to launch our GUI:
 # mvn exec:java -Dexec.mainClass="dbs.project.main.gui.AppGui" 
 # Or:
-# java -Dfile.encoding=UTF-8 -jar release/WM-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+# java -Dfile.encoding=UTF-8 -jar WM-0.0.1-SNAPSHOT-jar-with-dependencies.jar
 
