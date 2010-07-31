@@ -113,4 +113,14 @@ Benutzerpassword: postgres\end{verbatim}
 \item Führe das Programm mittels {\tt java -jar WM-0.0.1-SNAPSHOT-jar-with-dependencies.jar} aus.
 \end{enumerate}
 
+\section*{Gut zu wissen...}
+\begin{itemize}
+\item Es kann passieren, dass nach einer Turniererstellung (stored procedure oder java generator) keine Veränderung sichtbar werden.
+Dies liegt meistens daran, dass bereits ein Turnier mit der Jahreszahl in der Datenbank eingetragen ist.
+
+\item Die Turnier-Simulation ist extrem zeitaufwendig, da für jedes Spiel der Gruppenphase 22 Spieler per seperaten einzelnen Anfragen aufgestellt werden und dann nochmals 10 zufällige MatchEvents generiert werden.
+
+\item Es können Constraints-Fehler auftreten, da Hibernate und Raw-SQL Queries nicht auf gleicher Art und Weise die Sequence-Id verwalten.
+\end{itemize}
+
 \end{document}
