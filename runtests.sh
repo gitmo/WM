@@ -22,7 +22,7 @@ read -p 'Are you sure to delete everything from local DB "test" now? (y/n): ' an
 
 # Delete everything in DB test
 echo 'DROP SCHEMA public CASCADE; CREATE SCHEMA public AUTHORIZATION postgres;'\
-  | psql test
+  | psql -U postgres -h localhost test
 
 # Quick command line to empty the data base w/o dropping tables:
 # echo 'truncate table team,player,tournament cascade;' | psql test
