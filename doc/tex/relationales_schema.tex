@@ -98,6 +98,16 @@
 \maketitle
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Designentscheidungen}
+Das Design des Datenmodells deckt sich in unserem Fall größtenteils mit dem Objektmodell, da wir uns für den Weg entschieden \emph{Hibernate} für das Mapping von Objekt- nach Datenmodell einzusetzen.
+
+Eine Grundlegende Entscheidung war mehrere Turniere in einem Schema zu erlauben. Damit war es uns möglich beliebig viele Turniere zu generieren und auf einem umfangreicheren Testdatensatz zu operieren.
+
+\subsection*{OR-Mapper Vorgehensweise}
+Wir haben uns entschieden mit \emph{Hibernate} zu Arbeiten. Dabei wurde ausgehend von einem Java-Objektmodell ein relationales Modell erstellt. In unserem Build-Prozess (mittels \emph{Maven}) wird das Schema jedesmal regeneriert und in die Datenbank exportiert. Ein Snapshot der Datenbank inklusive \emph{Stored Procedure} zur Turniererstellung folgt unten.
+
+Alle Testdaten werden von unserer GUI-Anwendung automatisch generiert und in der Datenbank persistiert. Die Turniererstellung  aus dem Programm heraus ist sowohl über die \emph{Stored Procedure} als über Java-Methoden generiert möglich.
+
 \subsection*{OR-Mapper Vorgehensweise}
 Wir haben uns entschieden mit \emph{Hibernate} zu Arbeiten. Dabei wurde ausgehend von einem Java-Objektmodell ein relationales Modell erstellt. In unserem Build-Prozess (mittels \emph{Maven}) wird das Schema jedesmal regeneriert und in die Datenbank exportiert. Ein Snapshot der Datenbank inklusive \emph{Stored Procedure} zur Turniererstellung folgt unten.
 
@@ -113,19 +123,6 @@ Alle Testdaten werden von unserer GUI-Anwendung automatisch generiert und in der
 %\caption{Relationales Schema}
 %\label{fig:schema}
 %\end{figure}
-
-<<<<<<< HEAD
-\subsection*{Designentscheidungen}
-Das Design des Datenmodells deckt sich in unserem Fall größtenteils mit dem Objektmodell, da wir uns für den Weg entschieden \emph{Hibernate} für das Mapping von Objekt- nach Datenmodell einzusetzen.
-
-Eine Grundlegende Entscheidung war mehrere Turniere in einem Schema zu erlauben. Damit war es uns möglich beliebig viele Turniere zu generieren und auf einem umfangreicheren Testdatensatz zu operieren.
-
-\subsection*{OR-Mapper Vorgehensweise}
-Wir haben uns entschieden mit \emph{Hibernate} zu Arbeiten. Dabei wurde ausgehend von einem Java-Objektmodell ein relationales Modell erstellt. In unserem Build-Prozess (mittels \emph{Maven}) wird das Schema jedesmal regeneriert und in die Datenbank exportiert. Ein Snapshot der Datenbank inklusive \emph{Stored Procedure} zur Turniererstellung folgt unten.
-
-Alle Testdaten werden von unserer GUI-Anwendung automatisch generiert und in der Datenbank persistiert. Die Turniererstellung  aus dem Programm heraus ist sowohl über die \emph{Stored Procedure} als über Java-Methoden generiert möglich.
-=======
->>>>>>> origin/master
 
 \subsection*{SQL (Postgres)}
 \lstinputlisting{../sql/create.sql}
