@@ -2,7 +2,14 @@
 
 export MAVEN_OPTS="-Dfile.encoding=UTF-8"
 
-mv release/ ~/.Trash/release-$$
+# In linux there is no .Trash folder (for gnome there is ~/.local/share/Trash)
+if [ -d ~./Trash ]
+then
+	mv release/ ~/.Trash/release-$$
+else
+	rm -r release
+fi
+
 mkdir release/
 
 # This creates 3 JARs for sources, test sources and classes.
